@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Dashboard Absensi - CLC PERMODALAN</title>
+
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+
+  margin: 0;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  background:
+    #f1f5f9;
+
+  color:
+    #0f172a;
+
+}
+
+
+/* HEADER */
+
+.header {
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #1e3a8a
+    );
+
+  color:
+    white;
+
+  padding:
+    22px 15px;
+
+  text-align:
+    center;
+
+}
+
+
+.header h1 {
+
+  margin:
+    0;
+
+  font-size:
+    24px;
+
+  font-weight:
+    900;
+
+}
+
+
+.header p {
+
+  margin:
+    6px 0 0;
+
+  font-size:
+    13px;
+
+  opacity:
+    .85;
+
+}
+
+
+/* CONTAINER */
+
+.container {
+
+  max-width:
+    900px;
+
+  margin:
+    auto;
+
+  padding:
+    18px 14px 40px;
+
+}
+
+
+/* DATE */
+
+.date {
+
+  text-align:
+    center;
+
+  font-weight:
+    700;
+
+  color:
+    #475569;
+
+  margin-bottom:
+    15px;
+
+}
+
+
+/* STATISTIC */
+
+.stats {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+
+  gap:
+    12px;
+
+  margin-bottom:
+    18px;
+
+}
+
+
+.stat {
+
+  background:
+    white;
+
+  border-radius:
+    16px;
+
+  padding:
+    18px 10px;
+
+  text-align:
+    center;
+
+  box-shadow:
+    0 6px 20px
+    rgba(
+      0,
+      0,
+      0,
+      .07
+    );
+
+}
+
+
+.stat-icon {
+
+  font-size:
+    27px;
+
+}
+
+
+.stat-number {
+
+  font-size:
+    28px;
+
+  font-weight:
+    900;
+
+  margin:
+    5px 0;
+
+}
+
+
+.stat-label {
+
+  font-size:
+    12px;
+
+  color:
+    #64748b;
+
+  font-weight:
+    700;
+
+}
+
+
+/* CARD */
+
+.card {
+
+  background:
+    white;
+
+  border-radius:
+    18px;
+
+  padding:
+    18px;
+
+  box-shadow:
+    0 6px 20px
+    rgba(
+      0,
+      0,
+      0,
+      .07
+    );
+
+}
+
+
+.card-title {
+
+  font-size:
+    18px;
+
+  font-weight:
+    900;
+
+  margin-bottom:
+    15px;
+
+}
+
+
+/* TABLE */
+
+.table-wrapper {
+
+  overflow-x:
+    auto;
+
+}
+
+
+table {
+
+  width:
+    100%;
+
+  border-collapse:
+    collapse;
+
+}
+
+
+th {
+
+  background:
+    #0f172a;
+
+  color:
+    white;
+
+  padding:
+    12px 10px;
+
+  font-size:
+    13px;
+
+  text-align:
+    left;
+
+}
+
+
+td {
+
+  padding:
+    12px 10px;
+
+  border-bottom:
+    1px solid
+    #e2e8f0;
+
+  font-size:
+    13px;
+
+}
+
+
+tr:hover {
+
+  background:
+    #f8fafc;
+
+}
+
+
+/* STATUS */
+
+.badge {
+
+  display:
+    inline-block;
+
+  padding:
+    5px 10px;
+
+  border-radius:
+    20px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    800;
+
+}
+
+
+.badge-hadir {
+
+  background:
+    #dcfce7;
+
+  color:
+    #166534;
+
+}
+
+
+/* LOADING */
+
+.loading {
+
+  text-align:
+    center;
+
+  padding:
+    30px;
+
+  color:
+    #64748b;
+
+}
+
+
+/* BUTTON */
+
+.refresh {
+
+  width:
+    100%;
+
+  border:
+    none;
+
+  background:
+    #2563eb;
+
+  color:
+    white;
+
+  padding:
+    13px;
+
+  border-radius:
+    11px;
+
+  font-weight:
+    800;
+
+  cursor:
+    pointer;
+
+  margin-top:
+    15px;
+
+}
+
+
+.refresh:active {
+
+  transform:
+    scale(.98);
+
+}
+
+
+/* EMPTY */
+
+.empty {
+
+  text-align:
+    center;
+
+  padding:
+    30px;
+
+  color:
+    #64748b;
+
+}
+
+
+/* RESPONSIVE */
+
+@media (
+  max-width: 600px
+) {
+
+  .stats {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .stat {
+
+    padding:
+      15px;
+
+  }
+
+
+  .stat-number {
+
+    font-size:
+      25px;
+
+  }
+
+
+  th,
+  td {
+
+    white-space:
+      nowrap;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+  <h1>
+    📊 DASHBOARD ABSENSI
+  </h1>
+
+  <p>
+    CLC PERMODALAN
+  </p>
+
+</div>
+
+
+
+<div class="container">
+
+
+  <div
+    id="tanggal"
+    class="date"
+  >
+    Memuat tanggal...
+  </div>
+
+
+
+  <!-- STATISTIK -->
+
+  <div class="stats">
+
+
+    <div class="stat">
+
+      <div class="stat-icon">
+        👥
+      </div>
+
+      <div
+        id="total"
+        class="stat-number"
+      >
+        -
+      </div>
+
+      <div class="stat-label">
+        TOTAL SISWA
+      </div>
+
+    </div>
+
+
+
+    <div class="stat">
+
+      <div class="stat-icon">
+        ✅
+      </div>
+
+      <div
+        id="hadir"
+        class="stat-number"
+      >
+        -
+      </div>
+
+      <div class="stat-label">
+        SUDAH HADIR
+      </div>
+
+    </div>
+
+
+
+    <div class="stat">
+
+      <div class="stat-icon">
+        ⚠️
+      </div>
+
+      <div
+        id="belum"
+        class="stat-number"
+      >
+        -
+      </div>
+
+      <div class="stat-label">
+        BELUM HADIR
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- DAFTAR -->
+
+  <div class="card">
+
+
+    <div class="card-title">
+
+      📋 DAFTAR SISWA HADIR
+
+    </div>
+
+
+    <div
+      id="loading"
+      class="loading"
+    >
+
+      ⏳ Memuat data absensi...
+
+    </div>
+
+
+    <div
+      id="tableContainer"
+      class="table-wrapper"
+    ></div>
+
+
+    <button
+      class="refresh"
+      onclick="loadDashboard()"
+    >
+
+      🔄 PERBARUI DATA
+
+    </button>
+
+
+  </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/****************************************************
+ * URL APPS SCRIPT
+ ****************************************************/
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwBGvZdnWIfwNjpevh9WLSPtfD5ho_TqOYm9z2xFwE5SdKP_egi1INIkRevY3yFLNxi/exec";
+
+
+
+/****************************************************
+ * LOAD DASHBOARD
+ ****************************************************/
+
+function loadDashboard() {
+
+
+  document
+    .getElementById(
+      "loading"
+    )
+    .style.display =
+    "block";
+
+
+  const callbackName =
+    "dashboardCallback_" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  let selesai =
+    false;
+
+
+  window[callbackName] =
+    function(data) {
+
+      selesai =
+        true;
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+      catch(e) {}
+
+
+      tampilkanDashboard(
+        data
+      );
+
+    };
+
+
+  const timeout =
+    setTimeout(
+      function() {
+
+        if (selesai) {
+          return;
+        }
+
+
+        selesai =
+          true;
+
+
+        script.remove();
+
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        }
+        catch(e) {}
+
+
+        document
+          .getElementById(
+            "loading"
+          )
+          .innerHTML =
+          "❌ Server tidak dapat dihubungi.";
+
+      },
+      15000
+    );
+
+
+  const url =
+    API_URL +
+    "?action=dashboard" +
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  script.src =
+    url;
+
+
+  script.onerror =
+    function() {
+
+      clearTimeout(
+        timeout
+      );
+
+
+      if (selesai) {
+        return;
+      }
+
+
+      selesai =
+        true;
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+      catch(e) {}
+
+
+      document
+        .getElementById(
+          "loading"
+        )
+        .innerHTML =
+        "❌ Gagal menghubungi server.";
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+
+/****************************************************
+ * TAMPILKAN DASHBOARD
+ ****************************************************/
+
+function tampilkanDashboard(
+  data
+) {
+
+
+  document
+    .getElementById(
+      "loading"
+    )
+    .style.display =
+    "none";
+
+
+  if (
+    !data ||
+    data.success !== true
+  ) {
+
+    document
+      .getElementById(
+        "tableContainer"
+      )
+      .innerHTML =
+      "<div class='empty'>❌ Data gagal dimuat.</div>";
+
+    return;
+
+  }
+
+
+  /*
+   * Statistik
+   */
+
+  document
+    .getElementById(
+      "tanggal"
+    )
+    .textContent =
+    "Tanggal: " +
+    data.tanggal;
+
+
+  document
+    .getElementById(
+      "total"
+    )
+    .textContent =
+    data.total;
+
+
+  document
+    .getElementById(
+      "hadir"
+    )
+    .textContent =
+    data.hadir;
+
+
+  document
+    .getElementById(
+      "belum"
+    )
+    .textContent =
+    data.belum;
+
+
+
+  /*
+   * Daftar
+   */
+
+  const daftar =
+    data.daftar || [];
+
+
+  if (
+    daftar.length === 0
+  ) {
+
+    document
+      .getElementById(
+        "tableContainer"
+      )
+      .innerHTML = `
+
+        <div class="empty">
+
+          📭 Belum ada siswa
+          yang melakukan absensi.
+
+        </div>
+
+      `;
+
+    return;
+
+  }
+
+
+
+  let html = `
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>No</th>
+
+          <th>ID</th>
+
+          <th>Nama</th>
+
+          <th>Kelas</th>
+
+          <th>Jam</th>
+
+          <th>Status</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+  `;
+
+
+
+  daftar.forEach(
+    function(item, index) {
+
+      html += `
+
+        <tr>
+
+          <td>
+            ${index + 1}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.id
+            )}
+          </td>
+
+          <td>
+            <b>
+              ${escapeHtml(
+                item.nama
+              )}
+            </b>
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.kelas
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.jam
+            )}
+          </td>
+
+          <td>
+
+            <span class="badge badge-hadir">
+
+              ${escapeHtml(
+                item.status
+              )}
+
+            </span>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
+
+
+
+  html += `
+
+      </tbody>
+
+    </table>
+
+  `;
+
+
+
+  document
+    .getElementById(
+      "tableContainer"
+    )
+    .innerHTML =
+    html;
+
+}
+
+
+
+/****************************************************
+ * ESCAPE HTML
+ ****************************************************/
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+
+/****************************************************
+ * LOAD OTOMATIS
+ ****************************************************/
+
+loadDashboard();
+
+
+/*
+ * Refresh otomatis setiap 30 detik
+ */
+
+setInterval(
+  loadDashboard,
+  30000
+);
+
+</script>
+
+
+</body>
+
+</html>
