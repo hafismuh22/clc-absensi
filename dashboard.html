@@ -5,453 +5,618 @@
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard Absensi - CLC PERMODALAN</title>
+<title>
+Dashboard Absensi - CLC Permodalan
+</title>
 
 
 <style>
 
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
 
-body {
+body{
 
-  margin: 0;
+  margin:0;
 
   font-family:
-    Arial,
-    sans-serif;
+  Arial,
+  Helvetica,
+  sans-serif;
 
   background:
-    #f1f5f9;
+  #f4f6fa;
 
-  color:
-    #0f172a;
+  color:#182238;
 
 }
 
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
-.header {
+.header{
 
   background:
-    linear-gradient(
-      135deg,
-      #0f172a,
-      #1e3a8a
-    );
+  linear-gradient(
+    135deg,
+    #07152f,
+    #102b5c
+  );
 
-  color:
-    white;
+  color:white;
 
-  padding:
-    22px 15px;
+  padding:28px 20px;
 
-  text-align:
-    center;
-
-}
-
-
-.header h1 {
-
-  margin:
-    0;
-
-  font-size:
-    24px;
-
-  font-weight:
-    900;
+  box-shadow:
+  0 5px 20px
+  rgba(0,0,0,.12);
 
 }
 
 
-.header p {
+.header-inner{
 
-  margin:
-    6px 0 0;
+  max-width:1200px;
 
-  font-size:
-    13px;
-
-  opacity:
-    .85;
+  margin:auto;
 
 }
 
 
-/* CONTAINER */
+.logo-title{
 
-.container {
+  font-size:14px;
 
-  max-width:
-    900px;
+  color:#d8b45a;
 
-  margin:
-    auto;
+  font-weight:bold;
 
-  padding:
-    18px 14px 40px;
+  letter-spacing:2px;
 
 }
 
 
-/* DATE */
+.title{
 
-.date {
+  font-size:30px;
 
-  text-align:
-    center;
+  font-weight:800;
 
-  font-weight:
-    700;
-
-  color:
-    #475569;
-
-  margin-bottom:
-    15px;
+  margin-top:5px;
 
 }
 
 
-/* STATISTIC */
+.subtitle{
 
-.stats {
+  font-size:14px;
 
-  display:
-    grid;
+  opacity:.8;
+
+  margin-top:6px;
+
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+
+  max-width:1200px;
+
+  margin:auto;
+
+  padding:25px 18px 50px;
+
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+.filter{
+
+  background:white;
+
+  border-radius:14px;
+
+  padding:18px;
+
+  box-shadow:
+  0 4px 18px
+  rgba(0,0,0,.06);
+
+  display:flex;
+
+  gap:15px;
+
+  align-items:end;
+
+  flex-wrap:wrap;
+
+  margin-bottom:20px;
+
+}
+
+
+.filter-group{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:7px;
+
+}
+
+
+.filter-group label{
+
+  font-size:12px;
+
+  font-weight:bold;
+
+  color:#697386;
+
+}
+
+
+select,
+input{
+
+  border:1px solid #d9deea;
+
+  border-radius:9px;
+
+  padding:11px 13px;
+
+  font-size:14px;
+
+  background:white;
+
+  min-width:150px;
+
+}
+
+
+button{
+
+  border:0;
+
+  border-radius:9px;
+
+  padding:12px 20px;
+
+  background:#d3aa4c;
+
+  color:#101b31;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+}
+
+
+button:hover{
+
+  opacity:.9;
+
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+
+  display:grid;
 
   grid-template-columns:
-    repeat(
-      3,
-      1fr
-    );
+  repeat(6,1fr);
 
-  gap:
-    12px;
+  gap:12px;
 
-  margin-bottom:
-    18px;
+  margin-bottom:22px;
 
 }
 
 
-.stat {
+.card{
 
-  background:
-    white;
+  background:white;
 
-  border-radius:
-    16px;
+  border-radius:14px;
 
-  padding:
-    18px 10px;
-
-  text-align:
-    center;
+  padding:18px;
 
   box-shadow:
-    0 6px 20px
-    rgba(
-      0,
-      0,
-      0,
-      .07
-    );
+  0 4px 18px
+  rgba(0,0,0,.06);
 
 }
 
 
-.stat-icon {
+.card-label{
 
-  font-size:
-    27px;
+  font-size:12px;
 
-}
+  color:#70798c;
 
-
-.stat-number {
-
-  font-size:
-    28px;
-
-  font-weight:
-    900;
-
-  margin:
-    5px 0;
+  font-weight:bold;
 
 }
 
 
-.stat-label {
+.card-number{
 
-  font-size:
-    12px;
+  font-size:28px;
 
-  color:
-    #64748b;
+  font-weight:800;
 
-  font-weight:
-    700;
+  margin-top:7px;
 
 }
 
 
-/* CARD */
+.card-percent{
 
-.card {
+  color:#15803d;
 
-  background:
-    white;
+}
 
-  border-radius:
-    18px;
 
-  padding:
-    18px;
+/* =========================
+   SECTION
+========================= */
+
+.section{
+
+  background:white;
+
+  border-radius:14px;
 
   box-shadow:
-    0 6px 20px
-    rgba(
-      0,
-      0,
-      0,
-      .07
-    );
+  0 4px 18px
+  rgba(0,0,0,.06);
+
+  margin-bottom:20px;
+
+  overflow:hidden;
 
 }
 
 
-.card-title {
+.section-title{
 
-  font-size:
-    18px;
+  padding:17px 20px;
 
-  font-weight:
-    900;
+  font-weight:800;
 
-  margin-bottom:
-    15px;
-
-}
-
-
-/* TABLE */
-
-.table-wrapper {
-
-  overflow-x:
-    auto;
-
-}
-
-
-table {
-
-  width:
-    100%;
-
-  border-collapse:
-    collapse;
-
-}
-
-
-th {
-
-  background:
-    #0f172a;
-
-  color:
-    white;
-
-  padding:
-    12px 10px;
-
-  font-size:
-    13px;
-
-  text-align:
-    left;
-
-}
-
-
-td {
-
-  padding:
-    12px 10px;
+  font-size:16px;
 
   border-bottom:
-    1px solid
-    #e2e8f0;
-
-  font-size:
-    13px;
+  1px solid #edf0f5;
 
 }
 
 
-tr:hover {
+/* =========================
+   CLASS TABLE
+========================= */
 
-  background:
-    #f8fafc;
+.table-wrap{
 
-}
-
-
-/* STATUS */
-
-.badge {
-
-  display:
-    inline-block;
-
-  padding:
-    5px 10px;
-
-  border-radius:
-    20px;
-
-  font-size:
-    11px;
-
-  font-weight:
-    800;
+  overflow-x:auto;
 
 }
 
 
-.badge-hadir {
+table{
 
-  background:
-    #dcfce7;
+  width:100%;
 
-  color:
-    #166534;
+  border-collapse:collapse;
 
-}
-
-
-/* LOADING */
-
-.loading {
-
-  text-align:
-    center;
-
-  padding:
-    30px;
-
-  color:
-    #64748b;
+  font-size:13px;
 
 }
 
 
-/* BUTTON */
+th{
 
-.refresh {
+  background:#f7f8fb;
 
-  width:
-    100%;
+  color:#697386;
 
-  border:
-    none;
+  font-size:11px;
 
-  background:
-    #2563eb;
-
-  color:
-    white;
-
-  padding:
-    13px;
-
-  border-radius:
-    11px;
-
-  font-weight:
-    800;
-
-  cursor:
-    pointer;
-
-  margin-top:
-    15px;
+  text-transform:uppercase;
 
 }
 
 
-.refresh:active {
+th,
+td{
 
-  transform:
-    scale(.98);
+  padding:12px;
 
-}
+  border-bottom:
+  1px solid #edf0f5;
 
-
-/* EMPTY */
-
-.empty {
-
-  text-align:
-    center;
-
-  padding:
-    30px;
-
-  color:
-    #64748b;
+  text-align:center;
 
 }
 
 
-/* RESPONSIVE */
+td:nth-child(1),
+td:nth-child(2){
 
-@media (
-  max-width: 600px
-) {
+  text-align:left;
 
-  .stats {
+}
+
+
+.progress{
+
+  height:7px;
+
+  background:#edf0f5;
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  min-width:80px;
+
+}
+
+
+.progress-bar{
+
+  height:100%;
+
+  background:#d3aa4c;
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.badge{
+
+  display:inline-block;
+
+  padding:5px 9px;
+
+  border-radius:20px;
+
+  font-size:11px;
+
+  font-weight:bold;
+
+}
+
+
+.hadir{
+
+  background:#dcfce7;
+
+  color:#15803d;
+
+}
+
+
+.sakit{
+
+  background:#fef3c7;
+
+  color:#a16207;
+
+}
+
+
+.izin{
+
+  background:#dbeafe;
+
+  color:#1d4ed8;
+
+}
+
+
+.alpa{
+
+  background:#fee2e2;
+
+  color:#b91c1c;
+
+}
+
+
+.belum{
+
+  background:#e5e7eb;
+
+  color:#4b5563;
+
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+
+  text-align:center;
+
+  padding:40px;
+
+  color:#6b7280;
+
+}
+
+
+.empty{
+
+  text-align:center;
+
+  padding:30px;
+
+  color:#9ca3af;
+
+}
+
+
+/* =========================
+   PRINT
+========================= */
+
+@media print{
+
+  body{
+
+    background:white;
+
+  }
+
+  .filter,
+  button{
+
+    display:none !important;
+
+  }
+
+  .header{
+
+    box-shadow:none;
+
+  }
+
+  .section,
+  .card{
+
+    box-shadow:none;
+
+    border:
+    1px solid #ddd;
+
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+  .cards{
 
     grid-template-columns:
-      1fr;
+    repeat(3,1fr);
+
+  }
+
+}
+
+
+@media(max-width:600px){
+
+  .header{
+
+    padding:22px 16px;
 
   }
 
 
-  .stat {
+  .title{
+
+    font-size:23px;
+
+  }
+
+
+  .container{
 
     padding:
-      15px;
+    16px 12px 40px;
 
   }
 
 
-  .stat-number {
+  .filter{
 
-    font-size:
-      25px;
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
 
   }
 
 
-  th,
-  td {
+  .filter-group{
 
-    white-space:
-      nowrap;
+    width:100%;
+
+  }
+
+
+  select,
+  input{
+
+    width:100%;
+
+    min-width:0;
+
+  }
+
+
+  .filter button{
+
+    width:100%;
+
+    grid-column:
+    span 2;
+
+  }
+
+
+  .cards{
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:10px;
+
+  }
+
+
+  .card{
+
+    padding:15px;
+
+  }
+
+
+  .card-number{
+
+    font-size:24px;
 
   }
 
@@ -465,140 +630,190 @@ tr:hover {
 <body>
 
 
+<!-- HEADER -->
+
 <div class="header">
 
-  <h1>
-    📊 DASHBOARD ABSENSI
-  </h1>
+  <div class="header-inner">
 
-  <p>
-    CLC PERMODALAN
-  </p>
+    <div class="logo-title">
+      CLC PERMODALAN
+    </div>
+
+    <div class="title">
+      DASHBOARD ABSENSI
+    </div>
+
+    <div class="subtitle"
+    id="tanggalHeader">
+      Memuat data...
+    </div>
+
+  </div>
 
 </div>
-
 
 
 <div class="container">
 
 
-  <div
-    id="tanggal"
-    class="date"
-  >
-    Memuat tanggal...
-  </div>
+<!-- FILTER -->
+
+<div class="filter">
 
 
+  <div class="filter-group">
 
-  <!-- STATISTIK -->
+    <label>
+      TANGGAL
+    </label>
 
-  <div class="stats">
-
-
-    <div class="stat">
-
-      <div class="stat-icon">
-        👥
-      </div>
-
-      <div
-        id="total"
-        class="stat-number"
-      >
-        -
-      </div>
-
-      <div class="stat-label">
-        TOTAL SISWA
-      </div>
-
-    </div>
-
-
-
-    <div class="stat">
-
-      <div class="stat-icon">
-        ✅
-      </div>
-
-      <div
-        id="hadir"
-        class="stat-number"
-      >
-        -
-      </div>
-
-      <div class="stat-label">
-        SUDAH HADIR
-      </div>
-
-    </div>
-
-
-
-    <div class="stat">
-
-      <div class="stat-icon">
-        ⚠️
-      </div>
-
-      <div
-        id="belum"
-        class="stat-number"
-      >
-        -
-      </div>
-
-      <div class="stat-label">
-        BELUM HADIR
-      </div>
-
-    </div>
-
+    <input
+      type="date"
+      id="tanggal">
 
   </div>
 
 
+  <div class="filter-group">
 
-  <!-- DAFTAR -->
+    <label>
+      KELAS
+    </label>
+
+    <select id="kelas">
+
+      <option value="SEMUA">
+        Semua Kelas
+      </option>
+
+      <option value="7">
+        Kelas 7
+      </option>
+
+      <option value="8">
+        Kelas 8
+      </option>
+
+      <option value="9">
+        Kelas 9
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <button
+  onclick="loadDashboard()">
+
+    Tampilkan
+
+  </button>
+
+
+  <button
+  onclick="window.print()">
+
+    Cetak
+
+  </button>
+
+
+</div>
+
+
+<!-- CARDS -->
+
+<div class="cards">
+
 
   <div class="card">
 
-
-    <div class="card-title">
-
-      📋 DAFTAR SISWA HADIR
-
+    <div class="card-label">
+      TOTAL SISWA
     </div>
 
-
     <div
-      id="loading"
-      class="loading"
-    >
-
-      ⏳ Memuat data absensi...
-
+    class="card-number"
+    id="total">
+      -
     </div>
 
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-label">
+      HADIR
+    </div>
 
     <div
-      id="tableContainer"
-      class="table-wrapper"
-    ></div>
+    class="card-number"
+    id="hadir">
+      -
+    </div>
+
+  </div>
 
 
-    <button
-      class="refresh"
-      onclick="loadDashboard()"
-    >
+  <div class="card">
 
-      🔄 PERBARUI DATA
+    <div class="card-label">
+      SAKIT
+    </div>
 
-    </button>
+    <div
+    class="card-number"
+    id="sakit">
+      -
+    </div>
 
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-label">
+      IZIN
+    </div>
+
+    <div
+    class="card-number"
+    id="izin">
+      -
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-label">
+      ALPA
+    </div>
+
+    <div
+    class="card-number"
+    id="alpa">
+      -
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-label">
+      BELUM ABSEN
+    </div>
+
+    <div
+    class="card-number"
+    id="belum">
+      -
+    </div>
 
   </div>
 
@@ -606,450 +821,639 @@ tr:hover {
 </div>
 
 
+<!-- PERCENTAGE -->
+
+<div class="section">
+
+  <div class="section-title">
+    PERSENTASE KEHADIRAN
+  </div>
+
+  <div style="padding:20px">
+
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-weight:bold;
+    ">
+
+      <span>
+        Kehadiran
+      </span>
+
+      <span id="persen">
+        0%
+      </span>
+
+    </div>
+
+
+    <div class="progress"
+    style="height:12px">
+
+      <div
+      class="progress-bar"
+      id="persenBar"
+      style="width:0%">
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- KELAS -->
+
+<div class="section">
+
+  <div class="section-title">
+    RINGKASAN PER KELAS
+  </div>
+
+  <div
+  class="table-wrap"
+  id="kelasContainer">
+
+    <div class="loading">
+      Memuat data...
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- SISWA -->
+
+<div class="section">
+
+  <div class="section-title">
+    STATUS SISWA
+  </div>
+
+  <div
+  class="table-wrap"
+  id="siswaContainer">
+
+    <div class="loading">
+      Memuat data...
+    </div>
+
+  </div>
+
+</div>
+
+
+</div>
+
 
 <script>
 
 
-/****************************************************
- * URL APPS SCRIPT
- ****************************************************/
+/* =========================
+   KONFIGURASI
+========================= */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbwBGvZdnWIfwNjpevh9WLSPtfD5ho_TqOYm9z2xFwE5SdKP_egi1INIkRevY3yFLNxi/exec";
+"https://script.google.com/macros/s/AKfycbwBGvZdnWIfwNjpevh9WLSPtfD5ho_TqOYm9z2xFwE5SdKP_egi1INIkRevY3yFLNxi/exec";
 
 
+/* =========================
+   TANGGAL HARI INI
+========================= */
 
-/****************************************************
- * LOAD DASHBOARD
- ****************************************************/
+function tanggalHariIni(){
 
-function loadDashboard() {
+  const d = new Date();
 
+  const y =
+    d.getFullYear();
 
-  document
-    .getElementById(
-      "loading"
-    )
-    .style.display =
-    "block";
+  const m =
+    String(d.getMonth()+1)
+    .padStart(2,"0");
 
+  const day =
+    String(d.getDate())
+    .padStart(2,"0");
 
-  const callbackName =
-    "dashboardCallback_" +
-    Date.now();
-
-
-  const script =
-    document.createElement(
-      "script"
-    );
-
-
-  let selesai =
-    false;
-
-
-  window[callbackName] =
-    function(data) {
-
-      selesai =
-        true;
-
-
-      clearTimeout(
-        timeout
-      );
-
-
-      script.remove();
-
-
-      try {
-
-        delete window[
-          callbackName
-        ];
-
-      }
-      catch(e) {}
-
-
-      tampilkanDashboard(
-        data
-      );
-
-    };
-
-
-  const timeout =
-    setTimeout(
-      function() {
-
-        if (selesai) {
-          return;
-        }
-
-
-        selesai =
-          true;
-
-
-        script.remove();
-
-
-        try {
-
-          delete window[
-            callbackName
-          ];
-
-        }
-        catch(e) {}
-
-
-        document
-          .getElementById(
-            "loading"
-          )
-          .innerHTML =
-          "❌ Server tidak dapat dihubungi.";
-
-      },
-      15000
-    );
-
-
-  const url =
-    API_URL +
-    "?action=dashboard" +
-    "&callback=" +
-    encodeURIComponent(
-      callbackName
-    );
-
-
-  script.src =
-    url;
-
-
-  script.onerror =
-    function() {
-
-      clearTimeout(
-        timeout
-      );
-
-
-      if (selesai) {
-        return;
-      }
-
-
-      selesai =
-        true;
-
-
-      script.remove();
-
-
-      try {
-
-        delete window[
-          callbackName
-        ];
-
-      }
-      catch(e) {}
-
-
-      document
-        .getElementById(
-          "loading"
-        )
-        .innerHTML =
-        "❌ Gagal menghubungi server.";
-
-    };
-
-
-  document.body.appendChild(
-    script
-  );
+  return y + "-" + m + "-" + day;
 
 }
 
 
+document.getElementById(
+  "tanggal"
+).value = tanggalHariIni();
 
-/****************************************************
- * TAMPILKAN DASHBOARD
- ****************************************************/
 
-function tampilkanDashboard(
-  data
-) {
+/* =========================
+   JSONP
+========================= */
 
+function jsonp(url){
 
-  document
-    .getElementById(
-      "loading"
-    )
-    .style.display =
-    "none";
+  return new Promise(
+    function(resolve,reject){
 
+      const callbackName =
+        "callback_" +
+        Date.now() +
+        "_" +
+        Math.floor(
+          Math.random()*10000
+        );
 
-  if (
-    !data ||
-    data.success !== true
-  ) {
+      const script =
+        document.createElement("script");
 
-    document
-      .getElementById(
-        "tableContainer"
-      )
-      .innerHTML =
-      "<div class='empty'>❌ Data gagal dimuat.</div>";
+      window[callbackName] =
+        function(data){
 
-    return;
+          resolve(data);
 
-  }
+          delete window[callbackName];
 
+          script.remove();
 
-  /*
-   * Statistik
-   */
+        };
 
-  document
-    .getElementById(
-      "tanggal"
-    )
-    .textContent =
-    "Tanggal: " +
-    data.tanggal;
 
+      script.onerror =
+        function(){
 
-  document
-    .getElementById(
-      "total"
-    )
-    .textContent =
-    data.total;
+          reject(
+            new Error(
+              "Gagal menghubungi server."
+            )
+          );
 
+          delete window[callbackName];
 
-  document
-    .getElementById(
-      "hadir"
-    )
-    .textContent =
-    data.hadir;
+          script.remove();
 
+        };
 
-  document
-    .getElementById(
-      "belum"
-    )
-    .textContent =
-    data.belum;
 
+      script.src =
+        url +
+        "&callback=" +
+        callbackName;
 
-
-  /*
-   * Daftar
-   */
-
-  const daftar =
-    data.daftar || [];
-
-
-  if (
-    daftar.length === 0
-  ) {
-
-    document
-      .getElementById(
-        "tableContainer"
-      )
-      .innerHTML = `
-
-        <div class="empty">
-
-          📭 Belum ada siswa
-          yang melakukan absensi.
-
-        </div>
-
-      `;
-
-    return;
-
-  }
-
-
-
-  let html = `
-
-    <table>
-
-      <thead>
-
-        <tr>
-
-          <th>No</th>
-
-          <th>ID</th>
-
-          <th>Nama</th>
-
-          <th>Kelas</th>
-
-          <th>Jam</th>
-
-          <th>Status</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-  `;
-
-
-
-  daftar.forEach(
-    function(item, index) {
-
-      html += `
-
-        <tr>
-
-          <td>
-            ${index + 1}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              item.id
-            )}
-          </td>
-
-          <td>
-            <b>
-              ${escapeHtml(
-                item.nama
-              )}
-            </b>
-          </td>
-
-          <td>
-            ${escapeHtml(
-              item.kelas
-            )}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              item.jam
-            )}
-          </td>
-
-          <td>
-
-            <span class="badge badge-hadir">
-
-              ${escapeHtml(
-                item.status
-              )}
-
-            </span>
-
-          </td>
-
-        </tr>
-
-      `;
+      document.body.appendChild(
+        script
+      );
 
     }
   );
 
+}
 
 
-  html += `
+/* =========================
+   LOAD DASHBOARD
+========================= */
 
-      </tbody>
+async function loadDashboard(){
 
-    </table>
+  const tanggal =
+    document.getElementById(
+      "tanggal"
+    ).value;
 
-  `;
+  const kelas =
+    document.getElementById(
+      "kelas"
+    ).value;
 
 
+  document.getElementById(
+    "kelasContainer"
+  ).innerHTML =
+  '<div class="loading">Memuat data...</div>';
 
-  document
-    .getElementById(
-      "tableContainer"
-    )
-    .innerHTML =
-    html;
+
+  document.getElementById(
+    "siswaContainer"
+  ).innerHTML =
+  '<div class="loading">Memuat data...</div>';
+
+
+  try{
+
+    const url =
+      API_URL +
+      "?action=dashboard" +
+      "&tanggal=" +
+      encodeURIComponent(tanggal) +
+      "&kelas=" +
+      encodeURIComponent(kelas);
+
+
+    const data =
+      await jsonp(url);
+
+
+    if(!data.success){
+
+      throw new Error(
+        data.message ||
+        "Gagal memuat dashboard."
+      );
+
+    }
+
+
+    tampilkanDashboard(data);
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "kelasContainer"
+    ).innerHTML =
+    '<div class="empty">' +
+    'Gagal memuat data.' +
+    '</div>';
+
+
+    document.getElementById(
+      "siswaContainer"
+    ).innerHTML =
+    '<div class="empty">' +
+    'Silakan coba lagi.' +
+    '</div>';
+
+  }
 
 }
 
 
+/* =========================
+   TAMPILKAN DASHBOARD
+========================= */
 
-/****************************************************
- * ESCAPE HTML
- ****************************************************/
+function tampilkanDashboard(data){
 
-function escapeHtml(
-  value
-) {
 
-  return String(
-    value || ""
-  )
+  document.getElementById(
+    "tanggalHeader"
+  ).textContent =
+    data.tanggalTampil;
 
-  .replace(
-    /&/g,
-    "&amp;"
-  )
 
-  .replace(
-    /</g,
-    "&lt;"
-  )
+  document.getElementById(
+    "total"
+  ).textContent =
+    data.total;
 
-  .replace(
-    />/g,
-    "&gt;"
-  )
 
-  .replace(
-    /"/g,
-    "&quot;"
-  )
+  document.getElementById(
+    "hadir"
+  ).textContent =
+    data.hadir;
 
-  .replace(
-    /'/g,
-    "&#039;"
+
+  document.getElementById(
+    "sakit"
+  ).textContent =
+    data.sakit;
+
+
+  document.getElementById(
+    "izin"
+  ).textContent =
+    data.izin;
+
+
+  document.getElementById(
+    "alpa"
+  ).textContent =
+    data.alpa;
+
+
+  document.getElementById(
+    "belum"
+  ).textContent =
+    data.belum;
+
+
+  document.getElementById(
+    "persen"
+  ).textContent =
+    data.persentase + "%";
+
+
+  document.getElementById(
+    "persenBar"
+  ).style.width =
+    data.persentase + "%";
+
+
+  tampilkanKelas(
+    data.kelas
+  );
+
+
+  tampilkanSiswa(
+    data.siswa
   );
 
 }
 
 
+/* =========================
+   TABEL KELAS
+========================= */
 
-/****************************************************
- * LOAD OTOMATIS
- ****************************************************/
+function tampilkanKelas(data){
+
+  if(!data || data.length === 0){
+
+    document.getElementById(
+      "kelasContainer"
+    ).innerHTML =
+    '<div class="empty">' +
+    'Tidak ada data kelas.' +
+    '</div>';
+
+    return;
+
+  }
+
+
+  let html = `
+  <table>
+
+    <thead>
+
+      <tr>
+
+        <th>Kelas</th>
+
+        <th>Total</th>
+
+        <th>Hadir</th>
+
+        <th>Sakit</th>
+
+        <th>Izin</th>
+
+        <th>Alpa</th>
+
+        <th>Belum</th>
+
+        <th>Kehadiran</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+  `;
+
+
+  data.forEach(function(k){
+
+    html += `
+
+      <tr>
+
+        <td>
+          <strong>
+            ${escapeHtml(k.kelas)}
+          </strong>
+        </td>
+
+        <td>
+          ${k.total}
+        </td>
+
+        <td>
+          <span class="badge hadir">
+            ${k.hadir}
+          </span>
+        </td>
+
+        <td>
+          <span class="badge sakit">
+            ${k.sakit}
+          </span>
+        </td>
+
+        <td>
+          <span class="badge izin">
+            ${k.izin}
+          </span>
+        </td>
+
+        <td>
+          <span class="badge alpa">
+            ${k.alpa}
+          </span>
+        </td>
+
+        <td>
+          <span class="badge belum">
+            ${k.belum}
+          </span>
+        </td>
+
+        <td>
+
+          <div style="
+          display:flex;
+          align-items:center;
+          gap:8px;
+          ">
+
+            <div class="progress">
+
+              <div
+              class="progress-bar"
+              style="
+              width:${k.persen}%
+              ">
+              </div>
+
+            </div>
+
+            <strong>
+              ${k.persen}%
+            </strong>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+
+  html += `
+    </tbody>
+  </table>
+  `;
+
+
+  document.getElementById(
+    "kelasContainer"
+  ).innerHTML = html;
+
+}
+
+
+/* =========================
+   TABEL SISWA
+========================= */
+
+function tampilkanSiswa(data){
+
+  if(!data || data.length === 0){
+
+    document.getElementById(
+      "siswaContainer"
+    ).innerHTML =
+    '<div class="empty">' +
+    'Tidak ada siswa.' +
+    '</div>';
+
+    return;
+
+  }
+
+
+  let html = `
+
+  <table>
+
+    <thead>
+
+      <tr>
+
+        <th>No</th>
+
+        <th>Nama</th>
+
+        <th>ID</th>
+
+        <th>Kelas</th>
+
+        <th>Status</th>
+
+        <th>Jam</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+  `;
+
+
+  data.forEach(function(s,index){
+
+    let cls =
+      "belum";
+
+    if(s.status === "HADIR")
+      cls = "hadir";
+
+    else if(s.status === "SAKIT")
+      cls = "sakit";
+
+    else if(s.status === "IZIN")
+      cls = "izin";
+
+    else if(s.status === "ALPA")
+      cls = "alpa";
+
+
+    html += `
+
+      <tr>
+
+        <td>
+          ${index + 1}
+        </td>
+
+        <td>
+          <strong>
+            ${escapeHtml(s.nama)}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHtml(s.id)}
+        </td>
+
+        <td>
+          ${escapeHtml(s.kelas)}
+        </td>
+
+        <td>
+
+          <span class="badge ${cls}">
+            ${escapeHtml(s.status)}
+          </span>
+
+        </td>
+
+        <td>
+          ${escapeHtml(s.jam || "-")}
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+
+  html += `
+    </tbody>
+  </table>
+  `;
+
+
+  document.getElementById(
+    "siswaContainer"
+  ).innerHTML = html;
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHtml(text){
+
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   LOAD PERTAMA
+========================= */
 
 loadDashboard();
-
-
-/*
- * Refresh otomatis setiap 30 detik
- */
-
-setInterval(
-  loadDashboard,
-  30000
-);
 
 </script>
 
