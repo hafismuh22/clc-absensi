@@ -15,6 +15,25 @@
 
 <style>
 
+  .tahun-ajaran {
+  margin: 3px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.separator {
+  margin: 0 8px;
+  color: #64748b;
+}
+
+.table-title {
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -467,124 +486,74 @@ td.id {
 @media print {
 
   @page {
-
-    size:
-      landscape;
-
-    margin:
-      8mm;
-
+    size: landscape;
+    margin: 8mm;
   }
-
 
   body {
-
-    background:
-      white;
-
+    background: white;
   }
-
 
   .header {
-
-    background:
-      white;
-
-    color:
-      black;
-
-    padding:
-      5px;
-
+    background: white;
+    color: black;
+    padding: 2px 0 6px;
+    text-align: center;
   }
 
+  .header h1 {
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .header p {
+    font-size: 11px;
+    margin: 2px 0;
+    color: black;
+  }
+
+  .tahun-ajaran {
+    font-size: 10px !important;
+    margin-top: 2px !important;
+  }
 
   .filter-card {
-
-    display:
-      none;
-
+    display: none;
   }
-
-
-  .summary {
-
-    display:
-      grid;
-
-  }
-
 
   .table-card {
-
-    box-shadow:
-      none;
-
-    padding:
-      0;
-
+    box-shadow: none;
+    padding: 0;
   }
 
+  .table-title {
+    font-size: 10px;
+    margin-bottom: 7px;
+    font-weight: 800;
+  }
 
   .table-wrapper {
-
-    overflow:
-      visible;
-
+    overflow: visible;
   }
-
 
   table {
-
-    width:
-      100%;
-
-    font-size:
-      8px;
-
+    width: 100%;
   }
-
 
   th {
-
-    position:
-      static;
-
-    font-size:
-      7px;
-
-    padding:
-      4px;
-
+    position: static;
+    font-size: 7px;
+    padding: 4px;
   }
-
 
   td {
-
-    font-size:
-      7px;
-
-    padding:
-      4px;
-
+    font-size: 7px;
+    padding: 4px;
   }
-
-
-  .nama {
-
-    min-width:
-      120px;
-
-  }
-
 
   button {
-
-    display:
-      none;
-
+    display: none;
   }
-
 }
 
 
@@ -1316,32 +1285,96 @@ function tampilkanRekap(
 
 
   const namaKelas =
-    data.kelas === "SEMUA"
-
-      ?
-
-    "Semua Kelas"
-
-      :
-
-    "Kelas " +
-    data.kelas;
+  data.kelas === "SEMUA"
+    ? "SEMUA"
+    : data.kelas;
 
 
-  document
-    .getElementById(
-      "tableTitle"
-    )
-    .textContent =
+/*
+ * Tentukan semester otomatis
+ *
+ * Juli - Desember = GANJIL
+ * Januari - Juni = GENAP
+ */
 
-    "Rekap " +
-    namaBulan[
-      data.bulan
-    ] +
-    " " +
-    data.tahun +
-    " — " +
-    namaKelas;
+const semester =
+  (
+    data.bulan >= 7 &&
+    data.bulan <= 12
+  )
+    ? "GANJIL"
+    : "GENAP";
+
+
+/*
+ * Tahun ajaran
+ *
+ * Juli-Desember:
+ * 2026-2027
+ *
+ * Januari-Juni:
+ * 2026-2027
+ */
+
+let tahunAwal;
+
+
+if (data.bulan >= 7) {
+
+  tahunAwal =
+    data.tahun;
+
+}
+else {
+
+  tahunAwal =
+    data.tahun - 1;
+
+}
+
+
+const tahunAjaran =
+  tahunAwal +
+  "-" +
+  (tahunAwal + 1);
+
+
+/*
+ * Tampilkan tahun ajaran
+ */
+
+document
+  .getElementById(
+    "tahunAjaran"
+  )
+  .textContent =
+  tahunAjaran;
+
+
+/*
+ * Judul informasi
+ */
+
+document
+  .getElementById(
+    "tableTitle"
+  )
+  .innerHTML =
+
+  "KELAS : " +
+  escapeHtml(namaKelas) +
+
+  " <span class='separator'>|</span> " +
+
+  "SEMESTER : " +
+  semester +
+
+  " <span class='separator'>|</span> " +
+
+  "BULAN : " +
+  namaBulan[
+    data.bulan
+  ].toUpperCase();
 
 
   if (
