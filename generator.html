@@ -3,425 +3,1148 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-  <title>Generator QR - CLC Permodalan</title>
+<title>Generator QR Siswa - CLC PERMODALAN</title>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-  <style>
 
-    * {
-      box-sizing: border-box;
-    }
+<style>
 
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #f3f6fa;
-      color: #172033;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
 
-    .header {
-      background: linear-gradient(135deg, #071b3a, #0d3268);
-      color: white;
-      text-align: center;
-      padding: 25px 15px;
-      border-radius: 18px;
-      margin-bottom: 18px;
-    }
+body {
 
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
+  margin: 0;
 
-    .header p {
-      margin: 7px 0 0;
-      font-size: 13px;
-      opacity: .85;
-    }
+  font-family: Arial, sans-serif;
 
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
-    }
+  background: #f1f5f9;
 
-    .title {
-      font-size: 17px;
-      font-weight: bold;
-      color: #0d3268;
-      margin-bottom: 15px;
-    }
+  color: #0f172a;
 
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d5dbe5;
-      border-radius: 10px;
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
+}
 
-    button {
-      border: none;
-      border-radius: 10px;
-      padding: 12px 18px;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      margin: 4px;
-    }
 
-    .primary {
-      background: #0d6efd;
-      color: white;
-    }
+/* HEADER */
 
-    .print {
-      background: #198754;
-      color: white;
-    }
+.header {
 
-    .clear {
-      background: #dc3545;
-      color: white;
-    }
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #1e3a8a
+    );
 
-    #qrContainer {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
+  color: white;
 
-    .qr-card {
-      border: 1px solid #e0e5ec;
-      border-radius: 14px;
-      padding: 15px;
-      text-align: center;
-      background: white;
-    }
+  padding: 22px 15px;
 
-    .qr-card h3 {
-      margin: 0 0 5px;
-      font-size: 17px;
-      color: #0d3268;
-    }
+  text-align: center;
 
-    .qr-card p {
-      margin: 4px 0 12px;
-      font-size: 12px;
-      color: #687386;
-    }
+}
 
-    .qr {
-      display: flex;
-      justify-content: center;
-      margin: 10px 0;
-    }
 
-    .qr img {
-      max-width: 180px;
-      height: auto;
-    }
+.header h1 {
 
-    .id {
-      display: inline-block;
-      background: #edf3ff;
-      color: #0d3268;
-      padding: 7px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
+  margin: 0;
 
-    .note {
-      font-size: 12px;
-      line-height: 1.6;
-      color: #687386;
-      margin-top: 12px;
-    }
+  font-size: 24px;
 
-    @media print {
+  font-weight: 900;
 
-      body {
-        background: white;
-        padding: 0;
-      }
+}
 
-      .header,
-      .form-card,
-      .print-area-title,
-      .no-print {
-        display: none !important;
-      }
 
-      .container {
-        max-width: none;
-      }
+.header p {
 
-      .card {
-        box-shadow: none;
-        padding: 0;
-      }
+  margin: 6px 0 0;
 
-      #qrContainer {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
+  font-size: 13px;
 
-      .qr-card {
-        break-inside: avoid;
-        border: 1px solid #ccc;
-      }
+  opacity: .85;
 
-    }
+}
 
-  </style>
+
+/* CONTAINER */
+
+.container {
+
+  max-width: 1100px;
+
+  margin: auto;
+
+  padding: 18px 14px 40px;
+
+}
+
+
+/* CARD */
+
+.card {
+
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 18px;
+
+  margin-bottom: 18px;
+
+  box-shadow:
+    0 6px 20px
+    rgba(0,0,0,.07);
+
+}
+
+
+/* CONTROL */
+
+.controls {
+
+  display: flex;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+
+}
+
+
+button {
+
+  border: none;
+
+  border-radius: 10px;
+
+  padding: 12px 18px;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+}
+
+
+.btn-load {
+
+  background: #2563eb;
+
+  color: white;
+
+}
+
+
+.btn-print {
+
+  background: #16a34a;
+
+  color: white;
+
+}
+
+
+.btn-print:disabled {
+
+  background: #94a3b8;
+
+  cursor: not-allowed;
+
+}
+
+
+/* INFO */
+
+.info {
+
+  margin-top: 15px;
+
+  padding: 13px;
+
+  border-radius: 10px;
+
+  background: #eff6ff;
+
+  color: #1e40af;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+}
+
+
+/* LOADING */
+
+.loading {
+
+  text-align: center;
+
+  padding: 30px;
+
+  color: #64748b;
+
+}
+
+
+/* GRID */
+
+.qr-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(
+        210px,
+        1fr
+      )
+    );
+
+  gap: 16px;
+
+}
+
+
+/* QR CARD */
+
+.qr-card {
+
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 15px;
+
+  padding: 16px;
+
+  text-align: center;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0,0,0,.05);
+
+  break-inside: avoid;
+
+}
+
+
+.qr-number {
+
+  font-size: 12px;
+
+  color: #64748b;
+
+  margin-bottom: 5px;
+
+}
+
+
+.qr-name {
+
+  font-size: 16px;
+
+  font-weight: 900;
+
+  margin-bottom: 4px;
+
+}
+
+
+.qr-class {
+
+  font-size: 13px;
+
+  color: #475569;
+
+  margin-bottom: 12px;
+
+}
+
+
+.qr-code {
+
+  width: 180px;
+
+  height: 180px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+.qr-code img,
+.qr-code canvas {
+
+  max-width: 180px;
+
+  max-height: 180px;
+
+}
+
+
+.qr-id {
+
+  margin-top: 10px;
+
+  font-size: 15px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* EMPTY */
+
+.empty {
+
+  text-align: center;
+
+  padding: 40px 20px;
+
+  color: #64748b;
+
+}
+
+
+/* ERROR */
+
+.error {
+
+  background: #fee2e2;
+
+  color: #991b1b;
+
+  padding: 15px;
+
+  border-radius: 10px;
+
+  font-weight: 700;
+
+}
+
+
+/* MOBILE */
+
+@media (
+  max-width: 600px
+) {
+
+  .qr-grid {
+
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
+
+    gap: 10px;
+
+  }
+
+
+  .qr-card {
+
+    padding: 10px;
+
+  }
+
+
+  .qr-code {
+
+    width: 140px;
+
+    height: 140px;
+
+  }
+
+
+  .qr-code img,
+  .qr-code canvas {
+
+    max-width: 140px;
+
+    max-height: 140px;
+
+  }
+
+
+  .qr-name {
+
+    font-size: 13px;
+
+  }
+
+
+  .qr-id {
+
+    font-size: 12px;
+
+  }
+
+}
+
+
+/* PRINT */
+
+@media print {
+
+  body {
+
+    background: white;
+
+  }
+
+
+  .header {
+
+    background: white;
+
+    color: black;
+
+    padding: 10px;
+
+  }
+
+
+  .header p {
+
+    color: black;
+
+  }
+
+
+  .controls,
+  .info {
+
+    display: none;
+
+  }
+
+
+  .card {
+
+    box-shadow: none;
+
+    padding: 0;
+
+  }
+
+
+  .qr-grid {
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(
+        3,
+        1fr
+      );
+
+    gap: 10px;
+
+  }
+
+
+  .qr-card {
+
+    border: 1px solid #999;
+
+    box-shadow: none;
+
+    page-break-inside: avoid;
+
+    break-inside: avoid;
+
+  }
+
+
+  .qr-code {
+
+    width: 150px;
+
+    height: 150px;
+
+  }
+
+
+  .qr-code img,
+  .qr-code canvas {
+
+    max-width: 150px;
+
+    max-height: 150px;
+
+  }
+
+}
+
+</style>
 
 </head>
 
 
 <body>
 
-<div class="container">
 
-  <div class="header">
+<div class="header">
 
-    <h1>CLC PERMODALAN</h1>
+  <h1>
+    GENERATOR QR SISWA
+  </h1>
 
-    <p>
-      TKB MORISEM 3 • GENERATOR QR SISWA
-    </p>
-
-  </div>
-
-
-  <div class="card form-card">
-
-    <div class="title">
-      ➕ Tambahkan QR Siswa
-    </div>
-
-    <input
-      type="text"
-      id="studentID"
-      placeholder="ID siswa, contoh S001">
-
-    <input
-      type="text"
-      id="studentName"
-      placeholder="Nama siswa, contoh ANDI ALIF">
-
-    <div class="no-print">
-
-      <button
-        class="primary"
-        onclick="addQR()">
-
-        ＋ BUAT QR
-
-      </button>
-
-      <button
-        class="clear"
-        onclick="clearQR()">
-
-        🗑 HAPUS SEMUA
-
-      </button>
-
-      <button
-        class="print"
-        onclick="window.print()">
-
-        🖨 CETAK QR
-
-      </button>
-
-    </div>
-
-    <div class="note">
-
-      QR hanya menyimpan <b>ID siswa</b>.
-      Nama hanya digunakan untuk label pada kartu QR.
-
-      <br>
-
-      Contoh isi QR:
-
-      <b>S001</b>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="title print-area-title">
-      📱 QR SISWA
-    </div>
-
-    <div id="qrContainer"></div>
-
-  </div>
+  <p>
+    CLC PERMODALAN
+  </p>
 
 </div>
 
 
+
+<div class="container">
+
+
+  <div class="card">
+
+
+    <div class="controls">
+
+
+      <button
+        class="btn-load"
+        onclick="loadSiswa()"
+      >
+        🔄 AMBIL DATA SISWA
+      </button>
+
+
+      <button
+        id="printButton"
+        class="btn-print"
+        onclick="window.print()"
+        disabled
+      >
+        🖨️ CETAK SEMUA QR
+      </button>
+
+
+    </div>
+
+
+    <div
+      id="info"
+      class="info"
+    >
+
+      Klik "AMBIL DATA SISWA"
+      untuk mengambil data dari
+      DATA_SISWA.
+
+    </div>
+
+
+  </div>
+
+
+
+  <div class="card">
+
+
+    <div
+      id="loading"
+      class="loading"
+      style="display:none;"
+    >
+
+      ⏳ Mengambil data siswa...
+
+    </div>
+
+
+    <div
+      id="qrGrid"
+      class="qr-grid"
+    ></div>
+
+
+  </div>
+
+
+</div>
+
+
+
 <script>
 
-function addQR() {
 
-  const id =
-    document.getElementById("studentID")
-      .value
-      .trim()
-      .toUpperCase();
+/****************************************************
+ * URL APPS SCRIPT
+ ****************************************************/
 
-  const name =
-    document.getElementById("studentName")
-      .value
-      .trim()
-      .toUpperCase();
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwBGvZdnWIfwNjpevh9WLSPtfD5ho_TqOYm9z2xFwE5SdKP_egi1INIkRevY3yFLNxi/exec";
 
 
-  if (!id) {
+/****************************************************
+ * LOAD DATA SISWA
+ ****************************************************/
 
-    alert("Masukkan ID siswa terlebih dahulu.");
+function loadSiswa() {
+
+
+  const loading =
+    document.getElementById(
+      "loading"
+    );
+
+
+  const grid =
+    document.getElementById(
+      "qrGrid"
+    );
+
+
+  const info =
+    document.getElementById(
+      "info"
+    );
+
+
+  const printButton =
+    document.getElementById(
+      "printButton"
+    );
+
+
+  loading.style.display =
+    "block";
+
+
+  grid.innerHTML =
+    "";
+
+
+  printButton.disabled =
+    true;
+
+
+  info.textContent =
+    "⏳ Mengambil data dari DATA_SISWA...";
+
+
+  /*
+   * JSONP
+   */
+
+  const callbackName =
+    "siswaCallback_" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  let selesai =
+    false;
+
+
+  window[callbackName] =
+    function(data) {
+
+      selesai =
+        true;
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch(e) {}
+
+
+      loading.style.display =
+        "none";
+
+
+      tampilkanSiswa(
+        data
+      );
+
+    };
+
+
+  const timeout =
+    setTimeout(
+      function() {
+
+        if (selesai) {
+          return;
+        }
+
+
+        selesai =
+          true;
+
+
+        script.remove();
+
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        }
+
+        catch(e) {}
+
+
+        loading.style.display =
+          "none";
+
+
+        info.className =
+          "error";
+
+
+        info.textContent =
+          "❌ Server tidak dapat dihubungi.";
+
+      },
+      15000
+    );
+
+
+  const url =
+    API_URL +
+    "?action=siswa" +
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  script.src =
+    url;
+
+
+  script.onerror =
+    function() {
+
+      clearTimeout(
+        timeout
+      );
+
+
+      if (selesai) {
+        return;
+      }
+
+
+      selesai =
+        true;
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch(e) {}
+
+
+      loading.style.display =
+        "none";
+
+
+      info.className =
+        "error";
+
+
+      info.textContent =
+        "❌ Gagal mengambil data siswa.";
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/****************************************************
+ * TAMPILKAN SISWA
+ ****************************************************/
+
+function tampilkanSiswa(
+  siswa
+) {
+
+
+  const grid =
+    document.getElementById(
+      "qrGrid"
+    );
+
+
+  const info =
+    document.getElementById(
+      "info"
+    );
+
+
+  const printButton =
+    document.getElementById(
+      "printButton"
+    );
+
+
+  if (
+    !Array.isArray(siswa)
+  ) {
+
+    info.className =
+      "error";
+
+
+    info.textContent =
+      "❌ Data siswa tidak valid.";
+
 
     return;
 
   }
 
 
-  if (!name) {
+  if (
+    siswa.length === 0
+  ) {
 
-    alert("Masukkan nama siswa terlebih dahulu.");
+    grid.innerHTML = `
+
+      <div class="empty">
+
+        📭 Belum ada data siswa
+        di DATA_SISWA.
+
+      </div>
+
+    `;
+
+
+    info.className =
+      "info";
+
+
+    info.textContent =
+      "Tidak ada data siswa.";
+
 
     return;
 
   }
 
 
-  const container =
-    document.getElementById("qrContainer");
+  /*
+   * Urutkan berdasarkan kelas
+   * kemudian nama
+   */
+
+  siswa.sort(
+    function(a, b) {
+
+      const kelasA =
+        String(
+          a.kelas || ""
+        );
+
+
+      const kelasB =
+        String(
+          b.kelas || ""
+        );
+
+
+      if (
+        kelasA !== kelasB
+      ) {
+
+        return kelasA.localeCompare(
+          kelasB,
+          undefined,
+          {
+            numeric: true
+          }
+        );
+
+      }
+
+
+      return String(
+        a.nama || ""
+      ).localeCompare(
+        String(
+          b.nama || ""
+        )
+      );
+
+    }
+  );
+
+
+  info.className =
+    "info";
+
+
+  info.textContent =
+    "✅ " +
+    siswa.length +
+    " siswa ditemukan. QR dibuat otomatis berdasarkan ID dari DATA_SISWA.";
+
+
+  /*
+   * Buat QR
+   */
+
+  siswa.forEach(
+    function(item, index) {
+
+      buatKartuQR(
+        item,
+        index + 1
+      );
+
+    }
+  );
+
+
+  printButton.disabled =
+    false;
+
+}
+
+
+/****************************************************
+ * BUAT KARTU QR
+ ****************************************************/
+
+function buatKartuQR(
+  siswa,
+  nomor
+) {
+
+
+  const grid =
+    document.getElementById(
+      "qrGrid"
+    );
 
 
   const card =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   card.className =
     "qr-card";
 
 
-  const title =
-    document.createElement("h3");
+  const number =
+    document.createElement(
+      "div"
+    );
 
-  title.textContent =
-    name;
+
+  number.className =
+    "qr-number";
 
 
-  const p =
-    document.createElement("p");
+  number.textContent =
+    "SISWA #" +
+    nomor;
 
-  p.textContent =
-    "CLC PERMODALAN • TKB MORISEM 3";
+
+  const name =
+    document.createElement(
+      "div"
+    );
+
+
+  name.className =
+    "qr-name";
+
+
+  name.textContent =
+    siswa.nama || "-";
+
+
+  const kelas =
+    document.createElement(
+      "div"
+    );
+
+
+  kelas.className =
+    "qr-class";
+
+
+  kelas.textContent =
+    "Kelas " +
+    (siswa.kelas || "-");
 
 
   const qr =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   qr.className =
-    "qr";
-
-
-  const idLabel =
-    document.createElement("div");
-
-  idLabel.className =
-    "id";
-
-  idLabel.textContent =
-    id;
-
-
-  card.appendChild(title);
-
-  card.appendChild(p);
-
-  card.appendChild(qr);
-
-  card.appendChild(idLabel);
-
-
-  container.appendChild(card);
+    "qr-code";
 
 
   /*
-    PENTING:
-    QR hanya berisi ID.
-  */
+   * QR HANYA BERISI ID
+   *
+   * Contoh:
+   * M3001
+   */
 
-  new QRCode(qr, {
-
-    text: id,
-
-    width: 180,
-
-    height: 180,
-
-    correctLevel:
-      QRCode.CorrectLevel.H
-
-  });
+  const id =
+    String(
+      siswa.id || ""
+    ).trim();
 
 
-  document.getElementById("studentID")
-    .value = "";
+  if (!id) {
 
-  document.getElementById("studentName")
-    .value = "";
-
-  document.getElementById("studentID")
-    .focus();
-
-}
-
-
-function clearQR() {
-
-  if (
-    confirm(
-      "Hapus semua QR yang sudah dibuat?"
-    )
-  ) {
-
-    document.getElementById(
-      "qrContainer"
-    ).innerHTML = "";
+    qr.textContent =
+      "ID KOSONG";
 
   }
 
+  else {
+
+    new QRCode(
+      qr,
+      {
+
+        text: id,
+
+        width: 180,
+
+        height: 180,
+
+        correctLevel:
+          QRCode.CorrectLevel.H
+
+      }
+    );
+
+  }
+
+
+  const qrId =
+    document.createElement(
+      "div"
+    );
+
+
+  qrId.className =
+    "qr-id";
+
+
+  qrId.textContent =
+    id || "ID KOSONG";
+
+
+  card.appendChild(
+    number
+  );
+
+
+  card.appendChild(
+    name
+  );
+
+
+  card.appendChild(
+    kelas
+  );
+
+
+  card.appendChild(
+    qr
+  );
+
+
+  card.appendChild(
+    qrId
+  );
+
+
+  grid.appendChild(
+    card
+  );
+
 }
 
 
+/****************************************************
+ * LOAD OTOMATIS
+ ****************************************************/
+
+loadSiswa();
+
 </script>
+
 
 </body>
 
