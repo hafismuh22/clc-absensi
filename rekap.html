@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Rekap Absensi - CLC PERMODALAN</title>
+
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+
+  margin: 0;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  background:
+    #f1f5f9;
+
+  color:
+    #0f172a;
+
+}
+
+
+/* HEADER */
+
+.header {
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #1e3a8a
+    );
+
+  color: white;
+
+  padding:
+    22px 15px;
+
+  text-align: center;
+
+}
+
+
+.header h1 {
+
+  margin: 0;
+
+  font-size: 24px;
+
+  font-weight: 900;
+
+}
+
+
+.header p {
+
+  margin:
+    6px 0 0;
+
+  font-size:
+    13px;
+
+  opacity:
+    .85;
+
+}
+
+
+/* CONTAINER */
+
+.container {
+
+  max-width:
+    1400px;
+
+  margin:
+    auto;
+
+  padding:
+    18px 14px 40px;
+
+}
+
+
+/* FILTER */
+
+.filter-card {
+
+  background:
+    white;
+
+  padding:
+    18px;
+
+  border-radius:
+    18px;
+
+  box-shadow:
+    0 6px 20px
+    rgba(0,0,0,.07);
+
+  margin-bottom:
+    18px;
+
+}
+
+
+.filters {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap:
+    12px;
+
+}
+
+
+label {
+
+  font-size:
+    12px;
+
+  font-weight:
+    800;
+
+  color:
+    #475569;
+
+  display:
+    block;
+
+  margin-bottom:
+    6px;
+
+}
+
+
+select {
+
+  width:
+    100%;
+
+  padding:
+    12px;
+
+  border:
+    1px solid
+    #cbd5e1;
+
+  border-radius:
+    10px;
+
+  background:
+    white;
+
+  font-size:
+    14px;
+
+}
+
+
+button {
+
+  width:
+    100%;
+
+  padding:
+    12px;
+
+  border:
+    none;
+
+  border-radius:
+    10px;
+
+  background:
+    #2563eb;
+
+  color:
+    white;
+
+  font-size:
+    14px;
+
+  font-weight:
+    800;
+
+  cursor:
+    pointer;
+
+}
+
+
+/* SUMMARY */
+
+.summary {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap:
+    12px;
+
+  margin-bottom:
+    18px;
+
+}
+
+
+.summary-card {
+
+  background:
+    white;
+
+  border-radius:
+    15px;
+
+  padding:
+    17px;
+
+  text-align:
+    center;
+
+  box-shadow:
+    0 5px 15px
+    rgba(0,0,0,.06);
+
+}
+
+
+.summary-number {
+
+  font-size:
+    26px;
+
+  font-weight:
+    900;
+
+}
+
+
+.summary-label {
+
+  font-size:
+    12px;
+
+  color:
+    #64748b;
+
+  font-weight:
+    700;
+
+  margin-top:
+    5px;
+
+}
+
+
+/* TABLE */
+
+.table-card {
+
+  background:
+    white;
+
+  border-radius:
+    18px;
+
+  padding:
+    18px;
+
+  box-shadow:
+    0 6px 20px
+    rgba(0,0,0,.07);
+
+}
+
+
+.table-title {
+
+  font-size:
+    18px;
+
+  font-weight:
+    900;
+
+  margin-bottom:
+    15px;
+
+}
+
+
+.table-wrapper {
+
+  overflow-x:
+    auto;
+
+}
+
+
+table {
+
+  border-collapse:
+    collapse;
+
+  width:
+    max-content;
+
+  min-width:
+    100%;
+
+}
+
+
+th {
+
+  background:
+    #0f172a;
+
+  color:
+    white;
+
+  padding:
+    9px 8px;
+
+  font-size:
+    11px;
+
+  border:
+    1px solid
+    #334155;
+
+  position:
+    sticky;
+
+  top: 0;
+
+  z-index: 2;
+
+}
+
+
+td {
+
+  padding:
+    8px;
+
+  border:
+    1px solid
+    #e2e8f0;
+
+  font-size:
+    11px;
+
+  text-align:
+    center;
+
+}
+
+
+td.nama {
+
+  text-align:
+    left;
+
+  min-width:
+    180px;
+
+  font-weight:
+    800;
+
+}
+
+
+td.id {
+
+  font-weight:
+    700;
+
+}
+
+
+.hadir {
+
+  background:
+    #dcfce7;
+
+  color:
+    #166534;
+
+  font-weight:
+    900;
+
+}
+
+
+.tidak {
+
+  color:
+    #94a3b8;
+
+}
+
+
+.persen {
+
+  font-weight:
+    900;
+
+}
+
+
+.loading {
+
+  text-align:
+    center;
+
+  padding:
+    30px;
+
+  color:
+    #64748b;
+
+}
+
+
+.empty {
+
+  text-align:
+    center;
+
+  padding:
+    40px;
+
+  color:
+    #64748b;
+
+}
+
+
+/* PRINT */
+
+@media print {
+
+  @page {
+
+    size:
+      landscape;
+
+    margin:
+      8mm;
+
+  }
+
+
+  body {
+
+    background:
+      white;
+
+  }
+
+
+  .header {
+
+    background:
+      white;
+
+    color:
+      black;
+
+    padding:
+      5px;
+
+  }
+
+
+  .filter-card {
+
+    display:
+      none;
+
+  }
+
+
+  .summary {
+
+    display:
+      grid;
+
+  }
+
+
+  .table-card {
+
+    box-shadow:
+      none;
+
+    padding:
+      0;
+
+  }
+
+
+  .table-wrapper {
+
+    overflow:
+      visible;
+
+  }
+
+
+  table {
+
+    width:
+      100%;
+
+    font-size:
+      8px;
+
+  }
+
+
+  th {
+
+    position:
+      static;
+
+    font-size:
+      7px;
+
+    padding:
+      4px;
+
+  }
+
+
+  td {
+
+    font-size:
+      7px;
+
+    padding:
+      4px;
+
+  }
+
+
+  .nama {
+
+    min-width:
+      120px;
+
+  }
+
+
+  button {
+
+    display:
+      none;
+
+  }
+
+}
+
+
+/* MOBILE */
+
+@media (
+  max-width: 700px
+) {
+
+  .filters {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .summary {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+  <h1>
+    📅 REKAP ABSENSI
+  </h1>
+
+  <p>
+    CLC PERMODALAN
+  </p>
+
+</div>
+
+
+
+<div class="container">
+
+
+  <!-- FILTER -->
+
+  <div class="filter-card">
+
+
+    <div class="filters">
+
+
+      <div>
+
+        <label>
+          BULAN
+        </label>
+
+        <select
+          id="bulan"
+        >
+
+          <option value="1">
+            Januari
+          </option>
+
+          <option value="2">
+            Februari
+          </option>
+
+          <option value="3">
+            Maret
+          </option>
+
+          <option value="4">
+            April
+          </option>
+
+          <option value="5">
+            Mei
+          </option>
+
+          <option value="6">
+            Juni
+          </option>
+
+          <option value="7">
+            Juli
+          </option>
+
+          <option value="8">
+            Agustus
+          </option>
+
+          <option
+            value="9"
+            selected
+          >
+            September
+          </option>
+
+          <option value="10">
+            Oktober
+          </option>
+
+          <option value="11">
+            November
+          </option>
+
+          <option value="12">
+            Desember
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div>
+
+        <label>
+          TAHUN
+        </label>
+
+        <select
+          id="tahun"
+        ></select>
+
+      </div>
+
+
+      <div>
+
+        <label>
+          KELAS
+        </label>
+
+        <select
+          id="kelas"
+        >
+
+          <option value="SEMUA">
+            Semua Kelas
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div>
+
+        <label>
+          AKSI
+        </label>
+
+        <button
+          onclick="loadRekap()"
+        >
+          🔍 TAMPILKAN
+        </button>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- SUMMARY -->
+
+  <div class="summary">
+
+
+    <div class="summary-card">
+
+      <div
+        id="totalSiswa"
+        class="summary-number"
+      >
+        -
+      </div>
+
+      <div class="summary-label">
+        TOTAL SISWA
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div
+        id="totalHadir"
+        class="summary-number"
+      >
+        -
+      </div>
+
+      <div class="summary-label">
+        TOTAL KEHADIRAN
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div
+        id="rataRata"
+        class="summary-number"
+      >
+        -
+      </div>
+
+      <div class="summary-label">
+        RATA-RATA KEHADIRAN
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- TABLE -->
+
+  <div class="table-card">
+
+
+    <div
+      id="tableTitle"
+      class="table-title"
+    >
+      Rekap Absensi
+    </div>
+
+
+    <div
+      id="loading"
+      class="loading"
+      style="display:none;"
+    >
+      ⏳ Memuat rekap...
+    </div>
+
+
+    <div
+      id="tableContainer"
+      class="table-wrapper"
+    ></div>
+
+
+  </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/****************************************************
+ * API
+ ****************************************************/
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwBGvZdnWIfwNjpevh9WLSPtfD5ho_TqOYm9z2xFwE5SdKP_egi1INIkRevY3yFLNxi/exec";
+
+
+/****************************************************
+ * NAMA BULAN
+ ****************************************************/
+
+const namaBulan = [
+
+  "",
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember"
+
+];
+
+
+/****************************************************
+ * TAHUN
+ ****************************************************/
+
+function buatTahun() {
+
+  const select =
+    document.getElementById(
+      "tahun"
+    );
+
+
+  const tahunSekarang =
+    new Date().getFullYear();
+
+
+  for (
+    let i =
+      tahunSekarang - 2;
+
+    i <=
+      tahunSekarang + 2;
+
+    i++
+  ) {
+
+    const option =
+      document.createElement(
+        "option"
+      );
+
+
+    option.value =
+      i;
+
+
+    option.textContent =
+      i;
+
+
+    if (
+      i === tahunSekarang
+    ) {
+
+      option.selected =
+        true;
+
+    }
+
+
+    select.appendChild(
+      option
+    );
+
+  }
+
+}
+
+
+/****************************************************
+ * AMBIL KELAS
+ ****************************************************/
+
+function loadKelas() {
+
+
+  const callbackName =
+    "kelasCallback_" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  window[callbackName] =
+    function(data) {
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch(e) {}
+
+
+      if (
+        !Array.isArray(data)
+      ) {
+
+        return;
+
+      }
+
+
+      const kelasSelect =
+        document.getElementById(
+          "kelas"
+        );
+
+
+      const daftarKelas =
+        [];
+
+
+      data.forEach(
+        function(item) {
+
+          const kelas =
+            String(
+              item.kelas || ""
+            ).trim();
+
+
+          if (
+            kelas &&
+            !daftarKelas.includes(
+              kelas
+            )
+          ) {
+
+            daftarKelas.push(
+              kelas
+            );
+
+          }
+
+        }
+      );
+
+
+      daftarKelas.sort(
+        function(a,b) {
+
+          return a.localeCompare(
+            b,
+            undefined,
+            {
+              numeric: true
+            }
+          );
+
+        }
+      );
+
+
+      daftarKelas.forEach(
+        function(kelas) {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          option.value =
+            kelas;
+
+
+          option.textContent =
+            "Kelas " +
+            kelas;
+
+
+          kelasSelect.appendChild(
+            option
+          );
+
+        }
+      );
+
+    };
+
+
+  script.src =
+    API_URL +
+    "?action=siswa" +
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/****************************************************
+ * LOAD REKAP
+ ****************************************************/
+
+function loadRekap() {
+
+
+  const bulan =
+    document.getElementById(
+      "bulan"
+    ).value;
+
+
+  const tahun =
+    document.getElementById(
+      "tahun"
+    ).value;
+
+
+  const kelas =
+    document.getElementById(
+      "kelas"
+    ).value;
+
+
+  document
+    .getElementById(
+      "loading"
+    )
+    .style.display =
+    "block";
+
+
+  document
+    .getElementById(
+      "tableContainer"
+    )
+    .innerHTML =
+    "";
+
+
+  const callbackName =
+    "rekapCallback_" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  let selesai =
+    false;
+
+
+  window[callbackName] =
+    function(data) {
+
+
+      selesai =
+        true;
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch(e) {}
+
+
+      document
+        .getElementById(
+          "loading"
+        )
+        .style.display =
+        "none";
+
+
+      tampilkanRekap(
+        data
+      );
+
+    };
+
+
+  const timeout =
+    setTimeout(
+      function() {
+
+        if (selesai) {
+          return;
+        }
+
+
+        selesai =
+          true;
+
+
+        script.remove();
+
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        }
+
+        catch(e) {}
+
+
+        document
+          .getElementById(
+            "loading"
+          )
+          .style.display =
+          "none";
+
+
+        document
+          .getElementById(
+            "tableContainer"
+          )
+          .innerHTML =
+          "<div class='empty'>❌ Server tidak dapat dihubungi.</div>";
+
+      },
+      15000
+    );
+
+
+  const url =
+    API_URL +
+    "?action=rekap" +
+    "&bulan=" +
+    encodeURIComponent(
+      bulan
+    ) +
+    "&tahun=" +
+    encodeURIComponent(
+      tahun
+    ) +
+    "&kelas=" +
+    encodeURIComponent(
+      kelas
+    ) +
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  script.src =
+    url;
+
+
+  script.onerror =
+    function() {
+
+      clearTimeout(
+        timeout
+      );
+
+
+      if (selesai) {
+        return;
+      }
+
+
+      selesai =
+        true;
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch(e) {}
+
+
+      document
+        .getElementById(
+          "loading"
+        )
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById(
+          "tableContainer"
+        )
+        .innerHTML =
+        "<div class='empty'>❌ Gagal mengambil data.</div>";
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/****************************************************
+ * TAMPILKAN REKAP
+ ****************************************************/
+
+function tampilkanRekap(
+  data
+) {
+
+
+  if (
+    !data ||
+    data.success !== true
+  ) {
+
+    document
+      .getElementById(
+        "tableContainer"
+      )
+      .innerHTML =
+      "<div class='empty'>❌ Data rekap tidak tersedia.</div>";
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "totalSiswa"
+    )
+    .textContent =
+    data.totalSiswa;
+
+
+  document
+    .getElementById(
+      "totalHadir"
+    )
+    .textContent =
+    data.totalHadir;
+
+
+  document
+    .getElementById(
+      "rataRata"
+    )
+    .textContent =
+    data.rataRata +
+    "%";
+
+
+  const namaKelas =
+    data.kelas === "SEMUA"
+
+      ?
+
+    "Semua Kelas"
+
+      :
+
+    "Kelas " +
+    data.kelas;
+
+
+  document
+    .getElementById(
+      "tableTitle"
+    )
+    .textContent =
+
+    "Rekap " +
+    namaBulan[
+      data.bulan
+    ] +
+    " " +
+    data.tahun +
+    " — " +
+    namaKelas;
+
+
+  if (
+    !data.siswa ||
+    data.siswa.length === 0
+  ) {
+
+    document
+      .getElementById(
+        "tableContainer"
+      )
+      .innerHTML = `
+
+        <div class="empty">
+
+          📭 Tidak ada data siswa.
+
+        </div>
+
+      `;
+
+    return;
+
+  }
+
+
+  /*
+   * Header
+   */
+
+  let html = `
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th rowspan="2">
+            No
+          </th>
+
+          <th rowspan="2">
+            ID
+          </th>
+
+          <th rowspan="2">
+            Nama Siswa
+          </th>
+
+          <th rowspan="2">
+            Kelas
+          </th>
+
+          <th colspan="${data.jumlahHari}">
+            TANGGAL
+          </th>
+
+          <th rowspan="2">
+            HADIR
+          </th>
+
+          <th rowspan="2">
+            %
+          </th>
+
+        </tr>
+
+        <tr>
+
+  `;
+
+
+  for (
+    let i = 1;
+    i <= data.jumlahHari;
+    i++
+  ) {
+
+    html += `
+
+      <th>
+        ${i}
+      </th>
+
+    `;
+
+  }
+
+
+  html += `
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+  `;
+
+
+  /*
+   * Siswa
+   */
+
+  data.siswa.forEach(
+    function(item, index) {
+
+      html += `
+
+        <tr>
+
+          <td>
+            ${index + 1}
+          </td>
+
+          <td class="id">
+            ${escapeHtml(item.id)}
+          </td>
+
+          <td class="nama">
+            ${escapeHtml(item.nama)}
+          </td>
+
+          <td>
+            ${escapeHtml(item.kelas)}
+          </td>
+
+      `;
+
+
+      /*
+       * Tanggal
+       */
+
+      for (
+        let i = 1;
+        i <= data.jumlahHari;
+        i++
+      ) {
+
+        const hari =
+          item.hari[i];
+
+
+        if (
+          hari &&
+          hari.status ===
+          "HADIR"
+        ) {
+
+          html += `
+
+            <td
+              class="hadir"
+              title="Hadir pukul ${escapeHtml(hari.jam)}"
+            >
+              ✓
+            </td>
+
+          `;
+
+        }
+
+        else {
+
+          html += `
+
+            <td class="tidak">
+              -
+            </td>
+
+          `;
+
+        }
+
+      }
+
+
+      html += `
+
+          <td>
+            <b>
+              ${item.hadir}
+            </b>
+          </td>
+
+          <td class="persen">
+            ${item.persen}%
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
+
+
+  html += `
+
+      </tbody>
+
+    </table>
+
+    <div style="
+      margin-top:15px;
+      text-align:right;
+    ">
+
+      <button
+        onclick="window.print()"
+        style="
+          width:auto;
+          padding:10px 18px;
+        "
+      >
+
+        🖨️ CETAK REKAP
+
+      </button>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      "tableContainer"
+    )
+    .innerHTML =
+    html;
+
+}
+
+
+/****************************************************
+ * ESCAPE
+ ****************************************************/
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/****************************************************
+ * START
+ ****************************************************/
+
+buatTahun();
+
+loadKelas();
+
+loadRekap();
+
+</script>
+
+
+</body>
+
+</html>
