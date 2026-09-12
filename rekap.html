@@ -10,7 +10,9 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>Daftar Hadir - CLC PERMODALAN TKB MORISEM 3</title>
+<title>
+  Daftar Hadir - CLC PERMODALAN
+</title>
 
 
 <style>
@@ -86,11 +88,7 @@ body {
 
 .header .tahun-ajaran {
 
-  margin-top: 2px;
-
   font-size: 11px;
-
-  font-weight: 700;
 
 }
 
@@ -166,7 +164,9 @@ select {
 
   padding: 10px;
 
-  border: 1px solid #cbd5e1;
+  border:
+    1px solid
+    #cbd5e1;
 
   border-radius: 9px;
 
@@ -200,15 +200,8 @@ button {
 }
 
 
-button:hover {
-
-  opacity: .9;
-
-}
-
-
 /* ==================================================
-   JUDUL REKAP
+   HEADER CETAK
 ================================================== */
 
 .table-card {
@@ -280,7 +273,9 @@ button:hover {
 
   padding-bottom: 6px;
 
-  border-bottom: 1px solid #cbd5e1;
+  border-bottom:
+    1px solid
+    #cbd5e1;
 
 }
 
@@ -324,7 +319,9 @@ th {
 
   color: white;
 
-  border: 1px solid #334155;
+  border:
+    1px solid
+    #334155;
 
   padding: 5px 4px;
 
@@ -337,7 +334,9 @@ th {
 
 td {
 
-  border: 1px solid #cbd5e1;
+  border:
+    1px solid
+    #cbd5e1;
 
   padding: 5px 4px;
 
@@ -368,7 +367,11 @@ td.id {
 }
 
 
-.hadir {
+/* ==================================================
+   STATUS
+================================================== */
+
+.status-hadir {
 
   background: #dcfce7;
 
@@ -379,12 +382,49 @@ td.id {
 }
 
 
-.tidak {
+.status-sakit {
+
+  background: #fef3c7;
+
+  color: #92400e;
+
+  font-weight: 900;
+
+}
+
+
+.status-izin {
+
+  background: #dbeafe;
+
+  color: #1e40af;
+
+  font-weight: 900;
+
+}
+
+
+.status-alpa {
+
+  background: #fee2e2;
+
+  color: #991b1b;
+
+  font-weight: 900;
+
+}
+
+
+.status-kosong {
 
   color: #94a3b8;
 
 }
 
+
+/* ==================================================
+   JUMLAH
+================================================== */
 
 .jumlah-hadir {
 
@@ -403,8 +443,28 @@ td.id {
 
 
 /* ==================================================
-   LOADING
+   KETERANGAN
 ================================================== */
+
+.keterangan {
+
+  margin-top: 10px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  color: #475569;
+
+}
+
+
+.keterangan span {
+
+  margin-right: 12px;
+
+}
+
 
 .loading {
 
@@ -413,8 +473,6 @@ td.id {
   padding: 30px;
 
   color: #64748b;
-
-  font-size: 13px;
 
 }
 
@@ -427,13 +485,11 @@ td.id {
 
   color: #64748b;
 
-  font-size: 13px;
-
 }
 
 
 /* ==================================================
-   TOMBOL CETAK
+   CETAK
 ================================================== */
 
 .print-area {
@@ -449,9 +505,11 @@ td.id {
 
   width: auto;
 
-  padding: 10px 18px;
+  padding:
+    10px 18px;
 
-  background: #16a34a;
+  background:
+    #16a34a;
 
 }
 
@@ -466,7 +524,8 @@ td.id {
 
   .filters {
 
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
 
   }
 
@@ -478,30 +537,9 @@ td.id {
   }
 
 
-  .header p {
-
-    font-size: 11px;
-
-  }
-
-
   .table-card {
 
     padding: 10px;
-
-  }
-
-
-  .print-header .judul {
-
-    font-size: 14px;
-
-  }
-
-
-  .print-header .sekolah {
-
-    font-size: 11px;
 
   }
 
@@ -509,7 +547,7 @@ td.id {
 
 
 /* ==================================================
-   CETAK
+   PRINT
 ================================================== */
 
 @media print {
@@ -532,24 +570,6 @@ td.id {
 
 
   .header {
-
-    background: white;
-
-    color: black;
-
-    padding: 0 0 5px;
-
-  }
-
-
-  .header h1 {
-
-    display: none;
-
-  }
-
-
-  .header p {
 
     display: none;
 
@@ -667,6 +687,15 @@ td.id {
   }
 
 
+  .keterangan {
+
+    font-size: 8px;
+
+    margin-top: 5px;
+
+  }
+
+
   .print-area {
 
     display: none;
@@ -698,10 +727,12 @@ td.id {
   </p>
 
   <p class="tahun-ajaran">
+
     TAHUN AJARAN
     <span id="tahunAjaranHeader">
       2026-2027
     </span>
+
   </p>
 
 </div>
@@ -720,8 +751,6 @@ td.id {
 
   <div class="filters">
 
-
-    <!-- BULAN -->
 
     <div class="filter-group">
 
@@ -784,8 +813,6 @@ td.id {
     </div>
 
 
-    <!-- TAHUN -->
-
     <div class="filter-group">
 
       <label>
@@ -796,8 +823,6 @@ td.id {
 
     </div>
 
-
-    <!-- KELAS -->
 
     <div class="filter-group">
 
@@ -815,8 +840,6 @@ td.id {
 
     </div>
 
-
-    <!-- TAMPILKAN -->
 
     <div class="filter-group">
 
@@ -842,30 +865,41 @@ td.id {
 
 
 <!-- ==================================================
-     REKAP
+     TABEL
 ================================================== -->
 
 <div class="table-card">
 
 
-  <!-- HEADER CETAK -->
-
   <div class="print-header">
 
+
     <div class="judul">
+
       DAFTAR HADIR
+
     </div>
+
 
     <div class="sekolah">
+
       CLC PERMODALAN TKB MORISEM 3
+
     </div>
 
+
     <div class="tahun">
+
       TAHUN AJARAN
+
       <span id="tahunAjaran">
+
         2026-2027
+
       </span>
+
     </div>
+
 
     <div
       id="infoRekap"
@@ -873,18 +907,25 @@ td.id {
     >
 
       KELAS : -
-      <span class="separator">|</span>
+
+      <span class="separator">
+        |
+      </span>
+
       SEMESTER : -
-      <span class="separator">|</span>
+
+      <span class="separator">
+        |
+      </span>
+
       BULAN : -
 
     </div>
 
+
   </div>
 
 
-
-  <!-- LOADING -->
 
   <div
     id="loading"
@@ -898,8 +939,6 @@ td.id {
 
 
 
-  <!-- TABLE -->
-
   <div
     id="tableContainer"
     class="table-wrapper"
@@ -907,7 +946,35 @@ td.id {
 
 
 
-  <!-- PRINT -->
+  <div
+    id="keterangan"
+    class="keterangan"
+    style="display:none;"
+  >
+
+    <span>
+      H = Hadir
+    </span>
+
+    <span>
+      S = Sakit
+    </span>
+
+    <span>
+      I = Izin
+    </span>
+
+    <span>
+      A = Alpa
+    </span>
+
+    <span>
+      - = Belum ada data
+    </span>
+
+  </div>
+
+
 
   <div class="print-area">
 
@@ -942,7 +1009,7 @@ const API_URL =
 
 
 /****************************************************
- * NAMA BULAN
+ * BULAN
  ****************************************************/
 
 const namaBulan = [
@@ -977,10 +1044,11 @@ const namaBulan = [
 
 
 /****************************************************
- * BUAT PILIHAN TAHUN
+ * TAHUN
  ****************************************************/
 
 function buatTahun() {
+
 
   const select =
     document.getElementById(
@@ -988,8 +1056,12 @@ function buatTahun() {
     );
 
 
+  const sekarang =
+    new Date();
+
+
   const tahunSekarang =
-    new Date().getFullYear();
+    sekarang.getFullYear();
 
 
   for (
@@ -1001,6 +1073,7 @@ function buatTahun() {
 
     tahun++
   ) {
+
 
     const option =
       document.createElement(
@@ -1037,7 +1110,7 @@ function buatTahun() {
 
 
 /****************************************************
- * AMBIL DAFTAR KELAS
+ * LOAD KELAS
  ****************************************************/
 
 function loadKelas() {
@@ -1054,15 +1127,8 @@ function loadKelas() {
     );
 
 
-  let selesai =
-    false;
-
-
   window[callbackName] =
     function(data) {
-
-      selesai =
-        true;
 
 
       script.remove();
@@ -1100,6 +1166,7 @@ function loadKelas() {
 
       data.forEach(
         function(item) {
+
 
           const kelas =
             String(
@@ -1142,6 +1209,7 @@ function loadKelas() {
       daftarKelas.forEach(
         function(kelas) {
 
+
           const option =
             document.createElement(
               "option"
@@ -1169,39 +1237,14 @@ function loadKelas() {
 
   script.src =
     API_URL +
+
     "?action=siswa" +
+
     "&callback=" +
+
     encodeURIComponent(
       callbackName
     );
-
-
-  script.onerror =
-    function() {
-
-      if (selesai) {
-        return;
-      }
-
-
-      selesai =
-        true;
-
-
-      script.remove();
-
-
-      try {
-
-        delete window[
-          callbackName
-        ];
-
-      }
-
-      catch(e) {}
-
-    };
 
 
   document.body.appendChild(
@@ -1252,6 +1295,14 @@ function loadRekap() {
     "";
 
 
+  document
+    .getElementById(
+      "keterangan"
+    )
+    .style.display =
+    "none";
+
+
   const callbackName =
     "rekapCallback_" +
     Date.now();
@@ -1269,6 +1320,7 @@ function loadRekap() {
 
   window[callbackName] =
     function(data) {
+
 
       selesai =
         true;
@@ -1311,6 +1363,7 @@ function loadRekap() {
   const timeout =
     setTimeout(
       function() {
+
 
         if (selesai) {
           return;
@@ -1364,6 +1417,7 @@ function loadRekap() {
 
 
   const url =
+
     API_URL +
 
     "?action=rekap" +
@@ -1396,6 +1450,7 @@ function loadRekap() {
   script.onerror =
     function() {
 
+
       clearTimeout(
         timeout
       );
@@ -1411,17 +1466,6 @@ function loadRekap() {
 
 
       script.remove();
-
-
-      try {
-
-        delete window[
-          callbackName
-        ];
-
-      }
-
-      catch(e) {}
 
 
       document
@@ -1470,6 +1514,7 @@ function tampilkanRekap(
     data.success !== true
   ) {
 
+
     document
       .getElementById(
         "tableContainer"
@@ -1483,6 +1528,7 @@ function tampilkanRekap(
         </div>
 
       `;
+
 
     return;
 
@@ -1548,7 +1594,8 @@ function tampilkanRekap(
 
   const kelasText =
 
-    data.kelas === "SEMUA"
+    data.kelas ===
+    "SEMUA"
 
       ?
 
@@ -1590,6 +1637,7 @@ function tampilkanRekap(
     .innerHTML =
 
     "KELAS : " +
+
     escapeHtml(
       kelasText
     ) +
@@ -1597,24 +1645,39 @@ function tampilkanRekap(
     " <span class='separator'>|</span> " +
 
     "SEMESTER : " +
+
     semester +
 
     " <span class='separator'>|</span> " +
 
     "BULAN : " +
+
     namaBulan[
       data.bulan
     ].toUpperCase();
 
 
   /************************************************
-   * JIKA KOSONG
+   * KETERANGAN
+   ************************************************/
+
+  document
+    .getElementById(
+      "keterangan"
+    )
+    .style.display =
+    "block";
+
+
+  /************************************************
+   * JIKA TIDAK ADA SISWA
    ************************************************/
 
   if (
     !data.siswa ||
     data.siswa.length === 0
   ) {
+
 
     document
       .getElementById(
@@ -1631,13 +1694,14 @@ function tampilkanRekap(
 
       `;
 
+
     return;
 
   }
 
 
   /************************************************
-   * BUAT TABLE
+   * TABLE HEADER
    ************************************************/
 
   let html = `
@@ -1696,6 +1760,7 @@ function tampilkanRekap(
     hari++
   ) {
 
+
     html += `
 
       <th>
@@ -1735,28 +1800,34 @@ function tampilkanRekap(
           </td>
 
           <td class="id">
+
             ${escapeHtml(
               item.id
             )}
+
           </td>
 
           <td class="nama">
+
             ${escapeHtml(
               item.nama
             )}
+
           </td>
 
           <td>
+
             ${escapeHtml(
               item.kelas
             )}
+
           </td>
 
       `;
 
 
       /************************************************
-       * SETIAP TANGGAL
+       * STATUS SETIAP TANGGAL
        ************************************************/
 
       for (
@@ -1775,22 +1846,46 @@ function tampilkanRekap(
           ];
 
 
-        if (
+        const status =
+
           dataHari &&
-          dataHari.status ===
+          dataHari.status
+
+            ?
+
+          String(
+            dataHari.status
+          )
+          .trim()
+          .toUpperCase()
+
+            :
+
+          "-";
+
+
+        /********************************************
+         * HADIR
+         ********************************************/
+
+        if (
+          status ===
           "HADIR"
         ) {
+
 
           html += `
 
             <td
-              class="hadir"
-              title="Hadir pukul ${escapeHtml(
-                dataHari.jam
-              )}"
+              class="status-hadir"
+              title="Hadir ${
+                escapeHtml(
+                  dataHari.jam || ""
+                )
+              }"
             >
 
-              ✓
+              H
 
             </td>
 
@@ -1798,12 +1893,97 @@ function tampilkanRekap(
 
         }
 
-        else {
+
+        /********************************************
+         * SAKIT
+         ********************************************/
+
+        else if (
+          status ===
+          "SAKIT"
+        ) {
+
 
           html += `
 
-            <td class="tidak">
+            <td
+              class="status-sakit"
+            >
+
+              S
+
+            </td>
+
+          `;
+
+        }
+
+
+        /********************************************
+         * IZIN
+         ********************************************/
+
+        else if (
+          status ===
+          "IZIN"
+        ) {
+
+
+          html += `
+
+            <td
+              class="status-izin"
+            >
+
+              I
+
+            </td>
+
+          `;
+
+        }
+
+
+        /********************************************
+         * ALPA
+         ********************************************/
+
+        else if (
+          status ===
+          "ALPA"
+        ) {
+
+
+          html += `
+
+            <td
+              class="status-alpa"
+            >
+
+              A
+
+            </td>
+
+          `;
+
+        }
+
+
+        /********************************************
+         * BELUM ADA DATA
+         ********************************************/
+
+        else {
+
+
+          html += `
+
+            <td
+              class="status-kosong"
+            >
+
               -
+
             </td>
 
           `;
@@ -1901,7 +2081,7 @@ function escapeHtml(
 
 
 /****************************************************
- * MULAI
+ * START
  ****************************************************/
 
 buatTahun();
