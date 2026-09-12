@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Generator QR - CLC Permodalan</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f3f6fa;
+      color: #172033;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #071b3a, #0d3268);
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .header p {
+      margin: 7px 0 0;
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    .title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #0d3268;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d5dbe5;
+      border-radius: 10px;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 4px;
+    }
+
+    .primary {
+      background: #0d6efd;
+      color: white;
+    }
+
+    .print {
+      background: #198754;
+      color: white;
+    }
+
+    .clear {
+      background: #dc3545;
+      color: white;
+    }
+
+    #qrContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .qr-card {
+      border: 1px solid #e0e5ec;
+      border-radius: 14px;
+      padding: 15px;
+      text-align: center;
+      background: white;
+    }
+
+    .qr-card h3 {
+      margin: 0 0 5px;
+      font-size: 17px;
+      color: #0d3268;
+    }
+
+    .qr-card p {
+      margin: 4px 0 12px;
+      font-size: 12px;
+      color: #687386;
+    }
+
+    .qr {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .qr img {
+      max-width: 180px;
+      height: auto;
+    }
+
+    .id {
+      display: inline-block;
+      background: #edf3ff;
+      color: #0d3268;
+      padding: 7px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .note {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #687386;
+      margin-top: 12px;
+    }
+
+    @media print {
+
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .header,
+      .form-card,
+      .print-area-title,
+      .no-print {
+        display: none !important;
+      }
+
+      .container {
+        max-width: none;
+      }
+
+      .card {
+        box-shadow: none;
+        padding: 0;
+      }
+
+      #qrContainer {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .qr-card {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+
+    <h1>CLC PERMODALAN</h1>
+
+    <p>
+      TKB MORISEM 3 • GENERATOR QR SISWA
+    </p>
+
+  </div>
+
+
+  <div class="card form-card">
+
+    <div class="title">
+      ➕ Tambahkan QR Siswa
+    </div>
+
+    <input
+      type="text"
+      id="studentID"
+      placeholder="ID siswa, contoh S001">
+
+    <input
+      type="text"
+      id="studentName"
+      placeholder="Nama siswa, contoh ANDI ALIF">
+
+    <div class="no-print">
+
+      <button
+        class="primary"
+        onclick="addQR()">
+
+        ＋ BUAT QR
+
+      </button>
+
+      <button
+        class="clear"
+        onclick="clearQR()">
+
+        🗑 HAPUS SEMUA
+
+      </button>
+
+      <button
+        class="print"
+        onclick="window.print()">
+
+        🖨 CETAK QR
+
+      </button>
+
+    </div>
+
+    <div class="note">
+
+      QR hanya menyimpan <b>ID siswa</b>.
+      Nama hanya digunakan untuk label pada kartu QR.
+
+      <br>
+
+      Contoh isi QR:
+
+      <b>S001</b>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="title print-area-title">
+      📱 QR SISWA
+    </div>
+
+    <div id="qrContainer"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function addQR() {
+
+  const id =
+    document.getElementById("studentID")
+      .value
+      .trim()
+      .toUpperCase();
+
+  const name =
+    document.getElementById("studentName")
+      .value
+      .trim()
+      .toUpperCase();
+
+
+  if (!id) {
+
+    alert("Masukkan ID siswa terlebih dahulu.");
+
+    return;
+
+  }
+
+
+  if (!name) {
+
+    alert("Masukkan nama siswa terlebih dahulu.");
+
+    return;
+
+  }
+
+
+  const container =
+    document.getElementById("qrContainer");
+
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "qr-card";
+
+
+  const title =
+    document.createElement("h3");
+
+  title.textContent =
+    name;
+
+
+  const p =
+    document.createElement("p");
+
+  p.textContent =
+    "CLC PERMODALAN • TKB MORISEM 3";
+
+
+  const qr =
+    document.createElement("div");
+
+  qr.className =
+    "qr";
+
+
+  const idLabel =
+    document.createElement("div");
+
+  idLabel.className =
+    "id";
+
+  idLabel.textContent =
+    id;
+
+
+  card.appendChild(title);
+
+  card.appendChild(p);
+
+  card.appendChild(qr);
+
+  card.appendChild(idLabel);
+
+
+  container.appendChild(card);
+
+
+  /*
+    PENTING:
+    QR hanya berisi ID.
+  */
+
+  new QRCode(qr, {
+
+    text: id,
+
+    width: 180,
+
+    height: 180,
+
+    correctLevel:
+      QRCode.CorrectLevel.H
+
+  });
+
+
+  document.getElementById("studentID")
+    .value = "";
+
+  document.getElementById("studentName")
+    .value = "";
+
+  document.getElementById("studentID")
+    .focus();
+
+}
+
+
+function clearQR() {
+
+  if (
+    confirm(
+      "Hapus semua QR yang sudah dibuat?"
+    )
+  ) {
+
+    document.getElementById(
+      "qrContainer"
+    ).innerHTML = "";
+
+  }
+
+}
+
+
+</script>
+
+</body>
+
+</html>
