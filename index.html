@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Test Kamera CLC Permodalan</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f3f6fa;
+      color: #172033;
+      text-align: center;
+    }
+
+    .card {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.10);
+    }
+
+    h1 {
+      color: #0b2d5c;
+      font-size: 22px;
+    }
+
+    p {
+      color: #667085;
+      font-size: 14px;
+    }
+
+    video {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 15px;
+      border-radius: 15px;
+      background: #000;
+      display: none;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 20px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    #start {
+      background: #0d6efd;
+      color: white;
+    }
+
+    #stop {
+      background: #dc3545;
+      color: white;
+      display: none;
+    }
+
+    #status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .info {
+      background: #eaf3ff;
+      color: #0757a6;
+    }
+
+    .success {
+      background: #e8f7ee;
+      color: #146c43;
+    }
+
+    .error {
+      background: #fdeaea;
+      color: #b02a37;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h1>📷 TEST KAMERA</h1>
+
+  <p>
+    CLC PERMODALAN • TKB MORISEM 3
+  </p>
+
+  <button id="start" onclick="startCamera()">
+    📷 AKTIFKAN KAMERA
+  </button>
+
+  <button id="stop" onclick="stopCamera()">
+    ⏹ MATIKAN KAMERA
+  </button>
+
+  <video id="video" autoplay playsinline></video>
+
+  <div id="status" class="info">
+    Tekan tombol AKTIFKAN KAMERA.
+  </div>
+
+</div>
+
+<script>
+
+let stream = null;
+
+async function startCamera() {
+
+  const video =
+    document.getElementById("video");
+
+  const status =
+    document.getElementById("status");
+
+  status.className = "info";
+
+  status.innerHTML =
+    "⏳ Meminta akses kamera...";
+
+  try {
+
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ) {
+
+      throw new Error(
+        "Browser tidak mendukung akses kamera."
+      );
+
+    }
+
+    stream =
+      await navigator.mediaDevices.getUserMedia({
+
+        video: {
+          facingMode: "environment"
+        },
+
+        audio: false
+
+      });
+
+    video.srcObject = stream;
+
+    video.style.display = "block";
+
+    document.getElementById("start")
+      .style.display = "none";
+
+    document.getElementById("stop")
+      .style.display = "inline-block";
+
+    status.className = "success";
+
+    status.innerHTML =
+      "✅ KAMERA BERHASIL AKTIF!";
+
+  }
+
+  catch(error) {
+
+    console.error(error);
+
+    status.className = "error";
+
+    status.innerHTML =
+
+      "<strong>❌ KAMERA GAGAL</strong><br><br>" +
+
+      "Error: " +
+      (error.name || "Tidak diketahui") +
+
+      "<br><br>" +
+
+      "Pesan: " +
+      (error.message || String(error));
+
+  }
+
+}
+
+function stopCamera() {
+
+  if (stream) {
+
+    stream.getTracks()
+      .forEach(function(track) {
+        track.stop();
+      });
+
+  }
+
+  stream = null;
+
+  document.getElementById("video")
+    .style.display = "none";
+
+  document.getElementById("start")
+    .style.display = "inline-block";
+
+  document.getElementById("stop")
+    .style.display = "none";
+
+  document.getElementById("status")
+    .className = "info";
+
+  document.getElementById("status")
+    .innerHTML =
+      "Kamera dimatikan.";
+
+}
+
+</script>
+
+</body>
+</html>
