@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Input Kehadiran - CLC PERMODALAN</title>
+
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+
+  margin: 0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    #f1f5f9;
+
+  color:
+    #0f172a;
+
+}
+
+
+.header {
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #1e3a8a
+    );
+
+  color:
+    white;
+
+  padding:
+    20px 15px;
+
+  text-align:
+    center;
+
+}
+
+
+.header h1 {
+
+  margin:
+    0;
+
+  font-size:
+    22px;
+
+  font-weight:
+    900;
+
+}
+
+
+.header p {
+
+  margin:
+    5px 0 0;
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+}
+
+
+.container {
+
+  max-width:
+    1100px;
+
+  margin:
+    auto;
+
+  padding:
+    18px 14px 40px;
+
+}
+
+
+.filter-card {
+
+  background:
+    white;
+
+  border-radius:
+    16px;
+
+  padding:
+    16px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(0,0,0,.07);
+
+  margin-bottom:
+    15px;
+
+}
+
+
+.filters {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap:
+    10px;
+
+}
+
+
+label {
+
+  display:
+    block;
+
+  font-size:
+    11px;
+
+  font-weight:
+    800;
+
+  color:
+    #475569;
+
+  margin-bottom:
+    5px;
+
+}
+
+
+input,
+select {
+
+  width:
+    100%;
+
+  padding:
+    11px;
+
+  border:
+    1px solid
+    #cbd5e1;
+
+  border-radius:
+    9px;
+
+  background:
+    white;
+
+  font-size:
+    13px;
+
+}
+
+
+button {
+
+  width:
+    100%;
+
+  border:
+    none;
+
+  border-radius:
+    9px;
+
+  padding:
+    11px;
+
+  background:
+    #2563eb;
+
+  color:
+    white;
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+
+  cursor:
+    pointer;
+
+}
+
+
+.table-card {
+
+  background:
+    white;
+
+  border-radius:
+    16px;
+
+  padding:
+    16px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(0,0,0,.07);
+
+}
+
+
+.table-wrapper {
+
+  overflow-x:
+    auto;
+
+}
+
+
+table {
+
+  width:
+    100%;
+
+  border-collapse:
+    collapse;
+
+}
+
+
+th {
+
+  background:
+    #0f172a;
+
+  color:
+    white;
+
+  padding:
+    10px;
+
+  font-size:
+    12px;
+
+  text-align:
+    left;
+
+}
+
+
+td {
+
+  border-bottom:
+    1px solid
+    #e2e8f0;
+
+  padding:
+    9px;
+
+  font-size:
+    12px;
+
+}
+
+
+.nama {
+
+  font-weight:
+    800;
+
+}
+
+
+.status-select {
+
+  min-width:
+    130px;
+
+}
+
+
+.simpan {
+
+  background:
+    #16a34a;
+
+  padding:
+    8px 12px;
+
+  width:
+    auto;
+
+}
+
+
+.simpan:disabled {
+
+  background:
+    #94a3b8;
+
+}
+
+
+.loading {
+
+  text-align:
+    center;
+
+  padding:
+    30px;
+
+  color:
+    #64748b;
+
+}
+
+
+.info {
+
+  margin-top:
+    12px;
+
+  padding:
+    12px;
+
+  border-radius:
+    9px;
+
+  background:
+    #eff6ff;
+
+  color:
+    #1e40af;
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+}
+
+
+.success {
+
+  background:
+    #dcfce7;
+
+  color:
+    #166534;
+
+}
+
+
+.error {
+
+  background:
+    #fee2e2;
+
+  color:
+    #991b1b;
+
+}
+
+
+@media (
+  max-width: 700px
+) {
+
+  .filters {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  th,
+  td {
+
+    white-space:
+      nowrap;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+  <h1>
+    INPUT KEHADIRAN
+  </h1>
+
+  <p>
+    CLC PERMODALAN TKB MORISEM 3
+  </p>
+
+</div>
+
+
+
+<div class="container">
+
+
+<div class="filter-card">
+
+
+  <div class="filters">
+
+
+    <div>
+
+      <label>
+        TANGGAL
+      </label>
+
+      <input
+        type="date"
+        id="tanggal"
+      >
+
+    </div>
+
+
+    <div>
+
+      <label>
+        KELAS
+      </label>
+
+      <select
+        id="kelas"
+      >
+
+        <option value="SEMUA">
+          Semua Kelas
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div>
+
+      <label>
+        AKSI
+      </label>
+
+      <button
+        onclick="loadSiswa()"
+      >
+
+        🔍 TAMPILKAN SISWA
+
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+  <div
+    id="info"
+    class="info"
+  >
+
+    Pilih tanggal dan kelas,
+    kemudian tampilkan siswa.
+
+  </div>
+
+
+</div>
+
+
+
+<div class="table-card">
+
+
+  <div
+    id="loading"
+    class="loading"
+    style="display:none;"
+  >
+
+    ⏳ Memuat data siswa...
+
+  </div>
+
+
+  <div
+    id="tableContainer"
+    class="table-wrapper"
+  ></div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+/****************************************************
+ * API
+ ****************************************************/
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwBGvZdnWIfwNjpevh9WLSPtfD5ho_TqOYm9z2xFwE5SdKP_egi1INIkRevY3yFLNxi/exec";
+
+
+/****************************************************
+ * SET TANGGAL HARI INI
+ ****************************************************/
+
+function setTanggalHariIni() {
+
+  const input =
+    document.getElementById(
+      "tanggal"
+    );
+
+
+  const sekarang =
+    new Date();
+
+
+  const tahun =
+    sekarang.getFullYear();
+
+
+  const bulan =
+    String(
+      sekarang.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const hari =
+    String(
+      sekarang.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  input.value =
+    tahun +
+    "-" +
+    bulan +
+    "-" +
+    hari;
+
+}
+
+
+/****************************************************
+ * LOAD KELAS
+ ****************************************************/
+
+function loadKelas() {
+
+
+  const callbackName =
+    "kelasStatusCallback_" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  window[callbackName] =
+    function(data) {
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch(e) {}
+
+
+      if (
+        !Array.isArray(data)
+      ) {
+
+        return;
+
+      }
+
+
+      const select =
+        document.getElementById(
+          "kelas"
+        );
+
+
+      const daftar =
+        [];
+
+
+      data.forEach(
+        function(item) {
+
+          const kelas =
+            String(
+              item.kelas || ""
+            ).trim();
+
+
+          if (
+            kelas &&
+            !daftar.includes(
+              kelas
+            )
+          ) {
+
+            daftar.push(
+              kelas
+            );
+
+          }
+
+        }
+      );
+
+
+      daftar.sort(
+        function(a,b) {
+
+          return a.localeCompare(
+            b,
+            undefined,
+            {
+              numeric: true
+            }
+          );
+
+        }
+      );
+
+
+      daftar.forEach(
+        function(kelas) {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          option.value =
+            kelas;
+
+
+          option.textContent =
+            "Kelas " +
+            kelas;
+
+
+          select.appendChild(
+            option
+          );
+
+        }
+      );
+
+    };
+
+
+  script.src =
+    API_URL +
+    "?action=siswa" +
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/****************************************************
+ * LOAD SISWA
+ ****************************************************/
+
+function loadSiswa() {
+
+
+  const tanggal =
+    document.getElementById(
+      "tanggal"
+    ).value;
+
+
+  const kelas =
+    document.getElementById(
+      "kelas"
+    ).value;
+
+
+  if (!tanggal) {
+
+    alert(
+      "Silakan pilih tanggal."
+    );
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "loading"
+    )
+    .style.display =
+    "block";
+
+
+  document
+    .getElementById(
+      "tableContainer"
+    )
+    .innerHTML =
+    "";
+
+
+  const callbackName =
+    "siswaStatusCallback_" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  let selesai =
+    false;
+
+
+  window[callbackName] =
+    function(data) {
+
+
+      selesai =
+        true;
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch(e) {}
+
+
+      if (
+        !Array.isArray(data)
+      ) {
+
+        tampilkanError(
+          "Data siswa tidak valid."
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * Filter kelas
+       */
+
+      let siswa =
+        data;
+
+
+      if (
+        kelas !== "SEMUA"
+      ) {
+
+        siswa =
+          data.filter(
+            function(item) {
+
+              return String(
+                item.kelas
+              ).trim()
+              ===
+              kelas;
+
+            }
+          );
+
+      }
+
+
+      tampilkanSiswa(
+        siswa
+      );
+
+    };
+
+
+  const timeout =
+    setTimeout(
+      function() {
+
+        if (selesai) {
+          return;
+        }
+
+
+        selesai =
+          true;
+
+
+        script.remove();
+
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        }
+
+        catch(e) {}
+
+
+        tampilkanError(
+          "Server tidak dapat dihubungi."
+        );
+
+      },
+      15000
+    );
+
+
+  script.src =
+    API_URL +
+    "?action=siswa" +
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  script.onerror =
+    function() {
+
+      clearTimeout(
+        timeout
+      );
+
+
+      if (selesai) {
+        return;
+      }
+
+
+      selesai =
+        true;
+
+
+      script.remove();
+
+
+      tampilkanError(
+        "Gagal mengambil data siswa."
+      );
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/****************************************************
+ * TAMPILKAN SISWA
+ ****************************************************/
+
+function tampilkanSiswa(
+  siswa
+) {
+
+
+  document
+    .getElementById(
+      "loading"
+    )
+    .style.display =
+    "none";
+
+
+  const container =
+    document.getElementById(
+      "tableContainer"
+    );
+
+
+  const info =
+    document.getElementById(
+      "info"
+    );
+
+
+  if (
+    siswa.length === 0
+  ) {
+
+    container.innerHTML = `
+
+      <div class="loading">
+
+        📭 Tidak ada siswa
+        pada kelas tersebut.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  info.className =
+    "info";
+
+
+  info.textContent =
+    "✅ " +
+    siswa.length +
+    " siswa ditemukan.";
+
+
+  let html = `
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>
+            NO
+          </th>
+
+          <th>
+            ID
+          </th>
+
+          <th>
+            NAMA
+          </th>
+
+          <th>
+            KELAS
+          </th>
+
+          <th>
+            STATUS KEHADIRAN
+          </th>
+
+          <th>
+            AKSI
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+  `;
+
+
+  siswa.forEach(
+    function(item,index) {
+
+
+      html += `
+
+        <tr>
+
+          <td>
+            ${index + 1}
+          </td>
+
+          <td>
+            <b>
+              ${escapeHtml(
+                item.id
+              )}
+            </b>
+          </td>
+
+          <td class="nama">
+            ${escapeHtml(
+              item.nama
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.kelas
+            )}
+          </td>
+
+          <td>
+
+            <select
+              class="status-select"
+              id="status_${index}"
+            >
+
+              <option value="HADIR">
+                HADIR
+              </option>
+
+              <option value="SAKIT">
+                SAKIT
+              </option>
+
+              <option value="IZIN">
+                IZIN
+              </option>
+
+              <option value="ALPA">
+                ALPA
+              </option>
+
+            </select>
+
+          </td>
+
+          <td>
+
+            <button
+              class="simpan"
+              onclick="simpanStatus(
+                '${escapeJs(item.id)}',
+                '${index}'
+              )"
+            >
+
+              💾 SIMPAN
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
+
+
+  html += `
+
+      </tbody>
+
+    </table>
+
+  `;
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+/****************************************************
+ * SIMPAN STATUS
+ ****************************************************/
+
+function simpanStatus(
+  id,
+  index
+) {
+
+
+  const tanggal =
+    document.getElementById(
+      "tanggal"
+    ).value;
+
+
+  const select =
+    document.getElementById(
+      "status_" +
+      index
+    );
+
+
+  const status =
+    select.value;
+
+
+  if (!tanggal) {
+
+    alert(
+      "Tanggal belum dipilih."
+    );
+
+    return;
+
+  }
+
+
+  const buttons =
+    document.querySelectorAll(
+      ".simpan"
+    );
+
+
+  buttons[index].disabled =
+    true;
+
+
+  buttons[index].textContent =
+    "⏳";
+
+
+  const callbackName =
+    "statusCallback_" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  let selesai =
+    false;
+
+
+  window[callbackName] =
+    function(data) {
+
+
+      selesai =
+        true;
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      script.remove();
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch(e) {}
+
+
+      buttons[index].disabled =
+        false;
+
+
+      buttons[index].textContent =
+        "💾 SIMPAN";
+
+
+      if (
+        data &&
+        data.success === true
+      ) {
+
+        infoBerhasil(
+          data.message
+        );
+
+      }
+
+      else {
+
+        tampilkanError(
+          data.message ||
+          "Gagal menyimpan status."
+        );
+
+      }
+
+    };
+
+
+  const timeout =
+    setTimeout(
+      function() {
+
+        if (selesai) {
+          return;
+        }
+
+
+        selesai =
+          true;
+
+
+        script.remove();
+
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        }
+
+        catch(e) {}
+
+
+        buttons[index].disabled =
+          false;
+
+
+        buttons[index].textContent =
+          "💾 SIMPAN";
+
+
+        tampilkanError(
+          "Server tidak dapat dihubungi."
+        );
+
+      },
+      15000
+    );
+
+
+  const url =
+    API_URL +
+
+    "?action=status" +
+
+    "&id=" +
+    encodeURIComponent(
+      id
+    ) +
+
+    "&tanggal=" +
+    encodeURIComponent(
+      tanggal
+    ) +
+
+    "&status=" +
+    encodeURIComponent(
+      status
+    ) +
+
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  script.src =
+    url;
+
+
+  script.onerror =
+    function() {
+
+      clearTimeout(
+        timeout
+      );
+
+
+      if (selesai) {
+        return;
+      }
+
+
+      selesai =
+        true;
+
+
+      script.remove();
+
+
+      buttons[index].disabled =
+        false;
+
+
+      buttons[index].textContent =
+        "💾 SIMPAN";
+
+
+      tampilkanError(
+        "Gagal menghubungi server."
+      );
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/****************************************************
+ * PESAN BERHASIL
+ ****************************************************/
+
+function infoBerhasil(
+  message
+) {
+
+  const info =
+    document.getElementById(
+      "info"
+    );
+
+
+  info.className =
+    "info success";
+
+
+  info.textContent =
+    "✅ " +
+    message;
+
+
+  setTimeout(
+    function() {
+
+      info.className =
+        "info";
+
+    },
+    3000
+  );
+
+}
+
+
+/****************************************************
+ * ERROR
+ ****************************************************/
+
+function tampilkanError(
+  message
+) {
+
+
+  document
+    .getElementById(
+      "loading"
+    )
+    .style.display =
+    "none";
+
+
+  const info =
+    document.getElementById(
+      "info"
+    );
+
+
+  info.className =
+    "info error";
+
+
+  info.textContent =
+    "❌ " +
+    message;
+
+}
+
+
+/****************************************************
+ * ESCAPE HTML
+ ****************************************************/
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/****************************************************
+ * ESCAPE JAVASCRIPT
+ ****************************************************/
+
+function escapeJs(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+  .replace(
+    /\\/g,
+    "\\\\"
+  )
+  .replace(
+    /'/g,
+    "\\'"
+  );
+
+}
+
+
+/****************************************************
+ * START
+ ****************************************************/
+
+setTanggalHariIni();
+
+loadKelas();
+
+</script>
+
+
+</body>
+
+</html>
