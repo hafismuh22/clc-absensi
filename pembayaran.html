@@ -1,0 +1,3399 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <base target="_top">
+
+  <!-- Paksa layout tetap bergaya desktop di semua perangkat. -->
+  <!--
+    Layout dasar tetap desktop 1250px.
+    Di HP browser akan menampilkan halaman sebagai desktop yang diperkecil,
+    lalu pengguna tetap bisa pinch-to-zoom untuk memperbesar.
+  -->
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=5.0, user-scalable=yes">
+
+  <title>
+    Informasi Pembayaran Siswa
+  </title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background: #f4f7fb;
+
+      color: #1e293b;
+
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .header {
+
+      background:
+        linear-gradient(
+          135deg,
+          #0d47a1,
+          #1976d2
+        );
+
+      color: white;
+
+      padding: 20px;
+
+      box-shadow:
+        0 4px 15px
+        rgba(0,0,0,.12);
+
+    }
+
+
+    .header-inner {
+
+      max-width: 1250px;
+
+      margin: auto;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 15px;
+
+    }
+
+
+    .logo {
+
+      width: 58px;
+
+      height: 58px;
+
+      background: white;
+
+      color: #0d47a1;
+
+      border-radius: 15px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-weight: bold;
+
+      font-size: 22px;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.15);
+
+    }
+
+
+    .header-title {
+
+      font-size: 22px;
+
+      font-weight: 700;
+
+    }
+
+
+    .header-school {
+
+      margin-top: 4px;
+
+      opacity: .9;
+
+      font-size: 14px;
+
+    }
+
+
+    /* =====================================================
+       CONTAINER
+    ===================================================== */
+
+    .container {
+
+      max-width: 1250px;
+
+      margin: auto;
+
+      padding: 25px 18px 50px;
+
+    }
+
+
+    /* =====================================================
+       PAGE NAVIGATION
+    ===================================================== */
+
+    .page-nav {
+
+      display: flex;
+
+      gap: 10px;
+
+      margin-bottom: 20px;
+
+      flex-wrap: wrap;
+
+    }
+
+
+    .nav-btn {
+
+      border: none;
+
+      padding: 11px 18px;
+
+      border-radius: 10px;
+
+      background: white;
+
+      color: #475569;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 2px 8px
+        rgba(0,0,0,.07);
+
+    }
+
+
+    .nav-btn.active {
+
+      background: #1565c0;
+
+      color: white;
+
+    }
+
+
+    /* =====================================================
+       PAGE
+    ===================================================== */
+
+    .page {
+
+      display: none;
+
+    }
+
+
+    .page.active {
+
+      display: block;
+
+    }
+
+
+    /* =====================================================
+       STAT CARDS
+    ===================================================== */
+
+    .stats {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 18px;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .stat-card {
+
+      background: white;
+
+      border-radius: 18px;
+
+      padding: 22px;
+
+      box-shadow:
+        0 4px 15px
+        rgba(15,23,42,.07);
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+
+    .stat-card::after {
+
+      content: '';
+
+      position: absolute;
+
+      width: 90px;
+
+      height: 90px;
+
+      background:
+        rgba(21,101,192,.08);
+
+      border-radius: 50%;
+
+      right: -25px;
+
+      top: -25px;
+
+    }
+
+
+    .stat-label {
+
+      font-size: 14px;
+
+      color: #64748b;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    .stat-number {
+
+      font-size: 34px;
+
+      font-weight: 800;
+
+      color: #0d47a1;
+
+    }
+
+
+    .stat-link {
+
+      display: inline-block;
+
+      margin-top: 10px;
+
+      color: #1565c0;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+    }
+
+
+    /* =====================================================
+       TOP PAYMENT
+    ===================================================== */
+
+    .section {
+
+      background: white;
+
+      border-radius: 18px;
+
+      padding: 20px;
+
+      margin-bottom: 20px;
+
+      box-shadow:
+        0 4px 15px
+        rgba(15,23,42,.07);
+
+    }
+
+
+    .section-title {
+
+      font-size: 19px;
+
+      font-weight: 700;
+
+      margin-bottom: 15px;
+
+    }
+
+
+    .top-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 15px;
+
+    }
+
+
+    .top-list {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 8px;
+
+    }
+
+
+    .top-item {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 12px;
+
+      background: #f8fafc;
+
+      border-radius: 10px;
+
+    }
+
+
+    .rank {
+
+      width: 32px;
+
+      height: 32px;
+
+      border-radius: 50%;
+
+      background: #e3f2fd;
+
+      color: #1565c0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-weight: bold;
+
+      flex-shrink: 0;
+
+    }
+
+
+    .top-info {
+
+      flex: 1;
+
+      min-width: 0;
+
+    }
+
+
+    .top-name {
+
+      font-weight: 700;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+    }
+
+
+    .top-class {
+
+      color: #64748b;
+
+      font-size: 12px;
+
+      margin-top: 3px;
+
+    }
+
+
+    .payment-count {
+
+      font-weight: bold;
+
+      color: #15803d;
+
+      font-size: 13px;
+
+    }
+
+
+    /* =====================================================
+       FILTER
+    ===================================================== */
+
+    .filter-area {
+
+      display: grid;
+
+      grid-template-columns:
+        2fr 1fr 1fr auto;
+
+      gap: 10px;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    input,
+    select {
+
+      width: 100%;
+
+      padding: 12px 14px;
+
+      border: 1px solid #dbe3ee;
+
+      border-radius: 10px;
+
+      outline: none;
+
+      font-size: 14px;
+
+      background: white;
+
+    }
+
+
+    input:focus,
+    select:focus {
+
+      border-color: #1976d2;
+
+      box-shadow:
+        0 0 0 3px
+        rgba(25,118,210,.08);
+
+    }
+
+
+    /* =====================================================
+       TOMBOL CETAK
+    ===================================================== */
+
+    .print-btn {
+
+      border: none;
+
+      padding: 12px 18px;
+
+      border-radius: 10px;
+
+      background: #0d47a1;
+
+      color: white;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      white-space: nowrap;
+
+      transition: .2s;
+
+    }
+
+
+    .print-btn:hover {
+
+      background: #1565c0;
+
+      transform: translateY(-1px);
+
+    }
+
+
+    /* =====================================================
+       TABLE
+    ===================================================== */
+
+    .table-wrapper {
+
+      overflow-x: auto;
+
+      border-radius: 12px;
+
+      border: 1px solid #e2e8f0;
+
+    }
+
+
+    table {
+
+      width: 100%;
+
+      border-collapse: collapse;
+
+      min-width: 1250px;
+
+      background: white;
+
+    }
+
+
+    th {
+
+      background: #0d47a1;
+
+      color: white;
+
+      padding: 12px 10px;
+
+      font-size: 12px;
+
+      white-space: nowrap;
+
+      text-align: center;
+
+    }
+
+
+    td {
+
+      padding: 10px;
+
+      border-bottom:
+        1px solid #edf2f7;
+
+      font-size: 13px;
+
+      text-align: center;
+
+      white-space: nowrap;
+
+    }
+
+
+    td.name-cell {
+
+      text-align: left;
+
+      font-weight: 600;
+
+    }
+
+
+    tr:hover td {
+
+      background: #f8fbff;
+
+    }
+
+
+    .paid {
+
+      color: #16a34a;
+
+      font-size: 19px;
+
+      font-weight: bold;
+
+    }
+
+
+    .unpaid {
+
+      color: #cbd5e1;
+
+      font-size: 18px;
+
+    }
+
+
+    /* =====================================================
+       DETAIL TABLE
+    ===================================================== */
+
+    .detail-table {
+
+      min-width: 1100px;
+
+    }
+
+
+    .photo {
+
+      width: 55px;
+
+      height: 55px;
+
+      object-fit: cover;
+
+      border-radius: 12px;
+
+      border: 2px solid #e2e8f0;
+
+      cursor: pointer;
+
+      background: #f1f5f9;
+
+    }
+
+
+    .no-photo {
+
+      width: 55px;
+
+      height: 55px;
+
+      border-radius: 12px;
+
+      background: #e2e8f0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: #94a3b8;
+
+      font-size: 20px;
+
+    }
+
+
+    /* =====================================================
+       EMPTY / LOADING
+    ===================================================== */
+
+    .loading {
+
+      text-align: center;
+
+      padding: 50px;
+
+      color: #64748b;
+
+    }
+
+
+    .empty {
+
+      text-align: center;
+
+      padding: 30px;
+
+      color: #64748b;
+
+    }
+
+
+    /* =====================================================
+       MODAL FOTO
+    ===================================================== */
+
+    .modal {
+
+      display: none;
+
+      position: fixed;
+
+      inset: 0;
+
+      background:
+        rgba(0,0,0,.75);
+
+      z-index: 9999;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 20px;
+
+    }
+
+
+    .modal.show {
+
+      display: flex;
+
+    }
+
+
+    .modal img {
+
+      max-width: 95%;
+
+      max-height: 90vh;
+
+      border-radius: 15px;
+
+      box-shadow:
+        0 10px 40px
+        rgba(0,0,0,.3);
+
+    }
+
+
+    .modal-close {
+
+      position: absolute;
+
+      right: 20px;
+
+      top: 15px;
+
+      color: white;
+
+      font-size: 35px;
+
+      cursor: pointer;
+
+    }
+
+
+    /* =====================================================
+       AREA CETAK / PDF
+    ===================================================== */
+
+    #printArea {
+
+      display: none;
+
+    }
+
+
+    .print-header {
+
+      width: 100%;
+
+      text-align: center;
+
+      margin-bottom: 12px;
+
+    }
+
+
+    .print-title {
+
+      font-size: 20px;
+
+      font-weight: 700;
+
+      color: #0d47a1;
+
+    }
+
+
+    .print-school {
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+      margin-top: 3px;
+
+    }
+
+
+    .print-line {
+
+      border-bottom: 2px solid #0d47a1;
+
+      margin: 9px 0;
+
+    }
+
+
+    .print-info {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      font-size: 10px;
+
+      margin-bottom: 10px;
+
+      color: #334155;
+
+    }
+
+
+    .print-table {
+
+      width: 100%;
+
+      max-width: 100%;
+
+      min-width: 0 !important;
+
+      border-collapse: collapse;
+
+      table-layout: fixed;
+
+      background: white;
+
+    }
+
+
+    .print-table th {
+
+      background: #0d47a1 !important;
+
+      color: white !important;
+
+      border: 1px solid #333;
+
+      padding: 6px 3px;
+
+      font-size: 8px;
+
+      text-align: center;
+
+      white-space: nowrap;
+
+    }
+
+
+    .print-table td {
+
+      border: 1px solid #555;
+
+      padding: 5px 3px;
+
+      font-size: 8px;
+
+      text-align: center;
+
+      white-space: normal;
+
+      vertical-align: middle;
+
+    }
+
+
+    /* ID */
+
+    .print-table th:nth-child(1),
+    .print-table td:nth-child(1) {
+
+      width: 6%;
+
+    }
+
+
+    /* NAMA */
+
+    .print-table th:nth-child(2),
+    .print-table td:nth-child(2) {
+
+      width: 20%;
+
+      text-align: left;
+
+    }
+
+
+    /* KELAS */
+
+    .print-table th:nth-child(3),
+    .print-table td:nth-child(3) {
+
+      width: 7%;
+
+    }
+
+
+    /* ESTATE */
+
+    .print-table th:nth-child(4),
+    .print-table td:nth-child(4) {
+
+      width: 17%;
+
+      text-align: left;
+
+    }
+
+
+    /* JANUARI - DESEMBER */
+
+    .print-table th:nth-child(n+5),
+    .print-table td:nth-child(n+5) {
+
+      width: 4.166%;
+
+    }
+
+
+    .print-table .paid {
+
+      color: #15803d !important;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+    }
+
+
+    .print-table .unpaid {
+
+      color: #94a3b8 !important;
+
+      font-size: 12px;
+
+    }
+
+
+    .print-footer {
+
+      margin-top: 10px;
+
+      text-align: right;
+
+      font-size: 9px;
+
+      color: #64748b;
+
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    footer {
+
+      text-align: center;
+
+      color: #94a3b8;
+
+      font-size: 12px;
+
+      margin-top: 25px;
+
+    }
+
+
+    /* =====================================================
+       DESKTOP MODE - SEMUA PERANGKAT
+    ===================================================== */
+
+    html {
+      width: 100%;
+      min-width: 0;
+      overflow-x: hidden;
+      /* Cegah browser HP membesarkan teks tertentu secara otomatis. */
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      width: 1250px;
+      min-width: 1250px;
+      margin: 0;
+      overflow-x: hidden;
+      transform-origin: top left;
+      /* Pertahankan ukuran font desktop agar ikut mengecil bersama zoom. */
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    /*
+      Skala desktop dihitung oleh JavaScript agar seluruh halaman 1250px
+      selalu masuk ke lebar layar HP tanpa horizontal scroll.
+    */
+    #desktopPage {
+      width: 1250px;
+      min-width: 1250px;
+    }
+
+    /* Area pembayaran selalu mempertahankan ukuran desktop. */
+    #dashboard .section {
+      min-width: 0;
+    }
+
+    #paymentTable {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #paymentTable table {
+      min-width: 1250px;
+    }
+
+    #paymentTable .filter-area {
+      min-width: 1100px;
+    }
+
+    /* Jangan ubah layout menjadi 1 kolom di HP. */
+    .stats {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .top-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .filter-area {
+      grid-template-columns: 2fr 1fr 1fr auto !important;
+    }
+
+    .print-btn {
+      width: auto !important;
+    }
+
+    .header-title {
+      font-size: 22px !important;
+    }
+
+    .header-school {
+      font-size: 14px !important;
+    }
+
+    .container {
+      padding: 25px 18px 50px !important;
+    }
+
+    .stat-card {
+      padding: 22px !important;
+    }
+
+    .stat-number {
+      font-size: 34px !important;
+    }
+
+    /* =====================================================
+       MOBILE TEXT PROTECTION
+       Jangan biarkan browser HP melakukan text autosizing.
+       Seluruh teks harus ikut skala desktop yang dihitung JS.
+    ===================================================== */
+    *, *::before, *::after {
+      -webkit-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
+    }
+
+    .section-title,
+    .stat-label,
+    .stat-number,
+    .stat-link,
+    .top-name,
+    .top-class,
+    .payment-count,
+    th,
+    td,
+    input,
+    select,
+    button {
+      text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+        /* =====================================================
+       PRINT
+    ===================================================== */
+
+    @page {
+
+      size: A4 landscape;
+
+      margin: 10mm;
+
+    }
+
+
+    @media print {
+
+      html {
+        zoom: 1 !important;
+      }
+
+      body {
+        zoom: 1 !important;
+        min-width: 0 !important;
+        width: auto !important;
+      }
+
+      html,
+      body {
+
+        background: white !important;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+      }
+
+
+      /* Sembunyikan seluruh tampilan aplikasi */
+
+      body > * {
+
+        display: none !important;
+
+      }
+
+
+      /* Tampilkan hanya area PDF */
+
+      #printArea {
+
+        display: block !important;
+
+        width: 100% !important;
+
+        max-width: none !important;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+      }
+
+
+      .print-table {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+      }
+
+
+      /* Ulangi header tabel di setiap halaman */
+
+      .print-table thead {
+
+        display: table-header-group;
+
+      }
+
+
+      /* Jangan memotong baris siswa */
+
+      .print-table tr {
+
+        break-inside: avoid;
+
+        page-break-inside: avoid;
+
+      }
+
+
+      .print-table th {
+
+        print-color-adjust: exact;
+
+        -webkit-print-color-adjust: exact;
+
+      }
+
+
+      .print-table td {
+
+        print-color-adjust: exact;
+
+        -webkit-print-color-adjust: exact;
+
+      }
+
+
+      .print-title {
+
+        color: #0d47a1 !important;
+
+      }
+
+
+      .print-line {
+
+        border-color: #0d47a1 !important;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <!-- DESKTOP-ONLY CANVAS: halaman tidak berubah menjadi layout mobile. -->
+  <div class="desktop-canvas">
+
+<!-- VERSI GOOGLE SITES/BLOGGER: tampilan dipertahankan. Data dibaca dari API Web App Google Apps Script. -->
+
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="header">
+
+    <div class="header-inner">
+
+      <div class="logo">
+        M3
+      </div>
+
+      <div>
+
+        <div class="header-title">
+          INFORMASI PEMBAYARAN SISWA
+        </div>
+
+        <div class="header-school">
+          CLC PERMODALAN TKB MORISEM 3
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <main class="container">
+
+
+    <!-- ===================================================
+         NAVIGATION
+    ==================================================== -->
+
+    <div class="page-nav">
+
+      <button
+        class="nav-btn active"
+        onclick="showPage('dashboard', this)">
+
+        Dashboard
+
+      </button>
+
+
+      <button
+        class="nav-btn"
+        onclick="showPage('students', this)">
+
+        Detail Siswa
+
+      </button>
+
+
+      <button
+        class="nav-btn"
+        onclick="showPage('teachers', this)">
+
+        Detail Guru
+
+      </button>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         DASHBOARD
+    ==================================================== -->
+
+    <section
+      id="dashboard"
+      class="page active">
+
+
+      <div class="stats">
+
+
+        <!-- SISWA -->
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            JUMLAH SISWA
+          </div>
+
+          <div
+            id="totalStudents"
+            class="stat-number">
+
+            0
+
+          </div>
+
+          <div
+            class="stat-link"
+            onclick="goToStudents()">
+
+            Lihat Detail Siswa →
+
+          </div>
+
+        </div>
+
+
+        <!-- GURU -->
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            JUMLAH GURU
+          </div>
+
+          <div
+            id="totalTeachers"
+            class="stat-number">
+
+            0
+
+          </div>
+
+          <div
+            class="stat-link"
+            onclick="goToTeachers()">
+
+            Lihat Detail Guru →
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+
+      <!-- =================================================
+           TOP PAYMENT
+      ================================================== -->
+
+      <div class="section">
+
+        <div class="section-title">
+
+          Top 10 Pembayaran Siswa
+
+        </div>
+
+
+        <div class="top-grid">
+
+          <div
+            id="topLeft"
+            class="top-list">
+
+          </div>
+
+
+          <div
+            id="topRight"
+            class="top-list">
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           PEMBAYARAN
+      ================================================== -->
+
+      <div class="section">
+
+        <div class="section-title">
+
+          Data Pembayaran Siswa
+
+        </div>
+
+
+        <div class="filter-area">
+
+
+          <input
+            type="text"
+            id="searchPayment"
+            placeholder="Cari nama siswa..."
+            oninput="renderPaymentTable()">
+
+
+          <select
+            id="filterClass"
+            onchange="renderPaymentTable()">
+
+            <option value="">
+              Semua Kelas
+            </option>
+
+          </select>
+
+
+          <select
+            id="filterEstate"
+            onchange="renderPaymentTable()">
+
+            <option value="">
+              Semua Estate
+            </option>
+
+          </select>
+
+
+          <!-- TOMBOL CETAK -->
+
+          <button
+            type="button"
+            class="print-btn"
+            onclick="printPaymentPDF()">
+
+            Cetak / PDF
+
+          </button>
+
+
+        </div>
+
+
+        <div
+          id="paymentTable"
+          class="table-wrapper">
+
+          <div class="loading">
+            Memuat data...
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- ===================================================
+         DETAIL SISWA
+    ==================================================== -->
+
+    <section
+      id="students"
+      class="page">
+
+
+      <div class="section">
+
+        <div class="section-title">
+
+          DATA DETAIL SISWA
+
+        </div>
+
+
+        <div class="filter-area">
+
+          <input
+            type="text"
+            id="searchStudent"
+            placeholder="Cari nama, NISN, ID..."
+            oninput="renderStudentDetails()">
+
+
+          <select
+            id="filterStudentClass"
+            onchange="renderStudentDetails()">
+
+            <option value="">
+              Semua Kelas
+            </option>
+
+          </select>
+
+
+          <input
+            type="text"
+            id="searchStudentEstate"
+            placeholder="Cari estate/alamat..."
+            oninput="renderStudentDetails()">
+
+        </div>
+
+
+        <div
+          id="studentTable"
+          class="table-wrapper">
+
+          <div class="loading">
+            Memuat data siswa...
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- ===================================================
+         DETAIL GURU
+    ==================================================== -->
+
+    <section
+      id="teachers"
+      class="page">
+
+
+      <div class="section">
+
+        <div class="section-title">
+
+          DATA DETAIL GURU
+
+        </div>
+
+
+        <div class="filter-area">
+
+          <input
+            type="text"
+            id="searchTeacher"
+            placeholder="Cari nama, ID, alamat..."
+            oninput="renderTeacherDetails()">
+
+
+          <div></div>
+
+          <div></div>
+
+        </div>
+
+
+        <div
+          id="teacherTable"
+          class="table-wrapper">
+
+          <div class="loading">
+            Memuat data guru...
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+
+    <footer>
+
+      CLC PERMODALAN © 2026
+
+    </footer>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       AREA KHUSUS CETAK / PDF
+  ====================================================== -->
+
+  <div id="printArea">
+
+    <div class="print-header">
+
+      <div class="print-title">
+        LAPORAN PEMBAYARAN SISWA
+      </div>
+
+      <div class="print-school">
+        CLC PERMODALAN
+      </div>
+
+      <div class="print-line"></div>
+
+      <div class="print-info">
+
+        <div>
+
+          <strong>
+            Filter:
+          </strong>
+
+          <span id="printFilter">
+            Semua Data
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <strong>
+            Tanggal Cetak:
+          </strong>
+
+          <span id="printDate">
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="printTableContainer">
+    </div>
+
+
+    <div class="print-footer">
+
+      CLC PERMODALAN © 2026
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       PHOTO MODAL
+  ====================================================== -->
+
+  <div
+    id="photoModal"
+    class="modal"
+    onclick="closePhoto()">
+
+
+    <span class="modal-close">
+      ×
+    </span>
+
+
+    <img
+      id="modalImage"
+      src=""
+      onclick="event.stopPropagation()">
+
+  </div>
+
+
+
+<script>
+
+
+/* ========================================================
+   GLOBAL DATA
+======================================================== */
+
+let DATA = {
+
+  students: [],
+
+  topPayments: [],
+
+  classes: [],
+
+  estates: [],
+
+  studentDetails: [],
+
+  teacherDetails: []
+
+};
+
+
+
+/* ========================================================
+   DESKTOP SCALE
+   Tampilan selalu desktop, tetapi di HP diperkecil agar seluruh
+   konten terlihat sekaligus. Pengguna tetap dapat pinch-to-zoom.
+======================================================== */
+(function setupDesktopScale() {
+
+  const DESIGN_WIDTH = 1250;
+
+  function applyDesktopScale() {
+    const body = document.body;
+    if (!body) return;
+
+    // Pada desktop jangan diperkecil. Pada layar sempit, scale mengikuti lebar layar.
+    const availableWidth = Math.max(1, window.innerWidth);
+    const scale = Math.min(1, availableWidth / DESIGN_WIDTH);
+
+    // CSS zoom membuat ukuran/layout ikut mengecil sehingga tidak menimbulkan
+    // ruang horizontal besar seperti transform biasa.
+    body.style.zoom = String(scale);
+    body.style.width = DESIGN_WIDTH + 'px';
+    body.style.minWidth = DESIGN_WIDTH + 'px';
+
+    // Simpan skala agar bagian lain mudah mengetahui ukuran tampilan.
+    document.documentElement.style.setProperty('--desktop-scale', scale);
+  }
+
+  window.addEventListener('load', applyDesktopScale);
+  window.addEventListener('resize', applyDesktopScale);
+  window.addEventListener('orientationchange', function() {
+    setTimeout(applyDesktopScale, 100);
+  });
+
+  // Jalankan secepat mungkin jika body sudah tersedia.
+  if (document.body) applyDesktopScale();
+  else document.addEventListener('DOMContentLoaded', applyDesktopScale);
+})();
+
+
+/* ========================================================
+   LOAD DATA
+======================================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+
+    loadData();
+
+  }
+);
+
+
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbw50eMZjCnY2ZNwtDxhnBXvuOCmBqCxqB_ik8w8gLMEIU_rLcW4T4WimIN79NLTSunG/exec';
+
+
+function loadData() {
+
+  if (!API_URL || API_URL.indexOf('PASTE_URL') !== -1) {
+    alert(
+      'URL API Apps Script belum dimasukkan.\n\n' +
+      'Buka bagian API_URL pada kode Blogger lalu masukkan URL Web App Apps Script.'
+    );
+    return;
+  }
+
+  const callbackName =
+    'clcPermodalanCallback_' + Date.now();
+
+  window[callbackName] = function(response) {
+
+    try {
+
+      if (!response || !response.ok) {
+        throw new Error(
+          response && response.error
+            ? response.error
+            : 'API tidak mengembalikan data.'
+        );
+      }
+
+      DATA = response.data || {};
+
+      DATA.students = Array.isArray(DATA.students) ? DATA.students : [];
+      DATA.topPayments = Array.isArray(DATA.topPayments) ? DATA.topPayments : [];
+      DATA.classes = Array.isArray(DATA.classes) ? DATA.classes : [];
+      DATA.estates = Array.isArray(DATA.estates) ? DATA.estates : [];
+      DATA.months = Array.isArray(DATA.months) ? DATA.months : [];
+      DATA.studentDetails = Array.isArray(DATA.studentDetails) ? DATA.studentDetails : [];
+      DATA.teacherDetails = Array.isArray(DATA.teacherDetails) ? DATA.teacherDetails : [];
+
+      document
+        .getElementById('totalStudents')
+        .textContent = DATA.totalStudents || 0;
+
+      document
+        .getElementById('totalTeachers')
+        .textContent = DATA.totalTeachers || 0;
+
+      populateFilters();
+      renderTopPayments();
+      renderPaymentTable();
+      renderStudentDetails();
+      renderTeacherDetails();
+
+    } catch (error) {
+
+      alert(
+        'Gagal memproses data API:\n' +
+        (error.message || error)
+      );
+
+    } finally {
+
+      delete window[callbackName];
+
+      const oldScript =
+        document.getElementById(callbackName);
+
+      if (oldScript) {
+        oldScript.remove();
+      }
+    }
+  };
+
+
+  const script = document.createElement('script');
+
+  script.id = callbackName;
+
+  script.src =
+    API_URL +
+    (API_URL.indexOf('?') === -1 ? '?' : '&') +
+    'callback=' + encodeURIComponent(callbackName) +
+    '&t=' + Date.now();
+
+
+  script.onerror = function() {
+
+    alert(
+      'Gagal menghubungi API Apps Script.\n\n' +
+      'Periksa URL Web App, deployment, dan pastikan akses disetel ke Anyone.'
+    );
+
+    delete window[callbackName];
+    script.remove();
+  };
+
+  document.body.appendChild(script);
+}
+
+
+/* ========================================================
+   NAVIGATION
+======================================================== */
+
+function showPage(
+  pageId,
+  button
+) {
+
+  document
+    .querySelectorAll('.page')
+    .forEach(function(page) {
+
+      page.classList.remove(
+        'active'
+      );
+
+    });
+
+
+  document
+    .getElementById(pageId)
+    .classList.add('active');
+
+
+  document
+    .querySelectorAll('.nav-btn')
+    .forEach(function(btn) {
+
+      btn.classList.remove(
+        'active'
+      );
+
+    });
+
+
+  if (button) {
+
+    button.classList.add(
+      'active'
+    );
+
+  }
+
+}
+
+
+function goToStudents() {
+
+  showPage(
+    'students',
+    document
+      .querySelectorAll('.nav-btn')[1]
+  );
+
+}
+
+
+function goToTeachers() {
+
+  showPage(
+    'teachers',
+    document
+      .querySelectorAll('.nav-btn')[2]
+  );
+
+}
+
+
+
+/* ========================================================
+   FILTER
+======================================================== */
+
+function populateFilters() {
+
+  const classSelect =
+    document.getElementById(
+      'filterClass'
+    );
+
+
+  const estateSelect =
+    document.getElementById(
+      'filterEstate'
+    );
+
+
+  DATA.classes.forEach(
+    function(value) {
+
+      const option =
+        document.createElement(
+          'option'
+        );
+
+      option.value = value;
+
+      option.textContent = value;
+
+      classSelect.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  DATA.estates.forEach(
+    function(value) {
+
+      const option =
+        document.createElement(
+          'option'
+        );
+
+      option.value = value;
+
+      option.textContent = value;
+
+      estateSelect.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  const studentClass =
+    document.getElementById(
+      'filterStudentClass'
+    );
+
+
+  DATA.classes.forEach(
+    function(value) {
+
+      const option =
+        document.createElement(
+          'option'
+        );
+
+      option.value = value;
+
+      option.textContent = value;
+
+      studentClass.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
+
+
+
+/* ========================================================
+   TOP PAYMENT
+======================================================== */
+
+function renderTopPayments() {
+
+  const left =
+    document.getElementById(
+      'topLeft'
+    );
+
+
+  const right =
+    document.getElementById(
+      'topRight'
+    );
+
+
+  left.innerHTML = '';
+
+  right.innerHTML = '';
+
+
+  if (
+    !DATA.topPayments ||
+    DATA.topPayments.length === 0
+  ) {
+
+    left.innerHTML =
+      '<div class="empty">' +
+      'Belum ada data pembayaran.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  DATA.topPayments.forEach(
+    function(student, index) {
+
+
+      const item =
+        document.createElement(
+          'div'
+        );
+
+
+      item.className =
+        'top-item';
+
+
+      item.innerHTML =
+
+        '<div class="rank">' +
+          (index + 1) +
+        '</div>' +
+
+        '<div class="top-info">' +
+
+          '<div class="top-name">' +
+            escapeHTML(
+              student.name
+            ) +
+          '</div>' +
+
+          '<div class="top-class">' +
+            'Kelas ' +
+            escapeHTML(
+              student.className || '-'
+            ) +
+          '</div>' +
+
+        '</div>' +
+
+        '<div class="payment-count">' +
+          student.paymentCount +
+          '/12' +
+        '</div>';
+
+
+      if (index < 5) {
+
+        left.appendChild(
+          item
+        );
+
+      } else {
+
+        right.appendChild(
+          item
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+
+/* ========================================================
+   NORMALISASI STATUS PEMBAYARAN
+   Mendukung boolean, angka, dan teks dari Google Sheet/API.
+======================================================== */
+function isPaid(value) {
+
+  if (value === true || value === 1) return true;
+
+  if (value === false || value === 0 || value === null || value === undefined) {
+    return false;
+  }
+
+  const text = String(value).trim().toLowerCase();
+
+  return [
+    'true',
+    'ya',
+    'yes',
+    'sudah',
+    'lunas',
+    'paid',
+    'terbayar',
+    '1',
+    'check',
+    'v'
+  ].includes(text);
+}
+
+/* ========================================================
+   PAYMENT TABLE
+======================================================== */
+
+function renderPaymentTable() {
+
+  const container =
+    document.getElementById(
+      'paymentTable'
+    );
+
+
+  const search =
+    document
+      .getElementById(
+        'searchPayment'
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const classFilter =
+    document
+      .getElementById(
+        'filterClass'
+      )
+      .value;
+
+
+  const estateFilter =
+    document
+      .getElementById(
+        'filterEstate'
+      )
+      .value;
+
+
+  const filtered =
+    DATA.students.filter(
+      function(student) {
+
+
+        const matchSearch =
+
+          !search ||
+
+          String(
+            student.name
+          )
+          .toLowerCase()
+          .includes(search) ||
+
+          String(
+            student.id
+          )
+          .toLowerCase()
+          .includes(search);
+
+
+        const matchClass =
+
+          !classFilter ||
+
+          String(
+            student.className
+          ) === classFilter;
+
+
+        const matchEstate =
+
+          !estateFilter ||
+
+          String(
+            student.estate
+          ) === estateFilter;
+
+
+        return (
+          matchSearch &&
+          matchClass &&
+          matchEstate
+        );
+
+      }
+    );
+
+
+  if (
+    filtered.length === 0
+  ) {
+
+    container.innerHTML =
+      '<div class="empty">' +
+      'Data siswa tidak ditemukan.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  let html =
+
+    '<table>' +
+
+      '<thead>' +
+
+        '<tr>' +
+
+          '<th>ID</th>' +
+
+          '<th>NAMA SISWA</th>' +
+
+          '<th>KELAS</th>' +
+
+          '<th>ESTATE</th>';
+
+
+  DATA.months.forEach(
+    function(month) {
+
+      html +=
+        '<th>' +
+        escapeHTML(month) +
+        '</th>';
+
+    }
+  );
+
+
+  html +=
+
+        '</tr>' +
+
+      '</thead>' +
+
+      '<tbody>';
+
+
+  filtered.forEach(
+    function(student) {
+
+
+      html +=
+
+        '<tr>' +
+
+          '<td>' +
+            escapeHTML(
+              student.id || '-'
+            ) +
+          '</td>' +
+
+          '<td class="name-cell">' +
+            escapeHTML(
+              student.name
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.className || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.estate || '-'
+            ) +
+          '</td>';
+
+
+      DATA.months.forEach(
+        function(month) {
+
+
+          const paid = isPaid(
+            student.payments && student.payments[month]
+          );
+
+
+          html +=
+
+            '<td>' +
+
+              (
+                paid
+                  ? '<span class="paid">&#10003;</span>'
+                  : '<span class="unpaid">&mdash;</span>'
+              ) +
+
+            '</td>';
+
+        }
+      );
+
+
+      html +=
+        '</tr>';
+
+    }
+  );
+
+
+  html +=
+
+      '</tbody>' +
+
+    '</table>';
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+
+/* ========================================================
+   CETAK / EXPORT PDF
+======================================================== */
+
+function printPaymentPDF() {
+
+
+  /* ======================================================
+     AMBIL FILTER
+  ====================================================== */
+
+  const search =
+    document
+      .getElementById(
+        'searchPayment'
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const classFilter =
+    document
+      .getElementById(
+        'filterClass'
+      )
+      .value;
+
+
+  const estateFilter =
+    document
+      .getElementById(
+        'filterEstate'
+      )
+      .value;
+
+
+
+  /* ======================================================
+     FILTER DATA SAMA SEPERTI TABEL DASHBOARD
+  ====================================================== */
+
+  const filtered =
+    DATA.students.filter(
+      function(student) {
+
+
+        const matchSearch =
+
+          !search ||
+
+          String(
+            student.name
+          )
+          .toLowerCase()
+          .includes(search) ||
+
+          String(
+            student.id
+          )
+          .toLowerCase()
+          .includes(search);
+
+
+        const matchClass =
+
+          !classFilter ||
+
+          String(
+            student.className
+          ) === classFilter;
+
+
+        const matchEstate =
+
+          !estateFilter ||
+
+          String(
+            student.estate
+          ) === estateFilter;
+
+
+        return (
+          matchSearch &&
+          matchClass &&
+          matchEstate
+        );
+
+      }
+    );
+
+
+
+  /* ======================================================
+     JIKA TIDAK ADA DATA
+  ====================================================== */
+
+  if (
+    filtered.length === 0
+  ) {
+
+    alert(
+      'Tidak ada data siswa yang dapat dicetak.'
+    );
+
+    return;
+
+  }
+
+
+
+  /* ======================================================
+     BUAT INFORMASI FILTER
+  ====================================================== */
+
+  let filterText =
+    'Semua Data';
+
+
+  const filterParts = [];
+
+
+  if (search) {
+
+    filterParts.push(
+      'Pencarian: "' +
+      search +
+      '"'
+    );
+
+  }
+
+
+  if (classFilter) {
+
+    filterParts.push(
+      'Kelas: ' +
+      classFilter
+    );
+
+  }
+
+
+  if (estateFilter) {
+
+    filterParts.push(
+      'Estate: ' +
+      estateFilter
+    );
+
+  }
+
+
+  if (
+    filterParts.length > 0
+  ) {
+
+    filterText =
+      filterParts.join(
+        ' | '
+      );
+
+  }
+
+
+
+  document
+    .getElementById(
+      'printFilter'
+    )
+    .textContent =
+    filterText;
+
+
+
+  /* ======================================================
+     TANGGAL CETAK
+  ====================================================== */
+
+  const now =
+    new Date();
+
+
+  const dateText =
+    now.toLocaleDateString(
+      'id-ID',
+      {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      }
+    );
+
+
+  document
+    .getElementById(
+      'printDate'
+    )
+    .textContent =
+    dateText;
+
+
+
+  /* ======================================================
+     BUAT TABEL PDF
+  ====================================================== */
+
+  let html =
+
+    '<table class="print-table">' +
+
+      '<thead>' +
+
+        '<tr>' +
+
+          '<th>ID</th>' +
+
+          '<th>NAMA SISWA</th>' +
+
+          '<th>KELAS</th>' +
+
+          '<th>ESTATE</th>';
+
+
+
+  DATA.months.forEach(
+    function(month) {
+
+      html +=
+
+        '<th>' +
+          escapeHTML(month) +
+        '</th>';
+
+    }
+  );
+
+
+
+  html +=
+
+        '</tr>' +
+
+      '</thead>' +
+
+      '<tbody>';
+
+
+
+  /* ======================================================
+     MASUKKAN DATA SISWA
+  ====================================================== */
+
+  filtered.forEach(
+    function(student) {
+
+
+      html +=
+
+        '<tr>' +
+
+          '<td>' +
+            escapeHTML(
+              student.id || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.name || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.className || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.estate || '-'
+            ) +
+          '</td>';
+
+
+
+      DATA.months.forEach(
+        function(month) {
+
+
+          const paid = isPaid(
+            student.payments && student.payments[month]
+          );
+
+
+          html +=
+
+            '<td>' +
+
+              (
+                paid
+                  ? '<span class="paid">&#10003;</span>'
+                  : '<span class="unpaid">&mdash;</span>'
+              ) +
+
+            '</td>';
+
+        }
+      );
+
+
+      html +=
+
+        '</tr>';
+
+    }
+  );
+
+
+
+  html +=
+
+      '</tbody>' +
+
+    '</table>';
+
+
+
+  /* ======================================================
+     MASUKKAN KE AREA PRINT
+  ====================================================== */
+
+  document
+    .getElementById(
+      'printTableContainer'
+    )
+    .innerHTML =
+    html;
+
+
+
+  /* ======================================================
+     UBAH JUDUL SEMENTARA
+     Agar nama file PDF lebih rapi pada beberapa browser
+  ====================================================== */
+
+  const oldTitle =
+    document.title;
+
+
+  let fileName =
+    'Laporan_Pembayaran_Siswa';
+
+
+  if (classFilter) {
+
+    fileName +=
+      '_Kelas_' +
+      classFilter
+        .replace(
+          /[^a-zA-Z0-9]+/g,
+          '_'
+        );
+
+  }
+
+
+  if (estateFilter) {
+
+    fileName +=
+      '_' +
+      estateFilter
+        .replace(
+          /[^a-zA-Z0-9]+/g,
+          '_'
+        );
+
+  }
+
+
+  document.title =
+    fileName;
+
+
+
+  /* ======================================================
+     BUKA PRINT PREVIEW
+  ====================================================== */
+
+  setTimeout(
+    function() {
+
+      window.print();
+
+    },
+    300
+  );
+
+
+
+  /* ======================================================
+     KEMBALIKAN JUDUL SETELAH PRINT
+  ====================================================== */
+
+  setTimeout(
+    function() {
+
+      document.title =
+        oldTitle;
+
+    },
+    2000
+  );
+
+}
+
+
+
+/* ========================================================
+   DETAIL SISWA
+======================================================== */
+
+function renderStudentDetails() {
+
+
+  const container =
+    document.getElementById(
+      'studentTable'
+    );
+
+
+  const search =
+    document
+      .getElementById(
+        'searchStudent'
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const classFilter =
+    document
+      .getElementById(
+        'filterStudentClass'
+      )
+      .value;
+
+
+  const estateSearch =
+    document
+      .getElementById(
+        'searchStudentEstate'
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    DATA.studentDetails.filter(
+      function(student) {
+
+
+        const text = (
+
+          String(student.name) +
+          ' ' +
+          String(student.id) +
+          ' ' +
+          String(student.nisn)
+
+        )
+        .toLowerCase();
+
+
+        const address =
+          String(
+            student.address
+          )
+          .toLowerCase();
+
+
+        return (
+
+          (!search ||
+            text.includes(search)) &&
+
+          (!classFilter ||
+            String(
+              student.className
+            ) === classFilter) &&
+
+          (!estateSearch ||
+            address.includes(
+              estateSearch
+            ))
+
+        );
+
+      }
+    );
+
+
+  if (
+    filtered.length === 0
+  ) {
+
+    container.innerHTML =
+      '<div class="empty">' +
+      'Data detail siswa tidak ditemukan.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  let html =
+
+    '<table class="detail-table">' +
+
+      '<thead>' +
+
+        '<tr>' +
+
+          '<th>FOTO</th>' +
+
+          '<th>ID</th>' +
+
+          '<th>NAMA</th>' +
+
+          '<th>NISN</th>' +
+
+          '<th>KELAS</th>' +
+
+          '<th>ESTATE / ALAMAT</th>' +
+
+          '<th>NAMA AYAH</th>' +
+
+          '<th>NAMA IBU</th>' +
+
+          '<th>NOMOR HP ORANGTUA</th>' +
+
+        '</tr>' +
+
+      '</thead>' +
+
+      '<tbody>';
+
+
+  filtered.forEach(
+    function(student) {
+
+
+      let photoHTML;
+
+
+      if (student.photo) {
+
+        photoHTML =
+
+          '<img ' +
+
+            'class="photo" ' +
+
+            'src="' +
+              escapeAttribute(
+                student.photo
+              ) +
+            '" ' +
+
+            'onclick="openPhoto(\'' +
+              escapeJS(
+                student.photo
+              ) +
+            '\')" ' +
+
+            'onerror="this.style.display=\'none\'">';
+
+      } else {
+
+        photoHTML =
+
+          '<div class="no-photo">' +
+            '-' +
+          '</div>';
+
+      }
+
+
+      html +=
+
+        '<tr>' +
+
+          '<td>' +
+            photoHTML +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.id || '-'
+            ) +
+          '</td>' +
+
+          '<td class="name-cell">' +
+            escapeHTML(
+              student.name
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.nisn || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.className || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.address || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.father || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.mother || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              student.parentPhone || '-'
+            ) +
+          '</td>' +
+
+        '</tr>';
+
+    }
+  );
+
+
+  html +=
+
+      '</tbody>' +
+
+    '</table>';
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+
+/* ========================================================
+   DETAIL GURU
+======================================================== */
+
+function renderTeacherDetails() {
+
+
+  const container =
+    document.getElementById(
+      'teacherTable'
+    );
+
+
+  const search =
+    document
+      .getElementById(
+        'searchTeacher'
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    DATA.teacherDetails.filter(
+      function(teacher) {
+
+
+        const text = (
+
+          String(teacher.name) +
+          ' ' +
+          String(teacher.id) +
+          ' ' +
+          String(teacher.address) +
+          ' ' +
+          String(teacher.phone)
+
+        )
+        .toLowerCase();
+
+
+        return (
+          !search ||
+          text.includes(search)
+        );
+
+      }
+    );
+
+
+  if (
+    filtered.length === 0
+  ) {
+
+    container.innerHTML =
+      '<div class="empty">' +
+      'Data guru tidak ditemukan.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  let html =
+
+    '<table class="detail-table">' +
+
+      '<thead>' +
+
+        '<tr>' +
+
+          '<th>FOTO</th>' +
+
+          '<th>ID</th>' +
+
+          '<th>NAMA</th>' +
+
+          '<th>ESTATE / ALAMAT</th>' +
+
+          '<th>NOMOR HP</th>' +
+
+        '</tr>' +
+
+      '</thead>' +
+
+      '<tbody>';
+
+
+  filtered.forEach(
+    function(teacher) {
+
+
+      let photoHTML;
+
+
+      if (teacher.photo) {
+
+        photoHTML =
+
+          '<img ' +
+
+            'class="photo" ' +
+
+            'src="' +
+              escapeAttribute(
+                teacher.photo
+              ) +
+            '" ' +
+
+            'onclick="openPhoto(\'' +
+              escapeJS(
+                teacher.photo
+              ) +
+            '\')" ' +
+
+            'onerror="this.style.display=\'none\'">';
+
+      } else {
+
+        photoHTML =
+
+          '<div class="no-photo">' +
+            '-' +
+          '</div>';
+
+      }
+
+
+      html +=
+
+        '<tr>' +
+
+          '<td>' +
+            photoHTML +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              teacher.id || '-'
+            ) +
+          '</td>' +
+
+          '<td class="name-cell">' +
+            escapeHTML(
+              teacher.name
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              teacher.address || '-'
+            ) +
+          '</td>' +
+
+          '<td>' +
+            escapeHTML(
+              teacher.phone || '-'
+            ) +
+          '</td>' +
+
+        '</tr>';
+
+    }
+  );
+
+
+  html +=
+
+      '</tbody>' +
+
+    '</table>';
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+
+/* ========================================================
+   PHOTO
+======================================================== */
+
+function openPhoto(url) {
+
+  document
+    .getElementById(
+      'modalImage'
+    )
+    .src = url;
+
+
+  document
+    .getElementById(
+      'photoModal'
+    )
+    .classList.add(
+      'show'
+    );
+
+}
+
+
+function closePhoto() {
+
+  document
+    .getElementById(
+      'photoModal'
+    )
+    .classList.remove(
+      'show'
+    );
+
+}
+
+
+
+/* ========================================================
+   SECURITY / ESCAPE HTML
+======================================================== */
+
+function escapeHTML(value) {
+
+  return String(
+    value || ''
+  )
+  .replace(
+    /&/g,
+    '&amp;'
+  )
+  .replace(
+    /</g,
+    '&lt;'
+  )
+  .replace(
+    />/g,
+    '&gt;'
+  )
+  .replace(
+    /"/g,
+    '&quot;'
+  )
+  .replace(
+    /'/g,
+    '&#039;'
+  );
+
+}
+
+
+function escapeAttribute(value) {
+
+  return String(
+    value || ''
+  )
+  .replace(
+    /&/g,
+    '&amp;'
+  )
+  .replace(
+    /"/g,
+    '&quot;'
+  )
+  .replace(
+    /</g,
+    '&lt;'
+  )
+  .replace(
+    />/g,
+    '&gt;'
+  );
+
+}
+
+
+function escapeJS(value) {
+
+  return String(
+    value || ''
+  )
+  .replace(
+    /\\/g,
+    '\\\\'
+  )
+  .replace(
+    /'/g,
+    "\\'"
+  )
+  .replace(
+    /"/g,
+    '\\"'
+  )
+  .replace(
+    /\n/g,
+    '\\n'
+  )
+  .replace(
+    /\r/g,
+    '\\r'
+  );
+
+}
+
+
+/* ========================================================
+   AUTO REFRESH DATA
+   Ambil data terbaru dari Google Sheet setiap 5 menit.
+   Tidak mengubah data spreadsheet; hanya membaca ulang API.
+======================================================== */
+setInterval(function() {
+  loadData();
+}, 5 * 60 * 1000);
+
+</script>
+
+
+</body>
+
+</html>
