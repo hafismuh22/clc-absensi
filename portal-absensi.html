@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Portal Absensi - CLC Permodalan</title>
+
+<style>
+*{box-sizing:border-box}
+
+html{
+  margin:0;
+  padding:0;
+  background:#eef2f7;
+  -webkit-text-size-adjust:none;
+  text-size-adjust:none;
+}
+
+body{
+  margin:0;
+  padding:0;
+  min-width:1250px;
+  background:#eef2f7;
+  color:#10213f;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:auto;
+}
+
+/* =========================================================
+   DESAIN UTAMA - 1250 PX SEPERTI SISTEM PEMBAYARAN
+========================================================= */
+.portal{
+  width:1250px;
+  margin:0 auto;
+  background:#eef2f7;
+  min-height:100vh;
+}
+
+.header{
+  background:linear-gradient(135deg,#071a3a 0%,#123d73 100%);
+  color:white;
+  padding:34px 45px 30px;
+  position:relative;
+  overflow:hidden;
+}
+
+.header:after{
+  content:"";
+  position:absolute;
+  width:280px;
+  height:280px;
+  border:1px solid rgba(211,170,76,.28);
+  border-radius:50%;
+  right:-70px;
+  top:-150px;
+}
+
+.header-top{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  position:relative;
+  z-index:2;
+}
+
+.logo{
+  width:66px;
+  height:66px;
+  border-radius:14px;
+  background:#fff;
+  color:#0b2855;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:19px;
+  font-weight:900;
+  box-shadow:0 5px 16px rgba(0,0,0,.18);
+}
+
+.brand h1{
+  margin:0;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.brand p{
+  margin:6px 0 0;
+  color:#e2bf62;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1.5px;
+}
+
+.header-title{
+  position:relative;
+  z-index:2;
+  margin-top:30px;
+}
+
+.header-title h2{
+  margin:0;
+  font-size:34px;
+  font-weight:900;
+}
+
+.header-title p{
+  margin:8px 0 0;
+  font-size:15px;
+  color:#dce8f7;
+}
+
+.content{
+  padding:30px 40px 45px;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:24px;
+}
+
+.section-title h3{
+  margin:0;
+  color:#0b2855;
+  font-size:22px;
+  font-weight:900;
+}
+
+.section-title p{
+  margin:7px 0 0;
+  color:#6c788c;
+  font-size:13px;
+}
+
+/* =========================================================
+   5 KARTU
+========================================================= */
+.menu-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.card{
+  background:#fff;
+  border-radius:17px;
+  border:1px solid #e2e7ef;
+  min-height:225px;
+  padding:28px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 7px 22px rgba(8,30,65,.07);
+  transition:.2s ease;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 28px rgba(8,30,65,.12);
+}
+
+.card:after{
+  content:"";
+  position:absolute;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:#f0f5fb;
+  right:-45px;
+  top:-55px;
+}
+
+.card.gold:after{
+  background:#fbf5e6;
+}
+
+.icon{
+  width:64px;
+  height:64px;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  background:#eaf1fb;
+  position:relative;
+  z-index:2;
+}
+
+.gold .icon{
+  background:#fbf1d7;
+}
+
+.card h4{
+  margin:19px 0 7px;
+  font-size:20px;
+  color:#0b2855;
+  font-weight:900;
+  position:relative;
+  z-index:2;
+}
+
+.card p{
+  margin:0;
+  color:#6c788c;
+  line-height:1.6;
+  font-size:13px;
+  max-width:480px;
+  position:relative;
+  z-index:2;
+}
+
+.open-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:18px;
+  padding:11px 17px;
+  border-radius:8px;
+  background:#0b2855;
+  color:white;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.2px;
+  position:relative;
+  z-index:3;
+}
+
+.gold .open-btn{
+  background:#d3aa4c;
+  color:#101b31;
+}
+
+.open-btn:hover{
+  opacity:.9;
+}
+
+.card-wide{
+  grid-column:1 / span 2;
+  min-height:190px;
+  display:flex;
+  align-items:center;
+  gap:25px;
+}
+
+.card-wide .card-body{
+  flex:1;
+}
+
+.card-wide .open-btn{
+  flex-shrink:0;
+  margin-right:8px;
+}
+
+/* =========================================================
+   INFO
+========================================================= */
+.info{
+  margin-top:22px;
+  background:#0b2855;
+  color:white;
+  border-radius:15px;
+  padding:19px 25px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.info-icon{
+  font-size:24px;
+}
+
+.info strong{
+  display:block;
+  font-size:13px;
+  margin-bottom:4px;
+}
+
+.info span{
+  font-size:11px;
+  color:#dce8f7;
+}
+
+.footer{
+  text-align:center;
+  padding:0 0 25px;
+  color:#8a94a6;
+  font-size:10px;
+}
+
+/* =========================================================
+   RESPONSIVE DENGAN METODE ZOOM SEPERTI PEMBAYARAN
+========================================================= */
+@media(max-width:1250px){
+  body{
+    min-width:0;
+  }
+
+  .portal{
+    width:1250px;
+    margin:0;
+  }
+}
+
+/* Google Sites / iframe */
+@media(max-width:700px){
+  .portal{
+    transform-origin:top left;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="portal" id="portal">
+
+  <header class="header">
+    <div class="header-top">
+      <div class="logo">M3</div>
+      <div class="brand">
+        <h1>CLC PERMODALAN</h1>
+        <p>SISTEM ABSENSI SISWA</p>
+      </div>
+    </div>
+
+    <div class="header-title">
+      <h2>PORTAL ABSENSI</h2>
+      <p>CLC PERMODALAN TKB MORISEM 3 • TAHUN AJARAN 2026–2027</p>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <div class="section-title">
+      <h3>MENU ABSENSI</h3>
+      <p>Pilih layanan yang ingin digunakan</p>
+    </div>
+
+    <div class="menu-grid">
+
+      <!-- 1 SCANNER -->
+      <div class="card">
+        <div class="icon">📷</div>
+        <h4>SCAN ABSENSI QR</h4>
+        <p>
+          Scan QR Code siswa untuk mencatat kehadiran secara otomatis
+          melalui kamera perangkat.
+        </p>
+        <a class="open-btn" href="index.html" target="_blank" rel="noopener">
+          BUKA SCANNER →
+        </a>
+      </div>
+
+      <!-- 2 DASHBOARD -->
+      <div class="card gold">
+        <div class="icon">📊</div>
+        <h4>DASHBOARD ABSENSI</h4>
+        <p>
+          Pantau jumlah hadir, sakit, izin, alpa, belum absen,
+          serta ringkasan kehadiran setiap kelas.
+        </p>
+        <a class="open-btn" href="dashboard.html" target="_blank" rel="noopener">
+          BUKA DASHBOARD →
+        </a>
+      </div>
+
+      <!-- 3 REKAP -->
+      <div class="card gold">
+        <div class="icon">📅</div>
+        <h4>REKAP ABSENSI</h4>
+        <p>
+          Lihat rekap kehadiran siswa berdasarkan bulan, tahun,
+          kelas, dan status kehadiran.
+        </p>
+        <a class="open-btn" href="rekap.html" target="_blank" rel="noopener">
+          BUKA REKAP →
+        </a>
+      </div>
+
+      <!-- 4 STATUS -->
+      <div class="card">
+        <div class="icon">✏️</div>
+        <h4>STATUS KEHADIRAN</h4>
+        <p>
+          Mengatur status siswa menjadi Hadir, Sakit, Izin,
+          atau Alpa dan menyimpannya ke sistem.
+        </p>
+        <a class="open-btn" href="status.html" target="_blank" rel="noopener">
+          INPUT STATUS →
+        </a>
+      </div>
+
+      <!-- 5 GENERATOR -->
+      <div class="card card-wide">
+        <div class="icon">🪪</div>
+        <div class="card-body">
+          <h4>GENERATOR QR SISWA</h4>
+          <p>
+            Buat dan cetak QR Code setiap siswa berdasarkan ID unik
+            yang tersimpan pada DATA_SISWA.
+          </p>
+        </div>
+        <a class="open-btn" href="generator.html" target="_blank" rel="noopener">
+          BUKA GENERATOR QR →
+        </a>
+      </div>
+
+    </div>
+
+    <div class="info">
+      <div class="info-icon">ℹ️</div>
+      <div>
+        <strong>Informasi Sistem</strong>
+        <span>
+          Gunakan menu sesuai kebutuhan. Data absensi diproses melalui
+          sistem backend CLC PERMODALAN dan tersimpan pada database sekolah.
+        </span>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="footer">
+    CLC PERMODALAN TKB MORISEM 3 • SISTEM ABSENSI SISWA
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   MODE DESKTOP YANG OTOMATIS MENGECIL DI HP
+   Mengikuti konsep halaman pembayaran yang sudah digunakan.
+========================================================= */
+(function(){
+  function applyDesktopZoom(){
+
+    var designWidth = 1250;
+    var screenWidth = window.innerWidth;
+
+    if(screenWidth < designWidth){
+
+      var scale = screenWidth / designWidth;
+
+      document.body.style.zoom = scale;
+
+      /*
+        Tinggi visual disesuaikan agar halaman tidak menyisakan
+        ruang kosong berlebihan setelah zoom.
+      */
+      var portal = document.getElementById("portal");
+
+      if(portal){
+        var originalHeight = portal.offsetHeight;
+        document.body.style.minHeight = Math.ceil(originalHeight * scale) + "px";
+      }
+
+    }else{
+
+      document.body.style.zoom = "1";
+      document.body.style.minHeight = "100vh";
+
+    }
+  }
+
+  window.addEventListener("load", applyDesktopZoom);
+  window.addEventListener("resize", applyDesktopZoom);
+})();
+</script>
+
+</body>
+</html>
