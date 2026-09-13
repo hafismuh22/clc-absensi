@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=5.0, user-scalable=yes">
+<title>Sistem Absensi - CLC Permodalan</title>
+
+<!-- QR CODE -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- QR SCANNER -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<style>
+*{box-sizing:border-box}
+html{
+  width:100%;
+  min-width:0;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  width:1250px;
+  min-width:1250px;
+  margin:0;
+  overflow-x:hidden;
+  transform-origin:top left;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  background:#f3f5f9;
+  color:#13233f;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+  --navy:#071a3a;
+  --navy2:#0d2c5d;
+  --gold:#d3aa4c;
+  --gold2:#b88b2f;
+  --white:#fff;
+  --muted:#6b778c;
+  --line:#e5e9f0;
+  --green:#15803d;
+  --yellow:#a16207;
+  --blue:#1d4ed8;
+  --red:#b91c1c;
+}
+
+.app{width:1250px;min-width:1250px;min-height:100vh}
+
+.topbar{
+  height:76px;background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff;display:flex;align-items:center;padding:0 28px;
+  position:sticky;top:0;z-index:1000;box-shadow:0 4px 18px rgba(0,0,0,.14)
+}
+.brand{display:flex;align-items:center;gap:14px;min-width:300px}
+.brand-mark{
+  width:44px;height:44px;border-radius:10px;background:#fff;color:var(--navy);
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px
+}
+.brand-title{font-size:18px;font-weight:900;letter-spacing:.7px}
+.brand-sub{font-size:11px;color:#d8b45a;margin-top:3px;letter-spacing:1px}
+
+.nav{
+  display:flex;gap:6px;align-items:center;overflow:auto;white-space:nowrap
+}
+.nav button{
+  background:transparent;color:#fff;border:0;border-radius:8px;padding:11px 13px;
+  font-size:13px;font-weight:700;cursor:pointer
+}
+.nav button:hover,.nav button.active{background:rgba(255,255,255,.13);color:#f1cc70}
+
+.container{width:100%;max-width:1450px;margin:auto;padding:24px 28px 50px}
+
+.page{display:none}
+.page.active{display:block}
+
+.page-head{
+  background:linear-gradient(135deg,#0b2855,#14518e);
+  color:#fff;border-radius:16px;padding:25px 28px;margin-bottom:20px;
+  box-shadow:0 6px 24px rgba(7,26,58,.12)
+}
+.page-head h1{margin:0;font-size:28px}
+.page-head p{margin:7px 0 0;color:#dce8f7;font-size:13px}
+
+.panel{
+  background:#fff;border-radius:15px;border:1px solid #edf0f5;
+  box-shadow:0 5px 20px rgba(0,0,0,.055);margin-bottom:20px;overflow:hidden
+}
+.panel-title{
+  padding:17px 20px;border-bottom:1px solid var(--line);font-weight:900;font-size:15px
+}
+.panel-body{padding:20px}
+
+.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:11px;font-weight:800;color:#697386;text-transform:uppercase}
+input,select{
+  height:40px;border:1px solid #d5dce8;border-radius:8px;padding:0 12px;
+  background:#fff;color:#182238;font-size:13px;outline:none
+}
+input:focus,select:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(211,170,76,.13)}
+
+.btn{
+  height:40px;border:0;border-radius:8px;padding:0 17px;cursor:pointer;font-weight:800;font-size:13px
+}
+.btn-gold{background:var(--gold);color:#101b31}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-light{background:#eef2f7;color:#243451}
+.btn-green{background:#15803d;color:#fff}
+.btn-red{background:#b91c1c;color:#fff}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+
+.cards{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
+.card{background:#fff;border:1px solid #edf0f5;border-radius:14px;padding:17px;box-shadow:0 5px 20px rgba(0,0,0,.05)}
+.card-label{font-size:10px;font-weight:800;color:#718096;letter-spacing:.5px}
+.card-num{font-size:27px;font-weight:900;margin-top:7px}
+
+.progress{height:10px;background:#edf1f6;border-radius:20px;overflow:hidden}
+.progress-bar{height:100%;background:var(--gold);transition:width .25s}
+
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#f7f8fb;color:#667085;font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+th,td{padding:11px 12px;border-bottom:1px solid #edf0f5;text-align:center;white-space:nowrap}
+td.left,th.left{text-align:left}
+tr:hover td{background:#fbfcfe}
+
+.badge{display:inline-flex;padding:5px 9px;border-radius:20px;font-size:10px;font-weight:900}
+.hadir{background:#dcfce7;color:var(--green)}
+.sakit{background:#fef3c7;color:var(--yellow)}
+.izin{background:#dbeafe;color:var(--blue)}
+.alpa{background:#fee2e2;color:var(--red)}
+.belum{background:#e5e7eb;color:#4b5563}
+
+.notice{
+  padding:12px 14px;border-radius:9px;background:#f5f7fa;color:#566277;font-size:12px;margin-bottom:14px
+}
+.success{background:#ecfdf3;color:#166534}
+.error{background:#fef2f2;color:#991b1b}
+.warning{background:#fffbeb;color:#92400e}
+
+.empty,.loading{text-align:center;padding:35px;color:#8a94a6;font-size:13px}
+
+/* Scanner */
+.scanner-grid{display:grid;grid-template-columns:480px 1fr;gap:20px}
+.scanner-box{background:#071a3a;border-radius:14px;padding:18px;color:#fff}
+#reader{width:100%;background:#000;border-radius:10px;overflow:hidden}
+.scan-actions{display:flex;gap:10px;margin-top:13px}
+.scan-result{border-radius:14px;background:#f7f9fc;padding:22px;min-height:300px}
+.result-icon{font-size:42px;margin-bottom:10px}
+.result-name{font-size:24px;font-weight:900}
+.result-info{color:#657086;font-size:13px;line-height:1.8;margin-top:8px}
+
+/* Status */
+.status-table select{height:34px;min-width:110px;font-weight:800}
+.status-tools{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:15px}
+.save-all{display:flex;gap:8px;align-items:center}
+
+/* Generator */
+.generator-tools{display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin-bottom:18px}
+.qr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.qr-card{
+  background:#fff;border:1px solid #e2e7ef;border-radius:12px;padding:15px;text-align:center;
+  break-inside:avoid
+}
+.qr-card .qr{width:160px;height:160px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
+.qr-card .name{font-size:13px;font-weight:900}
+.qr-card .id{font-size:12px;color:#657086;margin-top:5px}
+.qr-card .kelas{font-size:11px;color:#8a94a6;margin-top:3px}
+
+/* Rekap */
+.rekap-scroll{overflow:auto}
+.rekap-table{min-width:1250px}
+.rekap-table th.day{min-width:31px;padding:8px 4px}
+.rekap-table td.day{padding:8px 3px;font-weight:800}
+.rekap-table td.day.h{background:#dcfce7;color:#166534}
+.rekap-table td.day.s{background:#fef3c7;color:#92400e}
+.rekap-table td.day.i{background:#dbeafe;color:#1d4ed8}
+.rekap-table td.day.a{background:#fee2e2;color:#b91c1c}
+.rekap-table td.day.none{background:#f3f4f6;color:#6b7280}
+
+/* =========================================================
+   DESKTOP MODE DIKECILKAN DI HP
+   Mengikuti teknik halaman Pembayaran:
+   layout tetap 1250px, lalu CSS zoom menyesuaikan lebar layar.
+   ========================================================= */
+*,*::before,*::after{
+  -webkit-text-size-adjust:100% !important;
+  text-size-adjust:100% !important;
+}
+
+.topbar{
+  position:relative;
+}
+
+@media print{
+  html{zoom:1 !important}
+  body{
+    zoom:1 !important;
+    width:auto !important;
+    min-width:0 !important;
+    overflow:visible !important;
+  }
+}
+
+/* Print */
+@media print{
+  html{zoom:1 !important}
+  body{min-width:0;width:auto;background:#fff}
+  .topbar,.no-print{display:none!important}
+  .container{max-width:none;padding:0}
+  .page{display:none!important}
+  .page.active{display:block!important}
+  .panel,.card{box-shadow:none;border:1px solid #ddd}
+  .page-head{background:#fff;color:#000;border:1px solid #ddd;box-shadow:none}
+  .page-head p{color:#333}
+  .qr-grid{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header class="topbar no-print">
+  <div class="brand">
+    <div class="brand-mark">M3</div>
+    <div>
+      <div class="brand-title">CLC PERMODALAN</div>
+      <div class="brand-sub">SISTEM ABSENSI SISWA</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="active" data-page="scanner">📷 SCAN QR</button>
+    <button data-page="dashboard">📊 DASHBOARD</button>
+    <button data-page="rekap">📅 REKAP</button>
+    <button data-page="status">✏️ STATUS</button>
+    <button data-page="generator">🪪 GENERATOR QR</button>
+  </nav>
+</header>
+
+<main class="container">
+
+<!-- ================= SCANNER ================= -->
+<section id="page-scanner" class="page active">
+  <div class="page-head">
+    <h1>SCAN ABSENSI QR</h1>
+    <p>Scan QR Code siswa untuk mencatat kehadiran secara otomatis.</p>
+  </div>
+
+  <div class="scanner-grid">
+    <div class="scanner-box">
+      <div id="reader"></div>
+      <div class="scan-actions">
+        <button class="btn btn-gold" id="startScanner">▶ MULAI SCANNER</button>
+        <button class="btn btn-light" id="stopScanner" disabled>■ STOP</button>
+      </div>
+      <div id="scannerMessage" style="margin-top:12px;font-size:12px;color:#cbd5e1">
+        Klik MULAI SCANNER untuk mengaktifkan kamera.
+      </div>
+    </div>
+
+    <div class="scan-result" id="scanResult">
+      <div class="result-icon">📷</div>
+      <div class="result-name">Siap melakukan absensi</div>
+      <div class="result-info">
+        Arahkan kamera ke QR Code siswa.<br>
+        QR Code harus berisi ID siswa, misalnya <b>M3001</b>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DASHBOARD ================= -->
+<section id="page-dashboard" class="page">
+  <div class="page-head">
+    <h1>DASHBOARD ABSENSI</h1>
+    <p id="dashboardDateText">Memuat data...</p>
+  </div>
+
+  <div class="panel no-print">
+    <div class="panel-body">
+      <div class="filters">
+        <div class="field">
+          <label>Tanggal</label>
+          <input type="date" id="dashTanggal">
+        </div>
+        <div class="field">
+          <label>Kelas</label>
+          <select id="dashKelas"><option value="SEMUA">Semua Kelas</option></select>
+        </div>
+        <button class="btn btn-gold" onclick="loadDashboard()">TAMPILKAN</button>
+        <button class="btn btn-light" onclick="window.print()">CETAK</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="card-label">TOTAL SISWA</div><div class="card-num" id="dashTotal">-</div></div>
+    <div class="card"><div class="card-label">HADIR</div><div class="card-num" id="dashHadir">-</div></div>
+    <div class="card"><div class="card-label">SAKIT</div><div class="card-num" id="dashSakit">-</div></div>
+    <div class="card"><div class="card-label">IZIN</div><div class="card-num" id="dashIzin">-</div></div>
+    <div class="card"><div class="card-label">ALPA</div><div class="card-num" id="dashAlpa">-</div></div>
+    <div class="card"><div class="card-label">BELUM ABSEN</div><div class="card-num" id="dashBelum">-</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">PERSENTASE KEHADIRAN</div>
+    <div class="panel-body">
+      <div style="display:flex;justify-content:space-between;font-weight:800;font-size:13px;margin-bottom:8px">
+        <span>Kehadiran</span><span id="dashPersen">0%</span>
+      </div>
+      <div class="progress"><div class="progress-bar" id="dashPersenBar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">RINGKASAN PER KELAS</div>
+    <div class="table-wrap" id="dashKelasTable"><div class="loading">Memuat data...</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">STATUS SISWA</div>
+    <div class="table-wrap" id="dashSiswaTable"><div class="loading">Memuat data...</div></div>
+  </div>
+</section>
+
+<!-- ================= REKAP ================= -->
+<section id="page-rekap" class="page">
+  <div class="page-head">
+    <h1>REKAP ABSENSI</h1>
+    <p>Rekap kehadiran siswa berdasarkan bulan dan kelas.</p>
+  </div>
+
+  <div class="panel no-print">
+    <div class="panel-body">
+      <div class="filters">
+        <div class="field">
+          <label>Bulan</label>
+          <select id="rekapBulan"></select>
+        </div>
+        <div class="field">
+          <label>Tahun</label>
+          <select id="rekapTahun"></select>
+        </div>
+        <div class="field">
+          <label>Kelas</label>
+          <select id="rekapKelas"><option value="SEMUA">Semua Kelas</option></select>
+        </div>
+        <button class="btn btn-gold" onclick="loadRekap()">TAMPILKAN</button>
+        <button class="btn btn-light" onclick="window.print()">CETAK</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title" id="rekapInfo">DAFTAR HADIR — CLC PERMODALAN TKB MORISEM 3</div>
+    <div class="panel-body" style="padding-bottom:12px">
+      <div class="notice">
+        Keterangan:
+        <b class="badge hadir">H</b>
+        <b class="badge sakit">S</b>
+        <b class="badge izin">I</b>
+        <b class="badge alpa">A</b>
+        <b class="badge belum">-</b>
+      </div>
+    </div>
+    <div class="rekap-scroll" id="rekapTable"><div class="loading">Memuat data...</div></div>
+  </div>
+</section>
+
+<!-- ================= STATUS ================= -->
+<section id="page-status" class="page">
+  <div class="page-head">
+    <h1>INPUT KEHADIRAN</h1>
+    <p>Atur status siswa: Hadir, Sakit, Izin, atau Alpa.</p>
+  </div>
+
+  <div class="panel no-print">
+    <div class="panel-body">
+      <div class="status-tools">
+        <div class="filters">
+          <div class="field">
+            <label>Tanggal</label>
+            <input type="date" id="statusTanggal">
+          </div>
+          <div class="field">
+            <label>Kelas</label>
+            <select id="statusKelas"><option value="SEMUA">Semua Kelas</option></select>
+          </div>
+          <button class="btn btn-gold" onclick="loadStatus()">TAMPILKAN</button>
+        </div>
+        <div class="save-all">
+          <button class="btn btn-green" id="saveAllBtn" onclick="saveAllStatus()" disabled>SIMPAN SEMUA</button>
+        </div>
+      </div>
+      <div id="statusMessage"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">DAFTAR STATUS SISWA</div>
+    <div class="table-wrap" id="statusTable"><div class="loading">Pilih tanggal lalu klik TAMPILKAN.</div></div>
+  </div>
+</section>
+
+<!-- ================= GENERATOR ================= -->
+<section id="page-generator" class="page">
+  <div class="page-head">
+    <h1>GENERATOR QR SISWA</h1>
+    <p>Membuat QR Code berdasarkan ID unik siswa dari DATA_SISWA.</p>
+  </div>
+
+  <div class="panel no-print">
+    <div class="panel-body">
+      <div class="generator-tools">
+        <div class="field">
+          <label>Kelas</label>
+          <select id="genKelas"><option value="SEMUA">Semua Kelas</option></select>
+        </div>
+        <button class="btn btn-gold" onclick="loadGenerator()">TAMPILKAN QR</button>
+        <button class="btn btn-light" onclick="window.print()">CETAK / PDF</button>
+      </div>
+      <div class="notice">
+        QR hanya berisi <b>ID siswa</b>. Contoh: <b>M3001</b>.
+      </div>
+    </div>
+  </div>
+
+  <div class="qr-grid" id="qrGrid">
+    <div class="loading">Klik TAMPILKAN QR.</div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+/* =========================================================
+   KONFIGURASI
+========================================================= */
+const API_URL = "https://script.google.com/macros/s/AKfycbwBGvZdnWIfwNjpevh9WLSPtfD5ho_TqOYm9z2xFwE5SdKP_egi1INIkRevY3yFLNxi/exec";
+
+const MONTHS = [
+  "Januari","Februari","Maret","April","Mei","Juni",
+  "Juli","Agustus","September","Oktober","November","Desember"
+];
+
+let allStudents = [];
+let scanner = null;
+let scannerRunning = false;
+let statusStudents = [];
+
+/* =========================================================
+   UTILITAS
+========================================================= */
+function todayISO(){
+  const d = new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+
+function escapeHtml(v){
+  return String(v ?? "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const callbackName = "cb_" + Date.now() + "_" + Math.floor(Math.random()*100000);
+    const script = document.createElement("script");
+
+    const cleanup = ()=>{
+      delete window[callbackName];
+      if(script.parentNode) script.parentNode.removeChild(script);
+    };
+
+    window[callbackName] = data=>{
+      cleanup();
+      resolve(data);
+    };
+
+    script.onerror = ()=>{
+      cleanup();
+      reject(new Error("Gagal menghubungi server Apps Script."));
+    };
+
+    script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + encodeURIComponent(callbackName);
+    document.body.appendChild(script);
+  });
+}
+
+function api(action, params={}){
+  let url = API_URL + "?action=" + encodeURIComponent(action);
+  Object.keys(params).forEach(k=>{
+    url += "&" + encodeURIComponent(k) + "=" + encodeURIComponent(params[k] ?? "");
+  });
+  return jsonp(url);
+}
+
+function classBadge(status){
+  status = String(status || "").toUpperCase();
+  if(status==="HADIR") return "hadir";
+  if(status==="SAKIT") return "sakit";
+  if(status==="IZIN") return "izin";
+  if(status==="ALPA") return "alpa";
+  return "belum";
+}
+
+function statusText(status){
+  return status==="BELUM" ? "BELUM" : status;
+}
+
+function fillClassSelects(){
+  const classes = [...new Set(allStudents.map(s=>String(s.kelas||"").trim()).filter(Boolean))]
+    .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+
+  ["dashKelas","rekapKelas","statusKelas","genKelas"].forEach(id=>{
+    const el = document.getElementById(id);
+    const old = el.value || "SEMUA";
+    el.innerHTML = '<option value="SEMUA">Semua Kelas</option>' +
+      classes.map(c=>`<option value="${escapeHtml(c)}">Kelas ${escapeHtml(c)}</option>`).join("");
+    if(classes.includes(old)) el.value = old;
+  });
+}
+
+/* =========================================================
+   NAVIGASI
+========================================================= */
+document.querySelectorAll(".nav button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const page = btn.dataset.page;
+
+    document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+
+    document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+    document.getElementById("page-"+page).classList.add("active");
+
+    if(page==="dashboard") loadDashboard();
+    if(page==="rekap") loadRekap();
+    if(page==="status") loadStatus();
+    if(page==="generator") loadGenerator();
+  });
+});
+
+/* =========================================================
+   DATA SISWA
+========================================================= */
+async function loadStudents(){
+  try{
+    const data = await api("siswa");
+
+    if(Array.isArray(data)) allStudents = data;
+    else if(data && Array.isArray(data.siswa)) allStudents = data.siswa;
+    else allStudents = [];
+
+    fillClassSelects();
+  }catch(e){
+    console.error(e);
+  }
+}
+
+/* =========================================================
+   SCANNER
+========================================================= */
+async function startScanner(){
+  if(scannerRunning) return;
+
+  const msg = document.getElementById("scannerMessage");
+  const resultBox = document.getElementById("scanResult");
+
+  msg.textContent = "Meminta izin kamera...";
+  resultBox.innerHTML = `
+    <div class="result-icon">📷</div>
+    <div class="result-name">Menyiapkan kamera...</div>
+    <div class="result-info">Mohon izinkan akses kamera jika browser menampilkannya.</div>
+  `;
+
+  try{
+    // Pastikan halaman berjalan di HTTPS / secure context.
+    if(!window.isSecureContext){
+      throw new Error("Kamera hanya dapat digunakan melalui HTTPS. Buka halaman Absensi melalui alamat HTTPS.");
+    }
+
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      throw new Error("Browser tidak mendukung akses kamera.");
+    }
+
+    // Minta izin kamera terlebih dahulu. Stream langsung dihentikan karena
+    // Html5Qrcode akan mengambil alih kamera setelah ini.
+    const testStream = await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:{ideal:"environment"}},
+      audio:false
+    });
+    testStream.getTracks().forEach(track=>track.stop());
+
+    if(!scanner) scanner = new Html5Qrcode("reader");
+
+    // Jangan menggunakan getCameras(). Pada beberapa HP/browser,
+    // enumerate/getCameras dapat gagal walaupun izin kamera sudah diberikan.
+    // Gunakan facingMode agar langsung meminta kamera belakang.
+    await scanner.start(
+      {facingMode:"environment"},
+      {
+        fps:10,
+        qrbox:{width:280,height:280},
+        aspectRatio:1.0,
+        disableFlip:false
+      },
+      onScanSuccess,
+      ()=>{}
+    );
+
+    scannerRunning = true;
+    document.getElementById("startScanner").disabled = true;
+    document.getElementById("stopScanner").disabled = false;
+    msg.textContent = "Kamera aktif. Arahkan kamera belakang ke QR Code siswa.";
+
+    resultBox.innerHTML = `
+      <div class="result-icon">📷</div>
+      <div class="result-name">Scanner siap</div>
+      <div class="result-info">
+        Arahkan kamera ke QR Code siswa.<br>
+        QR Code harus berisi ID seperti <b>M3001</b>.
+      </div>
+    `;
+
+  }catch(e){
+    console.error("Scanner error:",e);
+
+    let detail = e && e.message ? e.message : String(e);
+    let bantuan = "";
+
+    if(e && e.name === "NotAllowedError"){
+      detail = "Akses kamera ditolak oleh browser.";
+      bantuan = "Tekan ikon pengaturan/kunci di sebelah alamat website → Kamera → Izinkan, lalu muat ulang halaman.";
+    }else if(e && e.name === "NotFoundError"){
+      detail = "Kamera tidak ditemukan pada perangkat.";
+      bantuan = "Pastikan kamera HP tersedia dan tidak sedang digunakan aplikasi lain.";
+    }else if(e && e.name === "NotReadableError"){
+      detail = "Kamera sedang digunakan atau tidak dapat dibaca browser.";
+      bantuan = "Tutup aplikasi lain yang menggunakan kamera, lalu coba lagi.";
+    }else if(e && e.name === "SecurityError"){
+      detail = "Browser memblokir akses kamera karena alasan keamanan.";
+      bantuan = "Pastikan halaman dibuka melalui HTTPS dan bukan dari pratinjau/editor Google Sites.";
+    }
+
+    msg.textContent = "Kamera gagal dibuka.";
+    resultBox.innerHTML = `
+      <div class="result-icon">❌</div>
+      <div class="result-name">Kamera gagal dibuka</div>
+      <div class="result-info">
+        <b>${escapeHtml(detail)}</b><br><br>
+        ${escapeHtml(bantuan || "Periksa izin kamera browser kemudian coba lagi.")}
+      </div>
+    `;
+
+    try{
+      if(scanner && scannerRunning) await scanner.stop();
+    }catch(_){ }
+    scannerRunning = false;
+    document.getElementById("startScanner").disabled = false;
+    document.getElementById("stopScanner").disabled = true;
+  }
+}
+async function stopScanner(){
+  if(!scanner || !scannerRunning) return;
+
+  try{ await scanner.stop(); }catch(e){ console.error(e); }
+
+  scannerRunning = false;
+  document.getElementById("startScanner").disabled = false;
+  document.getElementById("stopScanner").disabled = true;
+  document.getElementById("scannerMessage").textContent = "Scanner dihentikan.";
+}
+
+async function onScanSuccess(decodedText){
+  if(!scannerRunning) return;
+
+  const id = String(decodedText||"").trim();
+
+  // Hentikan sementara supaya satu QR tidak terkirim berkali-kali.
+  await stopScanner();
+
+  const resultBox = document.getElementById("scanResult");
+  resultBox.innerHTML = `
+    <div class="result-icon">⏳</div>
+    <div class="result-name">Memproses absensi...</div>
+    <div class="result-info">ID QR: <b>${escapeHtml(id)}</b></div>
+  `;
+
+  try{
+    const data = await api("scan",{id});
+
+    if(data.success){
+      resultBox.innerHTML = `
+        <div class="result-icon">✅</div>
+        <div class="result-name">${escapeHtml(data.nama||"Absensi berhasil")}</div>
+        <div class="result-info">
+          ID: <b>${escapeHtml(data.id||id)}</b><br>
+          Kelas: <b>${escapeHtml(data.kelas||"-")}</b><br>
+          Tanggal: <b>${escapeHtml(data.tanggal||"-")}</b><br>
+          Jam: <b>${escapeHtml(data.jam||"-")}</b><br>
+          Status: <span class="badge hadir">HADIR</span>
+        </div>
+      `;
+    }else if(data.already){
+      resultBox.innerHTML = `
+        <div class="result-icon">ℹ️</div>
+        <div class="result-name">Sudah Absen</div>
+        <div class="result-info">
+          ${escapeHtml(data.nama||"Siswa")}<br>
+          ID: <b>${escapeHtml(data.id||id)}</b><br>
+          Jam: <b>${escapeHtml(data.jam||"-")}</b>
+        </div>
+      `;
+    }else{
+      resultBox.innerHTML = `
+        <div class="result-icon">❌</div>
+        <div class="result-name">Absensi gagal</div>
+        <div class="result-info">${escapeHtml(data.message||"Terjadi kesalahan.")}</div>
+      `;
+    }
+  }catch(e){
+    resultBox.innerHTML = `
+      <div class="result-icon">❌</div>
+      <div class="result-name">Server tidak dapat dihubungi</div>
+      <div class="result-info">${escapeHtml(e.message)}</div>
+    `;
+  }
+}
+
+document.getElementById("startScanner").addEventListener("click",startScanner);
+document.getElementById("stopScanner").addEventListener("click",stopScanner);
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+async function loadDashboard(){
+  const tanggal = document.getElementById("dashTanggal").value || todayISO();
+  const kelas = document.getElementById("dashKelas").value || "SEMUA";
+
+  document.getElementById("dashTanggal").value = tanggal;
+  document.getElementById("dashKelasTable").innerHTML = '<div class="loading">Memuat data...</div>';
+  document.getElementById("dashSiswaTable").innerHTML = '<div class="loading">Memuat data...</div>';
+
+  try{
+    const data = await api("dashboard",{tanggal,kelas});
+
+    if(!data.success) throw new Error(data.message||"Gagal memuat dashboard.");
+
+    document.getElementById("dashboardDateText").textContent =
+      data.tanggalTampil || data.tanggal || tanggal;
+
+    document.getElementById("dashTotal").textContent = data.total ?? 0;
+    document.getElementById("dashHadir").textContent = data.hadir ?? 0;
+    document.getElementById("dashSakit").textContent = data.sakit ?? 0;
+    document.getElementById("dashIzin").textContent = data.izin ?? 0;
+    document.getElementById("dashAlpa").textContent = data.alpa ?? 0;
+    document.getElementById("dashBelum").textContent = data.belum ?? 0;
+
+    const persen = Number(data.persentase||0);
+    document.getElementById("dashPersen").textContent = persen+"%";
+    document.getElementById("dashPersenBar").style.width = Math.max(0,Math.min(100,persen))+"%";
+
+    renderDashboardClasses(data.kelas||[]);
+    renderDashboardStudents(data.siswa||[]);
+  }catch(e){
+    document.getElementById("dashKelasTable").innerHTML = `<div class="empty">${escapeHtml(e.message)}</div>`;
+    document.getElementById("dashSiswaTable").innerHTML = `<div class="empty">Silakan coba lagi.</div>`;
+  }
+}
+
+function renderDashboardClasses(rows){
+  if(!rows.length){
+    document.getElementById("dashKelasTable").innerHTML = '<div class="empty">Tidak ada data kelas.</div>';
+    return;
+  }
+
+  let html = `<table><thead><tr>
+    <th class="left">Kelas</th><th>Total</th><th>Hadir</th><th>Sakit</th><th>Izin</th><th>Alpa</th><th>Belum</th><th>Kehadiran</th>
+  </tr></thead><tbody>`;
+
+  rows.forEach(k=>{
+    html += `<tr>
+      <td class="left"><b>Kelas ${escapeHtml(k.kelas)}</b></td>
+      <td>${k.total??0}</td>
+      <td><span class="badge hadir">${k.hadir??0}</span></td>
+      <td><span class="badge sakit">${k.sakit??0}</span></td>
+      <td><span class="badge izin">${k.izin??0}</span></td>
+      <td><span class="badge alpa">${k.alpa??0}</span></td>
+      <td><span class="badge belum">${k.belum??0}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;justify-content:center">
+          <div class="progress" style="width:100px"><div class="progress-bar" style="width:${Number(k.persen||0)}%"></div></div>
+          <b>${Number(k.persen||0)}%</b>
+        </div>
+      </td>
+    </tr>`;
+  });
+
+  html += "</tbody></table>";
+  document.getElementById("dashKelasTable").innerHTML = html;
+}
+
+function renderDashboardStudents(rows){
+  if(!rows.length){
+    document.getElementById("dashSiswaTable").innerHTML = '<div class="empty">Tidak ada siswa.</div>';
+    return;
+  }
+
+  let html = `<table><thead><tr>
+    <th>No</th><th class="left">Nama</th><th>ID</th><th>Kelas</th><th>Status</th><th>Jam</th>
+  </tr></thead><tbody>`;
+
+  rows.forEach((s,i)=>{
+    const status = String(s.status||"BELUM").toUpperCase();
+    html += `<tr>
+      <td>${i+1}</td>
+      <td class="left"><b>${escapeHtml(s.nama)}</b></td>
+      <td>${escapeHtml(s.id)}</td>
+      <td>${escapeHtml(s.kelas)}</td>
+      <td><span class="badge ${classBadge(status)}">${escapeHtml(statusText(status))}</span></td>
+      <td>${escapeHtml(s.jam||"-")}</td>
+    </tr>`;
+  });
+
+  html += "</tbody></table>";
+  document.getElementById("dashSiswaTable").innerHTML = html;
+}
+
+/* =========================================================
+   REKAP
+========================================================= */
+function setupRekapFilters(){
+  const bulanEl = document.getElementById("rekapBulan");
+  bulanEl.innerHTML = MONTHS.map((m,i)=>`<option value="${i+1}">${m}</option>`).join("");
+
+  const now = new Date();
+  bulanEl.value = now.getMonth()+1;
+
+  const tahunEl = document.getElementById("rekapTahun");
+  let years = [];
+  for(let y=2025;y<=2030;y++) years.push(y);
+  tahunEl.innerHTML = years.map(y=>`<option value="${y}">${y}</option>`).join("");
+  tahunEl.value = now.getFullYear();
+}
+
+async function loadRekap(){
+  const bulan = document.getElementById("rekapBulan").value;
+  const tahun = document.getElementById("rekapTahun").value;
+  const kelas = document.getElementById("rekapKelas").value || "SEMUA";
+
+  document.getElementById("rekapTable").innerHTML = '<div class="loading">Memuat rekap...</div>';
+
+  try{
+    const data = await api("rekap",{bulan,tahun,kelas});
+    if(!data.success) throw new Error(data.message||"Gagal memuat rekap.");
+
+    const semester = Number(bulan)>=7 ? "GANJIL" : "GENAP";
+    const tahunAjaran = Number(bulan)>=7 ? `${tahun}-${Number(tahun)+1}` : `${Number(tahun)-1}-${tahun}`;
+
+    document.getElementById("rekapInfo").innerHTML =
+      `DAFTAR HADIR — CLC PERMODALAN TKB MORISEM 3<br>
+       <span style="font-size:11px;font-weight:700;color:#6b778c">
+       KELAS: ${escapeHtml(kelas)} &nbsp; | &nbsp; SEMESTER: ${semester}
+       &nbsp; | &nbsp; BULAN: ${MONTHS[Number(bulan)-1]} &nbsp; | &nbsp; TAHUN AJARAN: ${tahunAjaran}
+       </span>`;
+
+    renderRekap(data);
+  }catch(e){
+    document.getElementById("rekapTable").innerHTML = `<div class="empty">${escapeHtml(e.message)}</div>`;
+  }
+}
+
+function renderRekap(data){
+  const days = Number(data.jumlahHari||0);
+  const rows = data.siswa||[];
+
+  if(!rows.length){
+    document.getElementById("rekapTable").innerHTML = '<div class="empty">Tidak ada data siswa.</div>';
+    return;
+  }
+
+  let html = `<table class="rekap-table"><thead><tr>
+    <th>No</th><th>ID</th><th class="left">Nama</th><th>Kelas</th>`;
+
+  for(let d=1;d<=days;d++) html += `<th class="day">${d}</th>`;
+  html += `<th>H</th><th>%</th></tr></thead><tbody>`;
+
+  rows.forEach((s,i)=>{
+    html += `<tr>
+      <td>${i+1}</td>
+      <td>${escapeHtml(s.id)}</td>
+      <td class="left"><b>${escapeHtml(s.nama)}</b></td>
+      <td>${escapeHtml(s.kelas)}</td>`;
+
+    for(let d=1;d<=days;d++){
+      const item = s.hari && s.hari[d] ? s.hari[d] : {status:"-",jam:""};
+      const st = String(item.status||"-").toUpperCase();
+      let cls = "none";
+      let text = "-";
+      if(st==="HADIR"){cls="h";text="H"}
+      else if(st==="SAKIT"){cls="s";text="S"}
+      else if(st==="IZIN"){cls="i";text="I"}
+      else if(st==="ALPA"){cls="a";text="A"}
+
+      html += `<td class="day ${cls}" title="${escapeHtml(item.jam||"")}">${text}</td>`;
+    }
+
+    html += `<td><b>${s.hadir??0}</b></td><td><b>${s.persen??0}%</b></td></tr>`;
+  });
+
+  html += "</tbody></table>";
+  document.getElementById("rekapTable").innerHTML = html;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+async function loadStatus(){
+  const tanggal = document.getElementById("statusTanggal").value || todayISO();
+  const kelas = document.getElementById("statusKelas").value || "SEMUA";
+
+  document.getElementById("statusTanggal").value = tanggal;
+  document.getElementById("statusTable").innerHTML = '<div class="loading">Memuat status...</div>';
+  document.getElementById("saveAllBtn").disabled = true;
+  statusStudents = [];
+
+  const [y,m] = tanggal.split("-").map(Number);
+
+  try{
+    const data = await api("rekap",{bulan:m,tahun:y,kelas});
+    if(!data.success) throw new Error(data.message||"Gagal memuat status.");
+
+    const day = Number(tanggal.split("-")[2]);
+    statusStudents = (data.siswa||[]).map(s=>{
+      const item = s.hari && s.hari[day] ? s.hari[day] : {status:"-",jam:""};
+      let status = String(item.status||"-").toUpperCase();
+      if(!["HADIR","SAKIT","IZIN","ALPA"].includes(status)) status = "BELUM";
+      return {...s,status};
+    });
+
+    renderStatusTable();
+    document.getElementById("saveAllBtn").disabled = statusStudents.length===0;
+  }catch(e){
+    document.getElementById("statusTable").innerHTML = `<div class="empty">${escapeHtml(e.message)}</div>`;
+  }
+}
+
+function renderStatusTable(){
+  if(!statusStudents.length){
+    document.getElementById("statusTable").innerHTML = '<div class="empty">Tidak ada siswa.</div>';
+    return;
+  }
+
+  let html = `<table class="status-table"><thead><tr>
+    <th>No</th><th class="left">Nama</th><th>ID</th><th>Kelas</th><th>Status</th><th>Jam</th>
+  </tr></thead><tbody>`;
+
+  statusStudents.forEach((s,i)=>{
+    html += `<tr>
+      <td>${i+1}</td>
+      <td class="left"><b>${escapeHtml(s.nama)}</b></td>
+      <td>${escapeHtml(s.id)}</td>
+      <td>${escapeHtml(s.kelas)}</td>
+      <td>
+        <select id="status-${i}" onchange="statusStudents[${i}].status=this.value">
+          <option value="HADIR" ${s.status==="HADIR"?"selected":""}>HADIR</option>
+          <option value="SAKIT" ${s.status==="SAKIT"?"selected":""}>SAKIT</option>
+          <option value="IZIN" ${s.status==="IZIN"?"selected":""}>IZIN</option>
+          <option value="ALPA" ${s.status==="ALPA"?"selected":""}>ALPA</option>
+        </select>
+      </td>
+      <td>${escapeHtml(s.hari && s.hari[Number(document.getElementById("statusTanggal").value.split("-")[2])] ? s.hari[Number(document.getElementById("statusTanggal").value.split("-")[2])].jam : "-")}</td>
+    </tr>`;
+  });
+
+  html += "</tbody></table>";
+  document.getElementById("statusTable").innerHTML = html;
+}
+
+async function saveOneStatus(student,tanggal,status){
+  return api("status",{
+    id:student.id,
+    tanggal,
+    status
+  });
+}
+
+async function saveAllStatus(){
+  if(!statusStudents.length) return;
+
+  const btn = document.getElementById("saveAllBtn");
+  const msg = document.getElementById("statusMessage");
+  const tanggal = document.getElementById("statusTanggal").value;
+
+  btn.disabled = true;
+  btn.textContent = "MENYIMPAN...";
+  msg.innerHTML = '<div class="notice">Sedang menyimpan semua status...</div>';
+
+  let sukses = 0;
+  let gagal = 0;
+
+  for(const student of statusStudents){
+    try{
+      const result = await saveOneStatus(student,tanggal,student.status);
+      if(result && result.success) sukses++;
+      else gagal++;
+    }catch(e){
+      gagal++;
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = "SIMPAN SEMUA";
+
+  if(gagal===0){
+    msg.innerHTML = `<div class="notice success">✓ ${sukses} status berhasil disimpan.</div>`;
+  }else{
+    msg.innerHTML = `<div class="notice warning">Selesai. Berhasil: ${sukses}, gagal: ${gagal}.</div>`;
+  }
+
+  loadStatus();
+}
+
+/* =========================================================
+   GENERATOR QR
+========================================================= */
+function loadGenerator(){
+  const kelas = document.getElementById("genKelas").value || "SEMUA";
+  const rows = allStudents.filter(s=>{
+    if(kelas==="SEMUA") return true;
+    return String(s.kelas||"").trim().toLowerCase()===kelas.toLowerCase();
+  });
+
+  const grid = document.getElementById("qrGrid");
+
+  if(!rows.length){
+    grid.innerHTML = '<div class="empty">Tidak ada siswa.</div>';
+    return;
+  }
+
+  grid.innerHTML = "";
+
+  rows.forEach((s,i)=>{
+    const card = document.createElement("div");
+    card.className = "qr-card";
+    card.innerHTML = `
+      <div class="qr" id="qr-${i}"></div>
+      <div class="name">${escapeHtml(s.nama)}</div>
+      <div class="id">${escapeHtml(s.id)}</div>
+      <div class="kelas">Kelas ${escapeHtml(s.kelas)}</div>
+    `;
+    grid.appendChild(card);
+
+    new QRCode(document.getElementById("qr-"+i),{
+      text:String(s.id),
+      width:160,
+      height:160,
+      correctLevel:QRCode.CorrectLevel.H
+    });
+  });
+}
+
+/* =========================================================
+   DESKTOP SCALE
+   Layout tetap desktop 1250px, tetapi di HP diperkecil agar
+   seluruh tampilan terlihat seperti halaman Pembayaran.
+========================================================= */
+(function setupDesktopScale(){
+  const DESIGN_WIDTH = 1250;
+
+  function applyDesktopScale(){
+    const availableWidth = Math.max(1, window.innerWidth);
+    const scale = Math.min(1, availableWidth / DESIGN_WIDTH);
+
+    document.body.style.zoom = String(scale);
+    document.body.style.width = DESIGN_WIDTH + "px";
+    document.body.style.minWidth = DESIGN_WIDTH + "px";
+
+    document.documentElement.style.setProperty(
+      "--desktop-scale",
+      scale
+    );
+  }
+
+  window.addEventListener("load", applyDesktopScale);
+  window.addEventListener("resize", applyDesktopScale);
+
+  window.addEventListener("orientationchange", function(){
+    setTimeout(applyDesktopScale, 100);
+  });
+
+  if(document.body) applyDesktopScale();
+  else document.addEventListener("DOMContentLoaded", applyDesktopScale);
+})();
+
+/* =========================================================
+   INIT
+========================================================= */
+document.getElementById("dashTanggal").value = todayISO();
+document.getElementById("statusTanggal").value = todayISO();
+setupRekapFilters();
+
+(async function init(){
+  await loadStudents();
+  loadDashboard();
+})();
+</script>
+</body>
+</html>
