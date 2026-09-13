@@ -547,164 +547,182 @@ td.id {
 
 
 /* ==================================================
-   PRINT
+   PRINT A4 LANDSCAPE - FULL KERTAS
 ================================================== */
 
 @media print {
 
-
   @page {
-
-    size: landscape;
-
-    margin: 8mm;
-
+    size: A4 landscape;
+    margin: 5mm;
   }
 
+  html,
+  body {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: white !important;
+  }
 
   body {
-
-    background: white;
-
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-
-  .header {
-
-    display: none;
-
+  .header,
+  .filter-card,
+  .print-area {
+    display: none !important;
   }
-
 
   .container {
-
-    max-width: none;
-
-    padding: 0;
-
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-
-
-  .filter-card {
-
-    display: none;
-
-  }
-
 
   .table-card {
-
-    box-shadow: none;
-
-    border-radius: 0;
-
-    padding: 0;
-
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: white !important;
   }
-
 
   .print-header {
-
-    display: block;
-
-    margin-bottom: 8px;
-
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 4mm 0 !important;
+    padding: 0 !important;
+    text-align: center;
   }
-
 
   .print-header .judul {
-
-    font-size: 15px;
-
+    font-size: 15pt !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1mm !important;
   }
-
 
   .print-header .sekolah {
-
-    font-size: 11px;
-
+    font-size: 10pt !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1mm !important;
   }
-
 
   .print-header .tahun {
-
-    font-size: 10px;
-
+    font-size: 9pt !important;
+    line-height: 1.1 !important;
+    margin-bottom: 3mm !important;
   }
-
 
   .info-rekap {
-
-    font-size: 9px;
-
-    margin-bottom: 5px;
-
-    padding-bottom: 4px;
-
+    width: 100% !important;
+    margin: 0 0 2mm 0 !important;
+    padding: 1.5mm 0 !important;
+    border-top: 1px solid #000 !important;
+    border-bottom: 1px solid #000 !important;
+    font-size: 8pt !important;
+    line-height: 1.1 !important;
   }
-
 
   .table-wrapper {
-
-    overflow: visible;
-
+    width: 100% !important;
+    overflow: visible !important;
   }
-
 
   table {
-
-    width: 100%;
-
-    min-width: 0;
-
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
   }
 
+  th,
+  td {
+    border: 1px solid #000 !important;
+    padding: 1.2mm 0.7mm !important;
+    font-size: 7pt !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    overflow: hidden !important;
+  }
 
   th {
-
-    font-size: 7px;
-
-    padding: 3px 2px;
-
+    background: #0f172a !important;
+    color: white !important;
+    font-weight: 900 !important;
   }
-
-
-  td {
-
-    font-size: 7px;
-
-    padding: 3px 2px;
-
-  }
-
 
   td.nama {
-
-    min-width: 0;
-
-    width: 160px;
-
+    width: 32mm !important;
+    min-width: 32mm !important;
+    text-align: left !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    font-weight: 700 !important;
   }
 
+  td.id {
+    white-space: nowrap !important;
+  }
+
+  .status-hadir {
+    background: #dcfce7 !important;
+    color: #166534 !important;
+    font-weight: 900 !important;
+  }
+
+  .status-sakit {
+    background: #fef3c7 !important;
+    color: #92400e !important;
+    font-weight: 900 !important;
+  }
+
+  .status-izin {
+    background: #dbeafe !important;
+    color: #1e40af !important;
+    font-weight: 900 !important;
+  }
+
+  .status-alpa {
+    background: #fee2e2 !important;
+    color: #991b1b !important;
+    font-weight: 900 !important;
+  }
+
+  .status-kosong {
+    color: #64748b !important;
+  }
 
   .keterangan {
-
-    font-size: 8px;
-
-    margin-top: 5px;
-
+    display: block !important;
+    width: 100% !important;
+    margin-top: 2mm !important;
+    font-size: 7pt !important;
+    color: #000 !important;
   }
 
-
-  .print-area {
-
-    display: none;
-
+  /* Paksa isi tetap satu halaman bila memungkinkan */
+  .table-wrapper,
+  table {
+    page-break-inside: auto;
   }
 
-}
+  thead {
+    display: table-header-group;
+  }
 
-</style>
+  tr {
+    page-break-inside: avoid;
+  }
+}</style>
 
 </head>
 
