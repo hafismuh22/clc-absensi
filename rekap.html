@@ -563,7 +563,7 @@ td.id {
     min-width: 0;
     margin: 0;
     padding: 0;
-    background: white !important;
+    background: #fff !important;
   }
 
   body {
@@ -571,6 +571,7 @@ td.id {
     print-color-adjust: exact !important;
   }
 
+  /* Jangan cetak tampilan web/filter/tombol */
   .header,
   .filter-card,
   .print-area {
@@ -591,33 +592,37 @@ td.id {
     border: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    background: white !important;
+    background: #fff !important;
   }
 
+  /* Judul laporan */
   .print-header {
     display: block !important;
     width: 100% !important;
-    margin: 0 0 4mm 0 !important;
+    margin: 0 0 3mm 0 !important;
     padding: 0 !important;
-    text-align: center;
+    text-align: center !important;
   }
 
   .print-header .judul {
-    font-size: 15pt !important;
-    line-height: 1.1 !important;
-    margin-bottom: 1mm !important;
+    font-size: 14pt !important;
+    line-height: 1.05 !important;
+    margin: 0 0 1mm 0 !important;
+    color: #000 !important;
   }
 
   .print-header .sekolah {
-    font-size: 10pt !important;
-    line-height: 1.1 !important;
-    margin-bottom: 1mm !important;
+    font-size: 9pt !important;
+    line-height: 1.05 !important;
+    margin: 0 0 1mm 0 !important;
+    color: #000 !important;
   }
 
   .print-header .tahun {
-    font-size: 9pt !important;
-    line-height: 1.1 !important;
-    margin-bottom: 3mm !important;
+    font-size: 8pt !important;
+    line-height: 1.05 !important;
+    margin: 0 0 2mm 0 !important;
+    color: #000 !important;
   }
 
   .info-rekap {
@@ -628,6 +633,7 @@ td.id {
     border-bottom: 1px solid #000 !important;
     font-size: 8pt !important;
     line-height: 1.1 !important;
+    color: #000 !important;
   }
 
   .table-wrapper {
@@ -635,70 +641,91 @@ td.id {
     overflow: visible !important;
   }
 
+  /* Hapus kolom HADIR dan % hanya pada hasil cetak */
+  table th:nth-last-child(2),
+  table th:last-child,
+  table td:nth-last-child(2),
+  table td:last-child {
+    display: none !important;
+  }
+
+  /*
+    Jangan gunakan table-layout: fixed.
+    Lebar kolom ID dan NAMA mengikuti isi terpanjang.
+  */
   table {
     width: 100% !important;
     min-width: 0 !important;
-    max-width: 100% !important;
-    table-layout: fixed !important;
+    max-width: none !important;
+    table-layout: auto !important;
     border-collapse: collapse !important;
   }
 
   th,
   td {
     border: 1px solid #000 !important;
-    padding: 1.2mm 0.7mm !important;
+    background: #fff !important;
+    color: #000 !important;
+    padding: 1.2mm 1mm !important;
     font-size: 7pt !important;
     line-height: 1.05 !important;
     text-align: center !important;
     vertical-align: middle !important;
-    overflow: hidden !important;
   }
 
+  /* Semua header tabel putih, bukan navy/berwarna */
   th {
-    background: #0f172a !important;
-    color: white !important;
+    background: #fff !important;
+    color: #000 !important;
     font-weight: 900 !important;
-  }
-
-  td.nama {
-    width: 32mm !important;
-    min-width: 32mm !important;
-    text-align: left !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    font-weight: 700 !important;
-  }
-
-  td.id {
     white-space: nowrap !important;
   }
 
-  .status-hadir {
-    background: #dcfce7 !important;
-    color: #166534 !important;
-    font-weight: 900 !important;
+  /* ID mengikuti panjang isi dan tidak boleh turun baris */
+  td.id {
+    width: 1% !important;
+    min-width: max-content !important;
+    white-space: nowrap !important;
+    word-break: normal !important;
+    overflow: visible !important;
+    font-weight: 700 !important;
   }
 
-  .status-sakit {
-    background: #fef3c7 !important;
-    color: #92400e !important;
-    font-weight: 900 !important;
+  /*
+    Nama mengikuti nama terpanjang.
+    Tidak boleh dipotong atau dibuat beberapa baris.
+  */
+  td.nama {
+    width: 1% !important;
+    min-width: max-content !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    word-break: normal !important;
+    overflow: visible !important;
+    font-weight: 700 !important;
   }
 
-  .status-izin {
-    background: #dbeafe !important;
-    color: #1e40af !important;
-    font-weight: 900 !important;
+  /* Kelas juga tidak dibuat turun baris */
+  td:nth-child(4) {
+    width: 1% !important;
+    white-space: nowrap !important;
   }
 
-  .status-alpa {
-    background: #fee2e2 !important;
-    color: #991b1b !important;
-    font-weight: 900 !important;
+  /* Kolom tanggal dibuat tetap ringkas */
+  table th:not(:first-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)),
+  table td:not(:first-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)) {
+    white-space: nowrap !important;
   }
 
+  /* Status tetap putih pada hasil cetak */
+  .status-hadir,
+  .status-sakit,
+  .status-izin,
+  .status-alpa,
   .status-kosong {
-    color: #64748b !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-weight: 900 !important;
   }
 
   .keterangan {
@@ -707,12 +734,6 @@ td.id {
     margin-top: 2mm !important;
     font-size: 7pt !important;
     color: #000 !important;
-  }
-
-  /* Paksa isi tetap satu halaman bila memungkinkan */
-  .table-wrapper,
-  table {
-    page-break-inside: auto;
   }
 
   thead {
