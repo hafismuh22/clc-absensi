@@ -309,12 +309,52 @@ body{
     transform-origin:top left;
   }
 }
+
+/* ================= LOGIN ================= */
+body.login-mode{min-width:0;overflow:hidden;}
+.login-screen{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#071a3a,#123d73);}
+.login-box{width:min(430px,100%);background:#fff;border-radius:22px;padding:34px;box-shadow:0 20px 60px rgba(0,0,0,.28);}
+.login-logo{width:68px;height:68px;border-radius:16px;background:#071a3a;color:#e2bf62;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;margin:0 auto 18px;}
+.login-box h2{text-align:center;margin:0;color:#10213f;font-size:24px;}
+.login-box p{text-align:center;color:#64748b;font-size:13px;margin:8px 0 25px;}
+.login-field{margin-bottom:14px;}
+.login-field label{display:block;font-size:12px;font-weight:800;color:#334155;margin-bottom:6px;}
+.login-field input{width:100%;padding:13px 14px;border:1px solid #cbd5e1;border-radius:11px;font-size:15px;outline:none;}
+.login-field input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12);}
+.login-btn{width:100%;border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#0f2f63,#1e3a8a);color:#fff;font-weight:900;font-size:15px;cursor:pointer;margin-top:5px;}
+.login-btn:disabled{opacity:.6;cursor:wait;}
+.login-error{display:none;margin-top:14px;background:#fee2e2;color:#991b1b;border:1px solid #fecaca;padding:11px;border-radius:10px;font-size:13px;font-weight:700;text-align:center;}
+.portal-authbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-bottom:18px;}
+.portal-user{font-size:13px;color:#475569;font-weight:700;}
+.portal-logout{border:0;border-radius:9px;padding:9px 14px;background:#dc2626;color:#fff;font-weight:800;cursor:pointer;}
+@media(max-width:600px){.login-box{padding:25px 20px}.login-screen{padding:14px}}
+
 </style>
 </head>
 
-<body>
+<body class="login-mode">
 
-<div class="portal" id="portal">
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">CLC</div>
+    <h2>LOGIN ABSENSI</h2>
+    <p>CLC PERMODALAN TKB MORISEM 3</p>
+    <form id="loginForm">
+      <div class="login-field">
+        <label>USERNAME</label>
+        <input id="loginUsername" type="text" autocomplete="username" required>
+      </div>
+      <div class="login-field">
+        <label>PASSWORD</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="login-btn" id="loginButton" type="submit">MASUK KE PORTAL</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+  </div>
+</div>
+
+<div class="portal" id="portal" style="display:none;">
 
   <header class="header">
     <div class="header-top">
@@ -327,11 +367,16 @@ body{
 
     <div class="header-title">
       <h2>PORTAL ABSENSI</h2>
-      <p>CLC PERMODALAN TKB MORISEM 3 • TAHUN AJARAN 2026–2027</p>
+      <p>CLC PERMODALAN TKB MORISEM 3 â€¢ TAHUN AJARAN 2026â€“2027</p>
     </div>
   </header>
 
   <main class="content">
+<div class="portal-authbar">
+  <div class="portal-user" id="portalUser"></div>
+  <button class="portal-logout" onclick="logoutPortal()">KELUAR</button>
+</div>
+
 
     <div class="section-title">
       <h3>MENU ABSENSI</h3>
@@ -342,59 +387,59 @@ body{
 
       <!-- 1 SCANNER -->
       <div class="card">
-        <div class="icon">📷</div>
+        <div class="icon">ðŸ“·</div>
         <h4>SCAN ABSENSI QR</h4>
         <p>
           Scan QR Code siswa untuk mencatat kehadiran secara otomatis
           melalui kamera perangkat.
         </p>
         <a class="open-btn" href="index.html" target="_blank" rel="noopener">
-          BUKA SCANNER →
+          BUKA SCANNER â†’
         </a>
       </div>
 
       <!-- 2 DASHBOARD -->
       <div class="card gold">
-        <div class="icon">📊</div>
+        <div class="icon">ðŸ“Š</div>
         <h4>DASHBOARD ABSENSI</h4>
         <p>
           Pantau jumlah hadir, sakit, izin, alpa, belum absen,
           serta ringkasan kehadiran setiap kelas.
         </p>
         <a class="open-btn" href="dashboard.html" target="_blank" rel="noopener">
-          BUKA DASHBOARD →
+          BUKA DASHBOARD â†’
         </a>
       </div>
 
       <!-- 3 REKAP -->
       <div class="card gold">
-        <div class="icon">📅</div>
+        <div class="icon">ðŸ“…</div>
         <h4>REKAP ABSENSI</h4>
         <p>
           Lihat rekap kehadiran siswa berdasarkan bulan, tahun,
           kelas, dan status kehadiran.
         </p>
         <a class="open-btn" href="rekap.html" target="_blank" rel="noopener">
-          BUKA REKAP →
+          BUKA REKAP â†’
         </a>
       </div>
 
       <!-- 4 STATUS -->
       <div class="card">
-        <div class="icon">✏️</div>
+        <div class="icon">âœï¸</div>
         <h4>STATUS KEHADIRAN</h4>
         <p>
           Mengatur status siswa menjadi Hadir, Sakit, Izin,
           atau Alpa dan menyimpannya ke sistem.
         </p>
         <a class="open-btn" href="status.html" target="_blank" rel="noopener">
-          INPUT STATUS →
+          INPUT STATUS â†’
         </a>
       </div>
 
       <!-- 5 GENERATOR -->
       <div class="card card-wide">
-        <div class="icon">🪪</div>
+        <div class="icon">ðŸªª</div>
         <div class="card-body">
           <h4>GENERATOR QR SISWA</h4>
           <p>
@@ -403,14 +448,14 @@ body{
           </p>
         </div>
         <a class="open-btn" href="generator.html" target="_blank" rel="noopener">
-          BUKA GENERATOR QR →
+          BUKA GENERATOR QR â†’
         </a>
       </div>
 
     </div>
 
     <div class="info">
-      <div class="info-icon">ℹ️</div>
+      <div class="info-icon">â„¹ï¸</div>
       <div>
         <strong>Informasi Sistem</strong>
         <span>
@@ -423,50 +468,121 @@ body{
   </main>
 
   <div class="footer">
-    CLC PERMODALAN TKB MORISEM 3 • SISTEM ABSENSI SISWA
+    CLC PERMODALAN TKB MORISEM 3 â€¢ SISTEM ABSENSI SISWA
   </div>
 
 </div>
 
 <script>
-/* =========================================================
-   MODE DESKTOP YANG OTOMATIS MENGECIL DI HP
-   Mengikuti konsep halaman pembayaran yang sudah digunakan.
-========================================================= */
-(function(){
-  function applyDesktopZoom(){
+const API_URL = "https://script.google.com/macros/s/AKfycbwBGvZdnWIfwNjpevh9WLSPtfD5ho_TqOYm9z2xFwE5SdKP_egi1INIkRevY3yFLNxi/exec";
+const TOKEN_KEY = "CLC_ABSENSI_TOKEN";
+const USER_KEY = "CLC_ABSENSI_USER";
 
-    var designWidth = 1250;
-    var screenWidth = window.innerWidth;
+function jsonp(url, timeoutMs=15000){
+  return new Promise((resolve,reject)=>{
+    const cb="portalCb_"+Date.now()+"_"+Math.floor(Math.random()*10000);
+    const script=document.createElement("script");
+    let done=false;
+    const timer=setTimeout(()=>{if(done)return;done=true;cleanup();reject(new Error("Server tidak dapat dihubungi."));},timeoutMs);
+    function cleanup(){clearTimeout(timer);script.remove();try{delete window[cb]}catch(e){}}
+    window[cb]=data=>{if(done)return;done=true;cleanup();resolve(data)};
+    script.onerror=()=>{if(done)return;done=true;cleanup();reject(new Error("Gagal menghubungi server."))};
+    script.src=url+(url.includes("?")?"&":"?")+"callback="+encodeURIComponent(cb);
+    document.body.appendChild(script);
+  });
+}
 
-    if(screenWidth < designWidth){
+async function sha256(text){
+  const data=new TextEncoder().encode(text);
+  const hash=await crypto.subtle.digest("SHA-256",data);
+  return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
 
-      var scale = screenWidth / designWidth;
+function showPortal(userName){
+  document.body.classList.remove("login-mode");
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("portal").style.display="block";
+  document.getElementById("portalUser").textContent="Login: "+(userName||"Pengguna");
+  applyDesktopZoom();
+}
 
-      document.body.style.zoom = scale;
+function showLogin(){
+  document.body.classList.add("login-mode");
+  document.getElementById("loginScreen").style.display="flex";
+  document.getElementById("portal").style.display="none";
+}
 
-      /*
-        Tinggi visual disesuaikan agar halaman tidak menyisakan
-        ruang kosong berlebihan setelah zoom.
-      */
-      var portal = document.getElementById("portal");
-
-      if(portal){
-        var originalHeight = portal.offsetHeight;
-        document.body.style.minHeight = Math.ceil(originalHeight * scale) + "px";
-      }
-
+async function validateExisting(){
+  const token=localStorage.getItem(TOKEN_KEY)||"";
+  if(!token){showLogin();return;}
+  try{
+    const data=await jsonp(API_URL+"?action=validate&token="+encodeURIComponent(token));
+    if(data && data.success){
+      localStorage.setItem(USER_KEY,data.nama||data.username||"Pengguna");
+      showPortal(data.nama||data.username);
     }else{
-
-      document.body.style.zoom = "1";
-      document.body.style.minHeight = "100vh";
-
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+      showLogin();
     }
+  }catch(e){
+    document.getElementById("loginError").textContent="Server tidak dapat dihubungi.";
+    document.getElementById("loginError").style.display="block";
+    showLogin();
   }
+}
 
-  window.addEventListener("load", applyDesktopZoom);
-  window.addEventListener("resize", applyDesktopZoom);
-})();
+document.getElementById("loginForm").addEventListener("submit",async function(e){
+  e.preventDefault();
+  const username=document.getElementById("loginUsername").value.trim();
+  const password=document.getElementById("loginPassword").value;
+  const button=document.getElementById("loginButton");
+  const error=document.getElementById("loginError");
+  error.style.display="none";
+  button.disabled=true;
+  button.textContent="MEMERIKSA LOGIN...";
+  try{
+    const passwordHash=await sha256(password);
+    const data=await jsonp(API_URL+"?action=login&username="+encodeURIComponent(username)+"&passwordHash="+encodeURIComponent(passwordHash));
+    if(!data || !data.success) throw new Error(data && data.message ? data.message : "Login gagal.");
+    localStorage.setItem(TOKEN_KEY,data.token);
+    localStorage.setItem(USER_KEY,(data.user&&data.user.nama)||username);
+    showPortal((data.user&&data.user.nama)||username);
+  }catch(err){
+    error.textContent=err.message||"Login gagal.";
+    error.style.display="block";
+  }finally{
+    button.disabled=false;
+    button.textContent="MASUK KE PORTAL";
+  }
+});
+
+function logoutPortal(){
+  const token=localStorage.getItem(TOKEN_KEY)||"";
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
+  showLogin();
+  if(token){jsonp(API_URL+"?action=logout&token="+encodeURIComponent(token)).catch(()=>{});}
+}
+
+function applyDesktopZoom(){
+  var designWidth=1250;
+  var screenWidth=window.innerWidth;
+  var portal=document.getElementById("portal");
+  if(!portal || portal.style.display==="none") return;
+  if(screenWidth<designWidth){
+    var scale=screenWidth/designWidth;
+    document.body.style.zoom=scale;
+    var originalHeight=portal.offsetHeight;
+    document.body.style.minHeight=Math.ceil(originalHeight*scale)+"px";
+  }else{
+    document.body.style.zoom="1";
+    document.body.style.minHeight="100vh";
+  }
+}
+
+window.addEventListener("resize",applyDesktopZoom);
+validateExisting();
 </script>
 
 </body>
