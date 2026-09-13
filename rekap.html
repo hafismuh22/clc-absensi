@@ -571,7 +571,6 @@ td.id {
     print-color-adjust: exact !important;
   }
 
-  /* Jangan cetak tampilan web/filter/tombol */
   .header,
   .filter-card,
   .print-area {
@@ -595,53 +594,76 @@ td.id {
     background: #fff !important;
   }
 
-  /* Judul laporan */
+  /* =========================
+     JUDUL CETAK
+  ========================= */
+
   .print-header {
     display: block !important;
     width: 100% !important;
-    margin: 0 0 3mm 0 !important;
+    margin: 0 0 7mm 0 !important;
     padding: 0 !important;
     text-align: center !important;
   }
 
   .print-header .judul {
     font-size: 14pt !important;
-    line-height: 1.05 !important;
-    margin: 0 0 1mm 0 !important;
+    line-height: 1.15 !important;
+    margin: 0 0 1.5mm 0 !important;
     color: #000 !important;
+    font-weight: 700 !important;
   }
 
   .print-header .sekolah {
     font-size: 9pt !important;
-    line-height: 1.05 !important;
-    margin: 0 0 1mm 0 !important;
+    line-height: 1.15 !important;
+    margin: 0 0 1.5mm 0 !important;
     color: #000 !important;
+    font-weight: 600 !important;
   }
 
   .print-header .tahun {
     font-size: 8pt !important;
-    line-height: 1.05 !important;
-    margin: 0 0 2mm 0 !important;
+    line-height: 1.15 !important;
+    margin: 0 0 4mm 0 !important;
     color: #000 !important;
+    font-weight: 500 !important;
   }
 
   .info-rekap {
     width: 100% !important;
-    margin: 0 0 2mm 0 !important;
+    margin: 0 0 3mm 0 !important;
     padding: 1.5mm 0 !important;
     border-top: 1px solid #000 !important;
     border-bottom: 1px solid #000 !important;
     font-size: 8pt !important;
-    line-height: 1.1 !important;
+    line-height: 1.2 !important;
     color: #000 !important;
+    font-weight: 500 !important;
   }
+
+  /* =========================
+     TABEL
+  ========================= */
 
   .table-wrapper {
     width: 100% !important;
     overflow: visible !important;
   }
 
-  /* Hapus kolom HADIR dan % hanya pada hasil cetak */
+  table {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    table-layout: auto !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+  }
+
+  /*
+    Hapus HADIR dan % saat print.
+    Karena kedua kolom adalah dua kolom terakhir.
+  */
   table th:nth-last-child(2),
   table th:last-child,
   table td:nth-last-child(2),
@@ -649,75 +671,88 @@ td.id {
     display: none !important;
   }
 
-  /*
-    Jangan gunakan table-layout: fixed.
-    Lebar kolom ID dan NAMA mengikuti isi terpanjang.
-  */
-  table {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    table-layout: auto !important;
-    border-collapse: collapse !important;
-  }
-
   th,
   td {
     border: 1px solid #000 !important;
     background: #fff !important;
     color: #000 !important;
-    padding: 1.2mm 1mm !important;
+
+    /* Tulisan biasa, tidak bold */
+    font-weight: 400 !important;
+
     font-size: 7pt !important;
-    line-height: 1.05 !important;
+    line-height: 1.15 !important;
+    padding: 1.25mm 0.8mm !important;
+
     text-align: center !important;
     vertical-align: middle !important;
+
+    box-sizing: border-box !important;
   }
 
-  /* Semua header tabel putih, bukan navy/berwarna */
   th {
-    background: #fff !important;
-    color: #000 !important;
-    font-weight: 900 !important;
+    font-weight: 400 !important;
     white-space: nowrap !important;
   }
 
-  /* ID mengikuti panjang isi dan tidak boleh turun baris */
+  /* Nomor urut */
+  th:first-child,
+  td:first-child {
+    width: 9mm !important;
+    min-width: 9mm !important;
+    max-width: 9mm !important;
+  }
+
+  /* ID - tetap satu baris dan mengikuti isi */
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: auto !important;
+    min-width: 17mm !important;
+    white-space: nowrap !important;
+  }
+
   td.id {
-    width: 1% !important;
-    min-width: max-content !important;
+    font-weight: 400 !important;
     white-space: nowrap !important;
     word-break: normal !important;
     overflow: visible !important;
-    font-weight: 700 !important;
   }
 
-  /*
-    Nama mengikuti nama terpanjang.
-    Tidak boleh dipotong atau dibuat beberapa baris.
-  */
+  /* Nama - satu baris, tidak turun */
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: auto !important;
+    min-width: 35mm !important;
+    white-space: nowrap !important;
+  }
+
   td.nama {
-    width: 1% !important;
-    min-width: max-content !important;
     text-align: left !important;
+    font-weight: 400 !important;
     white-space: nowrap !important;
     word-break: normal !important;
     overflow: visible !important;
-    font-weight: 700 !important;
   }
 
-  /* Kelas juga tidak dibuat turun baris */
+  /* Kelas */
+  th:nth-child(4),
   td:nth-child(4) {
-    width: 1% !important;
+    width: 10mm !important;
+    min-width: 10mm !important;
+    max-width: 10mm !important;
     white-space: nowrap !important;
   }
 
-  /* Kolom tanggal dibuat tetap ringkas */
-  table th:not(:first-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)),
-  table td:not(:first-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)) {
+  /* Kolom tanggal: semua punya lebar yang konsisten */
+  th:nth-child(n+5),
+  td:nth-child(n+5) {
+    width: 7.2mm !important;
+    min-width: 7.2mm !important;
+    max-width: 7.2mm !important;
     white-space: nowrap !important;
   }
 
-  /* Status tetap putih pada hasil cetak */
+  /* Status H/S/I/A semuanya putih */
   .status-hadir,
   .status-sakit,
   .status-izin,
@@ -725,23 +760,35 @@ td.id {
   .status-kosong {
     background: #fff !important;
     color: #000 !important;
-    font-weight: 900 !important;
+    font-weight: 400 !important;
   }
 
+  /* Keterangan */
   .keterangan {
     display: block !important;
     width: 100% !important;
-    margin-top: 2mm !important;
+    margin-top: 2.5mm !important;
     font-size: 7pt !important;
+    line-height: 1.15 !important;
     color: #000 !important;
+    font-weight: 400 !important;
+  }
+
+  .keterangan span {
+    margin-right: 10px !important;
   }
 
   thead {
     display: table-header-group;
   }
 
+  tbody {
+    display: table-row-group;
+  }
+
   tr {
-    page-break-inside: avoid;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 }</style>
 
