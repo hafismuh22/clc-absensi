@@ -547,10 +547,14 @@ td.id {
 
 
 /* ==================================================
-   PRINT A4 LANDSCAPE - RAPI DAN TIDAK TERPOTONG
+   PRINT A4 LANDSCAPE - IDENTITAS JELAS + TANGGAL PENUH
 ================================================== */
 @media print {
-  @page { size: A4 landscape; margin: 5mm; }
+
+  @page {
+    size: A4 landscape;
+    margin: 5mm;
+  }
 
   html, body {
     width: 100% !important;
@@ -565,7 +569,9 @@ td.id {
     print-color-adjust: exact !important;
   }
 
-  .header, .filter-card, .print-area {
+  .header,
+  .filter-card,
+  .print-area {
     display: none !important;
   }
 
@@ -583,19 +589,20 @@ td.id {
     border: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
+    background: #fff !important;
   }
 
+  /* Jarak judul ke tabel */
   .print-header {
     display: block !important;
     width: 100% !important;
-    margin: 0 0 6mm 0 !important;
+    margin: 0 0 7mm 0 !important;
     padding: 0 !important;
     text-align: center !important;
   }
 
   .print-header .judul {
     font-size: 15pt !important;
-    line-height: 1.1 !important;
     margin: 0 0 1mm !important;
     color: #0f172a !important;
     font-weight: 800 !important;
@@ -603,7 +610,6 @@ td.id {
 
   .print-header .sekolah {
     font-size: 10pt !important;
-    line-height: 1.1 !important;
     margin: 0 0 1mm !important;
     color: #0f172a !important;
     font-weight: 700 !important;
@@ -611,7 +617,6 @@ td.id {
 
   .print-header .tahun {
     font-size: 9pt !important;
-    line-height: 1.1 !important;
     margin: 0 !important;
     color: #0f172a !important;
     font-weight: 600 !important;
@@ -633,145 +638,142 @@ td.id {
     overflow: visible !important;
   }
 
-  table {
+  /*
+    KUNCI:
+    Lebar kolom ditentukan melalui COLGROUP.
+    Jadi browser tidak boleh mengambil ruang tanggal
+    untuk memperbesar ID/NAMA.
+  */
+  .rekap-table {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
     table-layout: fixed !important;
     border-collapse: collapse !important;
     border-spacing: 0 !important;
-    height: 155mm !important;
+    height: 150mm !important;
   }
 
-  th, td {
+  /* Identitas */
+  .rekap-table col.col-no {
+    width: 9mm !important;
+  }
+
+  .rekap-table col.col-id {
+    width: 23mm !important;
+  }
+
+  .rekap-table col.col-nama {
+    width: 52mm !important;
+  }
+
+  .rekap-table col.col-kelas {
+    width: 11mm !important;
+  }
+
+  /*
+    Lebar tanggal memakai sisa halaman.
+    31 hari = sekitar 6.2 mm per tanggal.
+    30 hari = sekitar 6.4 mm per tanggal.
+  */
+  .rekap-table col.col-tanggal {
+    width: 6.2mm !important;
+  }
+
+  .rekap-table col.col-hadir,
+  .rekap-table col.col-persen {
+    display: none !important;
+  }
+
+  /* Sel tabel */
+  .rekap-table th,
+  .rekap-table td {
     border: 1px solid #000 !important;
     box-sizing: border-box !important;
-    padding: 1.2mm 0.5mm !important;
+    padding: 1.1mm 0.5mm !important;
     font-size: 7.2pt !important;
     line-height: 1.1 !important;
     text-align: center !important;
     vertical-align: middle !important;
+    overflow: hidden !important;
   }
 
-  /* Header mengikuti website */
-  th {
+  .rekap-table th {
     background: #0f172a !important;
     color: #fff !important;
     font-weight: 600 !important;
     white-space: nowrap !important;
   }
 
-  /* Lebar identitas */
-  th:first-child, td:first-child {
-    width: 9mm !important;
+  .rekap-table tbody td {
+    font-weight: 400 !important;
+    color: #0f172a !important;
   }
 
-  th:nth-child(2), td:nth-child(2) {
-    width: 23mm !important;
-  }
-
-  th:nth-child(3), td:nth-child(3) {
-    width: 50mm !important;
-  }
-
-  th:nth-child(4), td:nth-child(4) {
-    width: 11mm !important;
-  }
-
-  td.id {
-    width: 23mm !important;
+  /* ID */
+  .rekap-table td.col-id {
     white-space: nowrap !important;
     word-break: normal !important;
-    overflow: visible !important;
-    font-weight: 400 !important;
+    font-size: 7.2pt !important;
   }
 
-  td.nama {
-    width: 50mm !important;
-    min-width: 50mm !important;
+  /* Nama: satu baris dan tidak dipotong */
+  .rekap-table td.col-nama {
     text-align: left !important;
     white-space: nowrap !important;
-    word-break: normal !important;
     overflow: visible !important;
-    font-weight: 400 !important;
+    word-break: normal !important;
+    font-size: 7.2pt !important;
   }
 
-  td:nth-child(4) {
-    white-space: nowrap !important;
-    font-weight: 400 !important;
-  }
-
-  /*
-    Tanggal dibuat seragam.
-    6.15mm x 31 = 190.65mm.
-    Total dengan identitas tetap berada dalam lebar A4 landscape.
-  */
-  th:nth-child(n+5),
-  td:nth-child(n+5) {
-    width: 6.15mm !important;
-    min-width: 6.15mm !important;
-    max-width: 6.15mm !important;
-    padding-left: 0.2mm !important;
-    padding-right: 0.2mm !important;
+  .rekap-table td.col-kelas {
     white-space: nowrap !important;
   }
 
-  /*
-    Sembunyikan HADIR dan % hanya pada print.
-    Pada baris data keduanya memang selalu dua kolom terakhir.
-  */
-  tbody td:nth-last-child(2),
-  tbody td:last-child {
-    display: none !important;
+  /* Tanggal */
+  .rekap-table th.col-tanggal,
+  .rekap-table td.col-tanggal {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    padding-left: 0.15mm !important;
+    padding-right: 0.15mm !important;
   }
 
-  /*
-    Pada header pertama, TANGGAL adalah satu-satunya th colspan.
-    HADIR dan % adalah dua th setelahnya.
-  */
-  thead tr:first-child th:nth-last-child(2),
-  thead tr:first-child th:last-child {
-    display: none !important;
+  /* TANGGAL harus membentang di atas seluruh tanggal */
+  .rekap-table th.col-tanggal-group {
+    text-align: center !important;
   }
 
-  /* Pastikan TANGGAL tetap terlihat */
-  thead tr:first-child th[colspan] {
-    display: table-cell !important;
-  }
-
-  /* Warna status tetap seperti website */
-  .status-hadir {
+  /* Status mengikuti tampilan website */
+  .rekap-table .status-hadir {
     background: #dcfce7 !important;
     color: #166534 !important;
     font-weight: 600 !important;
   }
 
-  .status-sakit {
+  .rekap-table .status-sakit {
     background: #fef3c7 !important;
     color: #92400e !important;
     font-weight: 600 !important;
   }
 
-  .status-izin {
+  .rekap-table .status-izin {
     background: #dbeafe !important;
     color: #1e40af !important;
     font-weight: 600 !important;
   }
 
-  .status-alpa {
+  .rekap-table .status-alpa {
     background: #fee2e2 !important;
     color: #991b1b !important;
     font-weight: 600 !important;
   }
 
-  .status-kosong {
+  .rekap-table .status-kosong {
     background: #fff !important;
     color: #94a3b8 !important;
-    font-weight: 400 !important;
-  }
-
-  /* Isi tabel normal, bukan bold */
-  tbody td {
     font-weight: 400 !important;
   }
 
@@ -784,8 +786,13 @@ td.id {
     font-weight: 400 !important;
   }
 
-  thead { display: table-header-group !important; }
-  tbody { display: table-row-group !important; }
+  thead {
+    display: table-header-group !important;
+  }
+
+  tbody {
+    display: table-row-group !important;
+  }
 
   tr {
     page-break-inside: avoid !important;
@@ -1793,37 +1800,47 @@ function tampilkanRekap(
 
   let html = `
 
-    <table>
+    <table class="rekap-table">
+
+      <colgroup>
+        <col class="col-no">
+        <col class="col-id">
+        <col class="col-nama">
+        <col class="col-kelas">
+        ${Array.from({length: data.jumlahHari}, function(){ return '<col class="col-tanggal">'; }).join("")}
+        <col class="col-hadir">
+        <col class="col-persen">
+      </colgroup>
 
       <thead>
 
         <tr>
 
-          <th rowspan="2">
+          <th class="col-no" rowspan="2">
             NO
           </th>
 
-          <th rowspan="2">
+          <th class="col-id" rowspan="2">
             ID
           </th>
 
-          <th rowspan="2">
+          <th class="col-nama" rowspan="2">
             NAMA SISWA
           </th>
 
-          <th rowspan="2">
+          <th class="col-kelas" rowspan="2">
             KELAS
           </th>
 
-          <th colspan="${data.jumlahHari}">
+          <th class="col-tanggal-group" colspan="${data.jumlahHari}">
             TANGGAL
           </th>
 
-          <th rowspan="2">
+          <th class="col-hadir" rowspan="2">
             HADIR
           </th>
 
-          <th rowspan="2">
+          <th class="col-persen" rowspan="2">
             %
           </th>
 
@@ -1850,7 +1867,7 @@ function tampilkanRekap(
 
     html += `
 
-      <th>
+      <th class="col-tanggal">
         ${hari}
       </th>
 
@@ -1882,11 +1899,11 @@ function tampilkanRekap(
 
         <tr>
 
-          <td>
+          <td class="col-no">
             ${index + 1}
           </td>
 
-          <td class="id">
+          <td class="id col-id">
 
             ${escapeHtml(
               item.id
@@ -1894,7 +1911,7 @@ function tampilkanRekap(
 
           </td>
 
-          <td class="nama">
+          <td class="nama col-nama">
 
             ${escapeHtml(
               item.nama
@@ -1902,7 +1919,7 @@ function tampilkanRekap(
 
           </td>
 
-          <td>
+          <td class="col-kelas">
 
             ${escapeHtml(
               item.kelas
@@ -1964,7 +1981,7 @@ function tampilkanRekap(
           html += `
 
             <td
-              class="status-hadir"
+              class="status-hadir col-tanggal"
               title="Hadir ${
                 escapeHtml(
                   dataHari.jam || ""
@@ -1994,7 +2011,7 @@ function tampilkanRekap(
           html += `
 
             <td
-              class="status-sakit"
+              class="status-sakit col-tanggal"
             >
 
               S
@@ -2019,7 +2036,7 @@ function tampilkanRekap(
           html += `
 
             <td
-              class="status-izin"
+              class="status-izin col-tanggal"
             >
 
               I
@@ -2044,7 +2061,7 @@ function tampilkanRekap(
           html += `
 
             <td
-              class="status-alpa"
+              class="status-alpa col-tanggal"
             >
 
               A
@@ -2066,7 +2083,7 @@ function tampilkanRekap(
           html += `
 
             <td
-              class="status-kosong"
+              class="status-kosong col-tanggal"
             >
 
               -
@@ -2086,14 +2103,14 @@ function tampilkanRekap(
 
       html += `
 
-          <td class="jumlah-hadir">
+          <td class="jumlah-hadir col-hadir">
 
             ${item.hadir}
 
           </td>
 
 
-          <td class="persen">
+          <td class="persen col-persen">
 
             ${item.persen}%
 
