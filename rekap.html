@@ -547,23 +547,17 @@ td.id {
 
 
 /* ==================================================
-   PRINT A4 LANDSCAPE - TAMPILAN WEB + ISI SATU HALAMAN
+   PRINT A4 LANDSCAPE - RAPI DAN TIDAK TERPOTONG
 ================================================== */
-
 @media print {
+  @page { size: A4 landscape; margin: 5mm; }
 
-  @page {
-    size: A4 landscape;
-    margin: 5mm;
-  }
-
-  html,
-  body {
-    width: 100%;
-    min-width: 0;
-    margin: 0;
-    padding: 0;
-    background: #f1f5f9 !important;
+  html, body {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
   }
 
   body {
@@ -571,10 +565,7 @@ td.id {
     print-color-adjust: exact !important;
   }
 
-  /* Yang tidak perlu ikut dicetak */
-  .header,
-  .filter-card,
-  .print-area {
+  .header, .filter-card, .print-area {
     display: none !important;
   }
 
@@ -592,17 +583,12 @@ td.id {
     border: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    background: white !important;
   }
-
-  /* =========================
-     JUDUL
-  ========================= */
 
   .print-header {
     display: block !important;
     width: 100% !important;
-    margin: 0 0 7mm 0 !important;
+    margin: 0 0 6mm 0 !important;
     padding: 0 !important;
     text-align: center !important;
   }
@@ -610,17 +596,17 @@ td.id {
   .print-header .judul {
     font-size: 15pt !important;
     line-height: 1.1 !important;
-    margin: 0 0 1mm 0 !important;
+    margin: 0 0 1mm !important;
     color: #0f172a !important;
-    font-weight: 900 !important;
+    font-weight: 800 !important;
   }
 
   .print-header .sekolah {
     font-size: 10pt !important;
     line-height: 1.1 !important;
-    margin: 0 0 1mm 0 !important;
+    margin: 0 0 1mm !important;
     color: #0f172a !important;
-    font-weight: 800 !important;
+    font-weight: 700 !important;
   }
 
   .print-header .tahun {
@@ -628,24 +614,19 @@ td.id {
     line-height: 1.1 !important;
     margin: 0 !important;
     color: #0f172a !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
   }
 
   .info-rekap {
     width: 100% !important;
-    margin: 0 0 4mm 0 !important;
+    margin: 0 0 4mm !important;
     padding: 1.5mm 0 !important;
     border-top: 1px solid #cbd5e1 !important;
     border-bottom: 1px solid #cbd5e1 !important;
     font-size: 8pt !important;
-    line-height: 1.2 !important;
     color: #0f172a !important;
-    font-weight: 800 !important;
+    font-weight: 700 !important;
   }
-
-  /* =========================
-     TABEL
-  ========================= */
 
   .table-wrapper {
     width: 100% !important;
@@ -655,128 +636,143 @@ td.id {
   table {
     width: 100% !important;
     min-width: 0 !important;
-    max-width: none !important;
-
-    /*
-      Ini yang membuat tabel mengisi area ke bawah.
-      Untuk kelas dengan sedikit siswa, baris akan
-      otomatis mendapatkan ruang vertikal lebih besar.
-    */
-    height: 157mm !important;
-
+    max-width: 100% !important;
     table-layout: fixed !important;
     border-collapse: collapse !important;
     border-spacing: 0 !important;
+    height: 155mm !important;
   }
 
-  /* HADIR dan % tetap tidak dicetak */
-  table th:nth-last-child(2),
-  table th:last-child,
-  table td:nth-last-child(2),
-  table td:last-child {
-    display: none !important;
-  }
-
-  th,
-  td {
-    border: 1px solid #cbd5e1 !important;
-    padding: 1.5mm 1mm !important;
-
-    font-size: 7.5pt !important;
-    line-height: 1.15 !important;
-
+  th, td {
+    border: 1px solid #000 !important;
+    box-sizing: border-box !important;
+    padding: 1.2mm 0.5mm !important;
+    font-size: 7.2pt !important;
+    line-height: 1.1 !important;
     text-align: center !important;
     vertical-align: middle !important;
-
-    box-sizing: border-box !important;
   }
 
-  /*
-    Ikuti tampilan website:
-    header tabel tetap navy.
-  */
+  /* Header mengikuti website */
   th {
     background: #0f172a !important;
-    color: white !important;
-    font-weight: 700 !important;
+    color: #fff !important;
+    font-weight: 600 !important;
     white-space: nowrap !important;
   }
 
-  /*
-    Lebar identitas dibuat lebih proporsional.
-    Nama tidak dipaksa mengecil atau turun baris.
-  */
-  th:first-child,
-  td:first-child {
+  /* Lebar identitas */
+  th:first-child, td:first-child {
     width: 9mm !important;
   }
 
-  th:nth-child(2),
-  td:nth-child(2) {
-    width: 19mm !important;
-    white-space: nowrap !important;
+  th:nth-child(2), td:nth-child(2) {
+    width: 23mm !important;
   }
 
-  th:nth-child(3),
-  td:nth-child(3) {
-    width: 40mm !important;
+  th:nth-child(3), td:nth-child(3) {
+    width: 50mm !important;
   }
 
-  th:nth-child(4),
-  td:nth-child(4) {
+  th:nth-child(4), td:nth-child(4) {
     width: 11mm !important;
   }
 
   td.id {
+    width: 23mm !important;
     white-space: nowrap !important;
-    font-weight: 700 !important;
+    word-break: normal !important;
+    overflow: visible !important;
+    font-weight: 400 !important;
   }
 
   td.nama {
+    width: 50mm !important;
+    min-width: 50mm !important;
     text-align: left !important;
     white-space: nowrap !important;
+    word-break: normal !important;
     overflow: visible !important;
-    font-weight: 700 !important;
+    font-weight: 400 !important;
   }
 
-  /* Semua tanggal memiliki ukuran yang sama */
+  td:nth-child(4) {
+    white-space: nowrap !important;
+    font-weight: 400 !important;
+  }
+
+  /*
+    Tanggal dibuat seragam.
+    6.15mm x 31 = 190.65mm.
+    Total dengan identitas tetap berada dalam lebar A4 landscape.
+  */
   th:nth-child(n+5),
   td:nth-child(n+5) {
-    width: 7.1mm !important;
-    min-width: 7.1mm !important;
-    max-width: 7.1mm !important;
+    width: 6.15mm !important;
+    min-width: 6.15mm !important;
+    max-width: 6.15mm !important;
+    padding-left: 0.2mm !important;
+    padding-right: 0.2mm !important;
     white-space: nowrap !important;
   }
 
   /*
-    Tetap tampilkan warna status seperti website.
+    Sembunyikan HADIR dan % hanya pada print.
+    Pada baris data keduanya memang selalu dua kolom terakhir.
   */
+  tbody td:nth-last-child(2),
+  tbody td:last-child {
+    display: none !important;
+  }
+
+  /*
+    Pada header pertama, TANGGAL adalah satu-satunya th colspan.
+    HADIR dan % adalah dua th setelahnya.
+  */
+  thead tr:first-child th:nth-last-child(2),
+  thead tr:first-child th:last-child {
+    display: none !important;
+  }
+
+  /* Pastikan TANGGAL tetap terlihat */
+  thead tr:first-child th[colspan] {
+    display: table-cell !important;
+  }
+
+  /* Warna status tetap seperti website */
   .status-hadir {
     background: #dcfce7 !important;
     color: #166534 !important;
-    font-weight: 900 !important;
+    font-weight: 600 !important;
   }
 
   .status-sakit {
     background: #fef3c7 !important;
     color: #92400e !important;
-    font-weight: 900 !important;
+    font-weight: 600 !important;
   }
 
   .status-izin {
     background: #dbeafe !important;
     color: #1e40af !important;
-    font-weight: 900 !important;
+    font-weight: 600 !important;
   }
 
   .status-alpa {
     background: #fee2e2 !important;
     color: #991b1b !important;
-    font-weight: 900 !important;
+    font-weight: 600 !important;
   }
 
   .status-kosong {
+    background: #fff !important;
     color: #94a3b8 !important;
+    font-weight: 400 !important;
+  }
+
+  /* Isi tabel normal, bukan bold */
+  tbody td {
+    font-weight: 400 !important;
   }
 
   .keterangan {
@@ -784,22 +780,12 @@ td.id {
     width: 100% !important;
     margin-top: 2.5mm !important;
     font-size: 7pt !important;
-    line-height: 1.2 !important;
     color: #475569 !important;
-    font-weight: 700 !important;
+    font-weight: 400 !important;
   }
 
-  .keterangan span {
-    margin-right: 10px !important;
-  }
-
-  thead {
-    display: table-header-group;
-  }
-
-  tbody {
-    display: table-row-group;
-  }
+  thead { display: table-header-group !important; }
+  tbody { display: table-row-group !important; }
 
   tr {
     page-break-inside: avoid !important;
