@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0757b8">
+<title>CLC PERMODALAN TKB MORISEM 3</title>
+
+<style>
+:root{
+  --blue:#0757b8;
+  --blue-dark:#063d86;
+  --blue-soft:#eaf5ff;
+  --gold:#f4c51f;
+  --text:#123b73;
+  --muted:#6683a5;
+  --white:#fff;
+  --line:#dbeafa;
+  --shadow:0 10px 30px rgba(16,91,170,.12);
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:linear-gradient(180deg,#fff 0%,#f4fbff 48%,#fff 100%);
+}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+img{max-width:100%;display:block}
+
+/* ================= HEADER ================= */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  height:68px;
+  background:linear-gradient(100deg,#06468f,#0873d8);
+  color:#fff;
+  box-shadow:0 4px 18px rgba(0,60,130,.22);
+}
+.nav-wrap{
+  max-width:1440px;
+  height:100%;
+  margin:auto;
+  padding:0 28px;
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:0 0 auto;
+}
+.brand-logo{
+  width:49px;height:49px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#fff,#dcefff);
+  display:grid;place-items:center;
+  color:var(--blue);
+  font-size:24px;
+  border:2px solid rgba(255,255,255,.75);
+  overflow:hidden;
+}
+.brand-logo span{font-size:26px}
+.brand-text{
+  line-height:1.05;
+  white-space:nowrap;
+}
+.brand-text strong{
+  display:block;
+  font-size:17px;
+  letter-spacing:.3px;
+}
+.brand-text small{
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  margin-top:3px;
+}
+.main-nav{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:2px;
+  flex:1;
+}
+.main-nav a{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:23px 10px 20px;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  opacity:.96;
+}
+.main-nav a:hover,.main-nav a.active{background:rgba(255,255,255,.08)}
+.main-nav a.active:after{
+  content:"";
+  position:absolute;
+  left:9px;right:9px;bottom:9px;
+  height:3px;border-radius:99px;background:#fff;
+}
+.nav-icon{font-size:16px}
+.search-btn{
+  border:0;background:transparent;color:#fff;
+  cursor:pointer;padding:9px;font-size:21px;
+}
+.ppdb-btn{
+  background:#fff!important;
+  color:var(--blue)!important;
+  border-radius:24px!important;
+  padding:10px 17px!important;
+  margin-left:4px;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+.ppdb-btn:after{display:none!important}
+
+/* ================= COMMON ================= */
+.container{
+  width:min(1320px,calc(100% - 48px));
+  margin:auto;
+}
+.section{padding:42px 0}
+.section-label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--blue);
+  background:#e9f5ff;
+  border-radius:30px;
+  padding:7px 14px;
+  font-size:14px;
+  font-weight:800;
+}
+.section-title{
+  margin:9px 0 5px;
+  font-size:34px;
+  line-height:1.1;
+  color:#073d83;
+}
+.section-subtitle{
+  margin:0;color:var(--muted);font-size:15px;line-height:1.6;
+}
+.blue{color:#0876dc}
+
+/* ================= HERO ================= */
+.hero{
+  min-height:440px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(239,250,255,.98) 0%,rgba(239,250,255,.93) 38%,rgba(239,250,255,.28) 63%,rgba(3,57,119,.12) 100%),
+    url("assets/hero-sekolah.jpg") center/cover no-repeat,
+    linear-gradient(120deg,#dff4ff,#82c9fa 60%,#3d9fe8);
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  left:-80px;bottom:-110px;
+  width:260px;height:240px;
+  background:#2a8fe8;
+  border-radius:50%;
+  opacity:.22;
+  transform:rotate(-22deg);
+}
+.hero-inner{
+  min-height:440px;
+  display:flex;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+.hero-copy{width:57%;padding:35px 0}
+.welcome{
+  display:inline-flex;align-items:center;gap:9px;
+  color:#12549b;font-weight:800;
+  background:rgba(255,255,255,.8);
+  padding:7px 13px;border-radius:30px;
+  box-shadow:0 5px 18px rgba(0,74,145,.08);
+}
+.hero h1{
+  margin:15px 0 9px;
+  font-size:53px;
+  line-height:.98;
+  letter-spacing:-1.5px;
+  color:#073777;
+}
+.hero h1 span{display:block}
+.hero p{
+  max-width:570px;
+  font-size:15px;
+  line-height:1.65;
+  color:#35638f;
+  margin:0 0 19px;
+}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  border-radius:28px;
+  padding:12px 20px;
+  border:2px solid transparent;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:#0878df;color:#fff;box-shadow:0 8px 20px rgba(8,120,223,.22)}
+.btn-outline{background:#fff;color:#0871d0;border-color:#1584df}
+
+/* ================= STATS ================= */
+.stats{
+  margin-top:-1px;
+  padding:17px 0 8px;
+  background:linear-gradient(180deg,#f4fbff,#fff);
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.stat-card{
+  min-height:135px;
+  background:rgba(255,255,255,.97);
+  border:1px solid #e0effc;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:18px 23px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+.stat-icon{
+  width:72px;height:72px;flex:0 0 72px;
+  border-radius:50%;
+  background:#e5f4ff;
+  display:grid;place-items:center;
+  font-size:36px;
+}
+.stat-number{font-size:40px;font-weight:900;color:#073d83;line-height:1}
+.stat-label{font-size:16px;font-weight:800;margin-top:6px}
+.stat-note{font-size:12px;color:#6b88a9;margin-top:6px;line-height:1.35}
+
+/* ================= QUICK CARDS ================= */
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.quick-card{
+  min-height:112px;border-radius:18px;display:flex;align-items:center;
+  padding:16px 20px;color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 9px 25px rgba(20,91,170,.18);
+}
+.quick-card.blue-card{background:linear-gradient(100deg,#1599ed,#0861c7)}
+.quick-card.gold-card{background:linear-gradient(100deg,#f5c01c,#ff9d00)}
+.quick-card:after{
+  content:"";position:absolute;right:-25px;top:-30px;
+  width:150px;height:150px;border-radius:50%;
+  border:25px solid rgba(255,255,255,.10);
+}
+.quick-icon{
+  width:76px;height:76px;border-radius:50%;
+  background:rgba(255,255,255,.9);color:#0757b8;
+  display:grid;place-items:center;font-size:38px;flex:0 0 76px;
+  margin-right:15px;
+}
+.gold-card .quick-icon{color:#f09e00}
+.quick-text{position:relative;z-index:2}
+.quick-text strong{display:block;font-size:20px}
+.quick-text span{display:block;font-size:13px;margin-top:5px;opacity:.95}
+.arrow-circle{
+  margin-left:auto;width:40px;height:40px;border-radius:50%;
+  background:#fff;color:#0b63bf;display:grid;place-items:center;
+  font-size:23px;font-weight:900;position:relative;z-index:2;
+}
+
+/* ================= ABOUT ================= */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}
+.about-copy h2{font-size:38px;margin:10px 0 4px;color:#073d83}
+.about-copy h3{margin:0 0 16px;color:#0876dc;font-size:18px}
+.about-copy p{color:#547394;font-size:14px;line-height:1.75}
+.about-image{
+  min-height:320px;border-radius:24px;position:relative;overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(0,80,160,.05),rgba(0,60,130,.08)),
+    url("assets/sekolah-2.jpg") center/cover no-repeat,
+    linear-gradient(120deg,#aee1ff,#358fd7);
+  box-shadow:0 15px 35px rgba(15,85,160,.18);
+  border:8px solid #fff;
+}
+
+/* ================= SERVICES ================= */
+.services{background:linear-gradient(180deg,#effaff,#f8fcff)}
+.center-head{text-align:center}
+.center-head .section-label{margin:auto}
+.service-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:17px;margin-top:27px
+}
+.service-card{
+  background:#fff;border:1px solid #e0eefb;border-radius:18px;
+  box-shadow:var(--shadow);padding:23px 18px;text-align:center;
+}
+.service-icon{
+  width:67px;height:67px;border-radius:50%;margin:0 auto 12px;
+  background:#e7f5ff;display:grid;place-items:center;font-size:30px;
+}
+.service-card:nth-child(2) .service-icon{background:#dcfbf5}
+.service-card:nth-child(3) .service-icon{background:#eee6ff}
+.service-card:nth-child(4) .service-icon{background:#fff2d3}
+.service-card h3{font-size:17px;margin:0 0 9px}
+.service-card p{font-size:12px;color:#6a87a7;line-height:1.5;margin:0}
+
+/* ================= VISION ================= */
+.vm{
+  display:grid;grid-template-columns:1fr 1.5fr;
+  border-radius:22px;overflow:hidden;background:#fff;
+  box-shadow:var(--shadow);border:1px solid #e0effc;
+}
+.vm-image{
+  min-height:260px;
+  background:
+    linear-gradient(90deg,rgba(0,61,130,.15),rgba(0,61,130,.05)),
+    url("assets/siswa-sekolah.jpg") center/cover no-repeat,
+    linear-gradient(120deg,#6ec2f6,#176dc5);
+}
+.vm-copy{display:grid;grid-template-columns:1fr 1fr;padding:27px}
+.vm-box{padding:5px 24px}
+.vm-box+ .vm-box{border-left:1px solid #dcebf9}
+.vm-box h3{font-size:23px;margin:0 0 10px;color:#0868c9}
+.vm-box p,.vm-box li{font-size:12px;line-height:1.6;color:#6280a0}
+.vm-box ol{padding-left:18px;margin:0}
+
+/* ================= FOOTER ================= */
+.footer{
+  background:linear-gradient(105deg,#06448c,#0875d5);
+  color:#fff;margin-top:25px;
+}
+.footer-main{
+  max-width:1320px;margin:auto;padding:25px 24px;
+  display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:30px;align-items:center
+}
+.footer-brand{display:flex;align-items:center;gap:11px}
+.footer-brand .brand-logo{width:48px;height:48px}
+.footer-brand strong{font-size:17px}
+.footer-brand small{display:block;margin-top:4px}
+.footer-info{text-align:center;font-size:14px}
+.footer-social{text-align:right;font-size:13px}
+.footer-bottom{
+  background:rgba(0,31,78,.34);padding:12px 24px;text-align:center;
+  font-size:11px;opacity:.96
+}
+
+/* ================= SEARCH MODAL ================= */
+.search-overlay{
+  display:none;position:fixed;inset:0;background:rgba(2,33,72,.58);
+  z-index:2000;align-items:flex-start;justify-content:center;padding-top:100px;
+}
+.search-overlay.show{display:flex}
+.search-box{
+  width:min(620px,calc(100% - 30px));background:#fff;border-radius:18px;
+  padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.25)
+}
+.search-row{display:flex;gap:8px}
+.search-row input{
+  flex:1;padding:14px 16px;border:1px solid #cfe1f2;border-radius:12px;
+  outline:none;font-size:15px
+}
+.close-search{border:0;background:#edf6ff;color:#0757b8;border-radius:12px;padding:0 16px;cursor:pointer;font-size:22px}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:1150px){
+  .nav-wrap{padding:0 16px;gap:10px}
+  .brand-text strong{font-size:14px}.brand-text small{font-size:11px}
+  .main-nav a{padding-left:6px;padding-right:6px;font-size:10px}
+  .main-nav a .nav-icon{font-size:14px}
+  .container{width:min(100% - 32px,1320px)}
+}
+@media(max-width:900px){
+  .site-header{height:auto;position:relative}
+  .nav-wrap{min-height:70px;flex-wrap:wrap;padding:9px 14px}
+  .main-nav{order:3;flex-basis:100%;overflow-x:auto;justify-content:flex-start;padding-bottom:4px}
+  .main-nav a{padding:11px 9px 13px}
+  .main-nav a.active:after{bottom:3px}
+  .hero,.hero-inner{min-height:500px}
+  .hero-copy{width:70%}
+  .hero h1{font-size:43px}
+  .about-grid{grid-template-columns:1fr}
+  .service-grid{grid-template-columns:repeat(2,1fr)}
+  .vm{grid-template-columns:1fr}
+  .vm-copy{grid-template-columns:1fr}
+  .vm-box+ .vm-box{border-left:0;border-top:1px solid #dcebf9;margin-top:15px;padding-top:20px}
+  .footer-main{grid-template-columns:1fr;text-align:center}
+  .footer-brand{justify-content:center}
+  .footer-social{text-align:center}
+}
+@media(max-width:650px){
+  .container{width:calc(100% - 24px)}
+  .brand-text strong{font-size:13px}.brand-text small{font-size:10px}
+  .brand-logo{width:43px;height:43px}
+  .hero,.hero-inner{min-height:570px}
+  .hero{
+    background:
+      linear-gradient(90deg,rgba(241,251,255,.98),rgba(241,251,255,.80)),
+      url("assets/hero-sekolah.jpg") center/cover no-repeat,
+      linear-gradient(120deg,#dff4ff,#72b9ed);
+  }
+  .hero-copy{width:100%;padding-top:30px;align-self:flex-start}
+  .hero h1{font-size:39px}
+  .hero p{font-size:13px}
+  .stats-grid,.quick-grid{grid-template-columns:1fr}
+  .stat-card{min-height:115px}
+  .stat-number{font-size:34px}
+  .section{padding:31px 0}
+  .section-title{font-size:29px}
+  .about-copy h2{font-size:31px}
+  .service-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .service-card{padding:17px 10px}
+  .service-card h3{font-size:14px}
+  .service-card p{font-size:11px}
+  .quick-text strong{font-size:17px}
+  .quick-text span{font-size:11px}
+}
+
+/* fallback if image files are absent */
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="home.html" aria-label="CLC Permodalan">
+      <div class="brand-logo"><span>🎓</span></div>
+      <div class="brand-text">
+        <strong>CLC PERMODALAN</strong>
+        <small>TKB MORISEM 3</small>
+      </div>
+    </a>
+
+    <nav class="main-nav" aria-label="Navigasi utama">
+      <a href="home.html" class="active"><span class="nav-icon">⌂</span>Beranda</a>
+      <a href="guru.html"><span class="nav-icon">♟</span>Data Guru</a>
+      <a href="siswa.html"><span class="nav-icon">♟</span>Data Siswa</a>
+      <a href="alumni.html"><span class="nav-icon">🎓</span>Data Alumni</a>
+      <a href="kegiatan.html"><span class="nav-icon">▣</span>Kegiatan</a>
+      <a href="pembayaran.html"><span class="nav-icon">▤</span>Pembayaran</a>
+      <a href="portal-absensi.html"><span class="nav-icon">☑</span>Absensi</a>
+      <button class="search-btn" type="button" onclick="openSearch()" aria-label="Cari">⌕</button>
+      <a class="ppdb-btn" href="#" onclick="showComingSoon(event)">▣ &nbsp; PPDB</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <div class="welcome">🎓 &nbsp;Selamat Datang di</div>
+      <h1>CLC PERMODALAN <span>TKB MORISEM 3</span></h1>
+      <p>
+        Community Learning Center (CLC) Permodalan adalah satuan pendidikan
+        nonformal yang berlokasi di Ladang Permodalan 1, Kinabalu, Sabah, Malaysia.
+        Hadir untuk memberikan pendidikan berkualitas bagi anak-anak pekerja
+        migran Indonesia (PMI) dan anak-anak Indonesia yang orang tuanya bekerja/migrasi di Malaysia.
+      </p>
+      <div class="hero-actions">
+        <a href="siswa.html" class="btn btn-primary">🎓 &nbsp;Daftar Sekarang</a>
+        <a href="#tentang" class="btn btn-outline">▶ &nbsp;Lihat Video Profil</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">👩‍🏫</div>
+      <div>
+        <div class="stat-number">6</div>
+        <div class="stat-label">Jumlah Guru</div>
+        <div class="stat-note">Guru profesional dan berdedikasi untuk masa depan anak bangsa.</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🎓</div>
+      <div>
+        <div class="stat-number">208</div>
+        <div class="stat-label">Jumlah Siswa</div>
+        <div class="stat-note">Murid aktif dari jenjang SD dan SMP.</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏫</div>
+      <div>
+        <div class="stat-number">3</div>
+        <div class="stat-label">TKB</div>
+        <div class="stat-note">Tempat, Kegiatan, Belajar (TKB) Morisem 3, Permodalan dan Ladang Tas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container quick-grid">
+    <a href="siswa.html" class="quick-card blue-card">
+      <div class="quick-icon">👨‍👩‍👧‍👦</div>
+      <div class="quick-text">
+        <strong>Lihat Data Siswa</strong>
+        <span>Akses informasi lengkap data siswa CLC Permodalan TKB Morisem 3</span>
+      </div>
+      <div class="arrow-circle">›</div>
+    </a>
+
+    <a href="guru.html" class="quick-card gold-card">
+      <div class="quick-icon">👨‍🏫</div>
+      <div class="quick-text">
+        <strong>Lihat Guru</strong>
+        <span>Lihat profil dan informasi guru di CLC Permodalan TKB Morisem 3</span>
+      </div>
+      <div class="arrow-circle">›</div>
+    </a>
+  </div>
+</section>
+
+<section class="section" id="tentang">
+  <div class="container about-grid">
+    <div class="about-copy">
+      <div class="section-label">🏫 &nbsp;Tentang Kami</div>
+      <h2>CLC PERMODALAN</h2>
+      <h3>Pendidikan untuk Masa Depan yang Lebih Baik</h3>
+      <p>
+        CLC Permodalan (Community Learning Center) merupakan lembaga pendidikan
+        nonformal yang berfokus pada pendidikan dasar dan menengah (SD dan SMP)
+        bagi anak-anak Pekerja Migran Indonesia (PMI) dan anak-anak Indonesia
+        yang orang tuanya bekerja di Malaysia.
+      </p>
+      <p>
+        Kami berkomitmen untuk memberikan layanan pendidikan yang berkualitas,
+        berkarakter, dan berwawasan global, agar setiap anak memiliki kesempatan
+        untuk meraih masa depan yang lebih baik.
+      </p>
+      <a href="sekolah.html" class="btn btn-primary">Baca Selengkapnya &nbsp;→</a>
+    </div>
+    <div class="about-image" aria-label="Foto CLC Permodalan"></div>
+  </div>
+</section>
+
+<section class="section services">
+  <div class="container">
+    <div class="center-head">
+      <div class="section-label">⚙ &nbsp;Apa Yang Kami Sediakan</div>
+      <h2 class="section-title">Layanan Pendidikan Berkualitas</h2>
+      <p class="section-subtitle">Kami menyediakan berbagai layanan pendidikan untuk anak-anak migran di Sabah</p>
+    </div>
+
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="service-icon">📚</div>
+        <h3>Pendidikan Dasar (SD)</h3>
+        <p>Menanamkan pondasi ilmu, karakter dan akhlak mulia.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📖</div>
+        <h3>Pendidikan Menengah (SMP)</h3>
+        <p>Mengembangkan potensi, minat dan bakat siswa.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👥</div>
+        <h3>Pembinaan Karakter &amp; Akhlak</h3>
+        <p>Membentuk generasi yang berintegritas dan berakhlak mulia.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⭐</div>
+        <h3>Kegiatan Ekstrakurikuler</h3>
+        <p>Mengasah kreativitas, keterampilan dan kepercayaan diri.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="vm">
+      <div class="vm-image"></div>
+      <div class="vm-copy">
+        <div class="vm-box">
+          <h3>◉ Visi</h3>
+          <p><strong>Pusat Layanan Pendidikan Terintegrasi Yang Unggul dan Berakhlak Mulia</strong></p>
+          <ol>
+            <li>Menyelenggarakan layanan pendidikan terpadu, adil, merata dan bermutu.</li>
+            <li>Menyelenggarakan dan mengembangkan pendidikan berbasis kecakapan abad 21.</li>
+            <li>Menggali dan mengembangkan potensi peserta didik secara optimal.</li>
+            <li>Mewujudkan peserta didik yang berkarakter, menghargai keberagaman dan cinta lingkungan.</li>
+          </ol>
+        </div>
+        <div class="vm-box">
+          <h3>◎ Misi</h3>
+          <ol>
+            <li>Menyelenggarakan pendidikan yang berkualitas dan berkesinambungan.</li>
+            <li>Mengembangkan kurikulum yang relevan dengan kebutuhan peserta didik.</li>
+            <li>Meningkatkan kompetensi guru dan tenaga kependidikan.</li>
+            <li>Membangun lingkungan belajar yang aman, nyaman dan kondusif.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="brand-logo"><span>🎓</span></div>
+      <div>
+        <strong>CLC PERMODALAN</strong>
+        <small>TKB MORISEM 3</small>
+      </div>
+    </div>
+    <div class="footer-info">Pendidikan untuk Masa Depan yang Lebih Baik</div>
+    <div class="footer-social">Bersama Membangun Generasi Berprestasi<br>◉ &nbsp;◎ &nbsp;▶ &nbsp;♪ &nbsp; Ikuti kami di media sosial</div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 CLC Permodalan TKB Morisem 3. All rights reserved.
+    &nbsp; | &nbsp; Pendidikan untuk Semua, Masa Depan untuk Anak Bangsa
+  </div>
+</footer>
+
+<div class="search-overlay" id="searchOverlay" onclick="closeSearch(event)">
+  <div class="search-box" onclick="event.stopPropagation()">
+    <div class="search-row">
+      <input id="searchInput" type="search" placeholder="Cari data siswa, guru, alumni, kegiatan...">
+      <button class="close-search" onclick="closeSearch()">×</button>
+    </div>
+    <p style="margin:12px 2px 0;color:#6b88a9;font-size:12px">
+      Fitur pencarian global akan dihubungkan setelah database baru aktif.
+    </p>
+  </div>
+</div>
+
+<script>
+function openSearch(){
+  document.getElementById('searchOverlay').classList.add('show');
+  setTimeout(()=>document.getElementById('searchInput').focus(),100);
+}
+function closeSearch(e){
+  if(e && e.target !== e.currentTarget) return;
+  document.getElementById('searchOverlay').classList.remove('show');
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeSearch();
+});
+function showComingSoon(e){
+  e.preventDefault();
+  alert('Halaman PPDB akan diaktifkan pada tahap berikutnya.');
+}
+</script>
+
+</body>
+</html>
