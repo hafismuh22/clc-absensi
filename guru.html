@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0757b8">
+<title>Data Guru - CLC PERMODALAN</title>
+<style>
+:root{--blue:#0757b8;--blue2:#0878df;--navy:#073d83;--text:#123b73;--muted:#6b86a5;--line:#d9eafb;--shadow:0 8px 25px rgba(12,88,165,.11)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#f8fdff,#fff 55%,#f4fbff)}
+a{text-decoration:none;color:inherit}button,input,select{font:inherit}
+.site-header{position:sticky;top:0;z-index:1000;background:linear-gradient(100deg,#06468f,#0873d8);color:#fff;box-shadow:0 4px 18px rgba(0,60,130,.22)}
+.nav-wrap{max-width:1440px;height:68px;margin:auto;padding:0 28px;display:flex;align-items:center;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}.brand-logo{width:49px;height:49px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:25px;border:2px solid rgba(255,255,255,.75)}
+.brand-text{line-height:1.05;white-space:nowrap}.brand-text strong{display:block;font-size:17px}.brand-text small{display:block;font-size:14px;font-weight:700;margin-top:3px}
+.main-nav{display:flex;align-items:center;justify-content:flex-end;gap:2px;flex:1}.main-nav a{position:relative;display:flex;align-items:center;gap:6px;padding:23px 10px 20px;font-size:12px;font-weight:700;white-space:nowrap}.main-nav a:hover,.main-nav a.active{background:rgba(255,255,255,.08)}
+.main-nav a.active:after{content:"";position:absolute;left:9px;right:9px;bottom:9px;height:3px;border-radius:99px;background:#fff}.nav-icon{font-size:16px}.search-btn{border:0;background:transparent;color:#fff;cursor:pointer;padding:9px;font-size:21px}.ppdb-btn{background:#fff!important;color:var(--blue)!important;border-radius:24px!important;padding:10px 17px!important;margin-left:4px}.ppdb-btn:after{display:none!important}
+
+.container{width:min(1320px,calc(100% - 48px));margin:auto}
+.hero{min-height:350px;position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(239,249,255,.98),rgba(239,249,255,.86) 38%,rgba(239,249,255,.16) 68%,rgba(0,48,105,.15)),url("assets/hero-guru.jpg") center/cover no-repeat,linear-gradient(120deg,#dff4ff,#68b8ef)}
+.hero-inner{min-height:350px;display:flex;align-items:center}.hero-copy{width:58%;padding:35px 0}.breadcrumb{font-size:13px;font-weight:700;color:#1765b7;margin-bottom:16px}
+.hero h1{font-size:54px;line-height:1;margin:0;color:#073777;letter-spacing:-1px}.hero h1 span{display:block;font-size:32px;margin-top:5px;letter-spacing:0}.hero p{font-size:15px;color:#3d6289;line-height:1.55;max-width:530px;margin:13px 0 17px}
+.quote{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:30px;padding:10px 20px;color:#14539a;font-size:13px;font-weight:800;box-shadow:0 6px 18px rgba(0,70,140,.1)}
+
+.category-wrap{padding:16px 0 18px;background:linear-gradient(180deg,#fff,#f4fbff)}.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.category{min-height:105px;border:1px solid var(--line);border-radius:17px;background:#fff;box-shadow:var(--shadow);display:flex;align-items:center;padding:15px 20px;cursor:pointer;transition:.2s;position:relative;color:var(--text)}
+.category:hover{transform:translateY(-2px)}.category.active{background:linear-gradient(100deg,#1289e5,#0861c8);color:#fff;border-color:#0d76d5}
+.cat-icon{width:65px;height:65px;border-radius:50%;background:#eaf6ff;color:#0757b8;display:grid;place-items:center;font-size:31px;flex:0 0 65px;margin-right:15px}.category.active .cat-icon{background:#fff}
+.cat-title{font-weight:900;font-size:17px}.cat-sub{font-size:12px;margin-top:5px;opacity:.85}.cat-arrow{margin-left:auto;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#0757b8;font-size:22px;font-weight:900}
+
+.section{padding:27px 0 42px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:16px}.heading-left{display:flex;align-items:center;gap:13px}.heading-icon{width:55px;height:55px;border-radius:50%;background:#e5f4ff;display:grid;place-items:center;font-size:28px}
+.section-title{margin:0;font-size:31px;color:#073d83}.section-title small{display:block;font-size:17px;margin-top:3px}
+.total{background:#eef8ff;border:1px solid #cde7fb;border-radius:12px;padding:10px 22px;min-width:190px;display:flex;align-items:center;gap:12px}.total-icon{width:40px;height:40px;border-radius:50%;background:#0757b8;color:#fff;display:grid;place-items:center}.total b{display:block;color:#0870cf;font-size:12px}.total strong{font-size:27px;color:#073d83}.total span{font-size:12px;color:#6683a5}
+
+.filters{display:grid;grid-template-columns:1.45fr .65fr .65fr auto auto;gap:9px;margin-bottom:16px}.input,.select,.filter-btn,.reset-btn{height:44px;border-radius:9px;border:1px solid #cfe0f0;background:#fff;padding:0 14px;color:#345a82;outline:none}.input{width:100%}.filter-btn{background:#0873d8;color:#fff;border-color:#0873d8;padding:0 22px;font-weight:800;cursor:pointer}.reset-btn{padding:0 20px;font-weight:700;cursor:pointer}
+.teacher-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.teacher-card{background:#fff;border:1px solid #e0edf8;border-radius:16px;box-shadow:var(--shadow);padding:14px;display:flex;flex-direction:column}
+.teacher-main{display:flex;gap:20px;min-height:225px}.teacher-photo{width:158px;height:205px;flex:0 0 158px;border-radius:12px;background:linear-gradient(135deg,#e5f2fb,#c6e0f4);display:grid;place-items:center;font-size:60px;overflow:hidden}.teacher-photo img{width:100%;height:100%;object-fit:cover}
+.teacher-info{padding:17px 5px 0;min-width:0}.teacher-name{font-size:20px;font-weight:900;color:#073d83;margin-bottom:11px}.role{display:inline-flex;padding:7px 25px;border-radius:18px;background:#0a78da;color:#fff;font-weight:800;font-size:13px;margin-bottom:11px}.role.pink{background:#ffe2f0;color:#df2781}.teacher-meta{font-size:12px;color:#5e7897;line-height:2}.teacher-meta span{display:block}.detail{height:40px;border:1px solid #b8def8;background:#edf8ff;color:#0870cf;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:900;cursor:pointer;margin-top:8px}
+
+.pagination{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:22px;color:#6481a1;font-size:12px}.pages{display:flex;gap:5px}.page{width:34px;height:34px;border:1px solid #d3e4f2;background:#fff;border-radius:7px;display:grid;place-items:center;color:#174e8c;cursor:pointer}.page.active{background:#0867cc;color:#fff;border-color:#0867cc}
+.per-page{display:flex;align-items:center;gap:7px}.per-page select{height:34px;border:1px solid #d3e4f2;border-radius:7px;padding:0 8px;color:#315d88}
+.info-strip{background:#fff;border:1px solid #e1eef8;border-radius:17px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;margin-top:8px}.info-box{text-align:center;padding:20px 18px}.info-box+.info-box{border-left:1px solid #e0edf8}.info-icon{width:52px;height:52px;border-radius:50%;margin:auto auto 9px;background:#e7f5ff;display:grid;place-items:center;font-size:26px}.info-box:nth-child(2) .info-icon{background:#eee7ff}.info-box:nth-child(3) .info-icon{background:#e5f7ef}.info-box:nth-child(4) .info-icon{background:#fff0d8}.info-box h3{margin:0 0 5px;font-size:16px}.info-box p{margin:0;color:#6b86a5;font-size:11px;line-height:1.5}
+
+.footer{background:linear-gradient(105deg,#06448c,#0875d5);color:#fff}.footer-main{max-width:1320px;margin:auto;padding:23px 24px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:30px;align-items:center}.footer-brand{display:flex;align-items:center;gap:11px}.footer-brand .brand-logo{width:46px;height:46px}.footer-brand strong{font-size:16px}.footer-brand small{display:block;margin-top:4px}.footer-info{text-align:center;font-size:14px}.footer-social{text-align:right;font-size:12px}.footer-bottom{background:rgba(0,31,78,.34);padding:11px 24px;text-align:center;font-size:10px}
+.modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,30,70,.62);align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{width:min(650px,100%);background:#fff;border-radius:20px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25);position:relative}.close{position:absolute;right:15px;top:12px;border:0;background:#eef7ff;color:#0757b8;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:21px}.modal-box h2{margin:0 0 16px;color:#073d83}.detail-layout{display:flex;gap:20px}.detail-photo{width:150px;height:190px;border-radius:12px;background:#e8f5ff;display:grid;place-items:center;font-size:55px;flex:0 0 150px}.detail-lines{font-size:14px;line-height:2;color:#5c7898}.detail-lines strong{color:#073d83}
+
+@media(max-width:1100px){.nav-wrap{padding:0 14px;gap:8px}.brand-text strong{font-size:14px}.brand-text small{font-size:11px}.main-nav a{padding-left:6px;padding-right:6px;font-size:10px}.container{width:min(100% - 30px,1320px)}.teacher-grid{grid-template-columns:1fr}.filters{grid-template-columns:1.5fr .7fr .7fr auto auto}}
+@media(max-width:850px){.site-header{position:relative}.nav-wrap{height:auto;min-height:68px;flex-wrap:wrap;padding:8px 12px}.main-nav{order:3;flex-basis:100%;overflow-x:auto;justify-content:flex-start}.main-nav a{padding:10px 8px 12px}.main-nav a.active:after{bottom:2px}.hero,.hero-inner{min-height:410px}.hero-copy{width:70%}.hero h1{font-size:43px}.hero h1 span{font-size:28px}.filters{grid-template-columns:1fr 1fr 1fr}.filter-btn,.reset-btn{height:42px}.section-head{align-items:flex-start}.total{min-width:165px}.info-strip{grid-template-columns:repeat(2,1fr)}.info-box:nth-child(3){border-left:0;border-top:1px solid #e0edf8}.info-box:nth-child(4){border-top:1px solid #e0edf8}}
+@media(max-width:600px){.container{width:calc(100% - 20px)}.hero{min-height:490px;background:linear-gradient(90deg,rgba(241,251,255,.96),rgba(241,251,255,.78)),url("assets/hero-guru.jpg") center/cover no-repeat}.hero-inner{min-height:490px;align-items:flex-start}.hero-copy{width:100%;padding-top:35px}.hero h1{font-size:39px}.hero h1 span{font-size:25px}.hero p{font-size:13px}.category-grid{grid-template-columns:1fr}.category{min-height:92px}.section-head{flex-direction:column}.total{width:100%}.filters{grid-template-columns:1fr 1fr}.input{grid-column:1/-1}.filter-btn,.reset-btn{width:100%}.teacher-main{display:block;min-height:0}.teacher-photo{width:100%;height:280px}.teacher-info{padding:12px 3px}.teacher-name{font-size:18px}.pagination{flex-wrap:wrap}.pages{order:3;width:100%;justify-content:center}.info-strip{grid-template-columns:1fr}.info-box:nth-child(3),.info-box:nth-child(4){border-left:0}}
+</style>
+</head>
+<body>
+<header class="site-header">
+<div class="nav-wrap">
+<a class="brand" href="home.html"><div class="brand-logo">🎓</div><div class="brand-text"><strong>CLC PERMODALAN</strong><small>TKB MORISEM 3</small></div></a>
+<nav class="main-nav">
+<a href="home.html"><span class="nav-icon">⌂</span>Beranda</a>
+<a href="guru.html" class="active"><span class="nav-icon">♟</span>Data Guru</a>
+<a href="siswa.html"><span class="nav-icon">♟</span>Data Siswa</a>
+<a href="alumni.html"><span class="nav-icon">🎓</span>Data Alumni</a>
+<a href="kegiatan.html"><span class="nav-icon">▣</span>Kegiatan</a>
+<a href="pembayaran.html"><span class="nav-icon">▤</span>Pembayaran</a>
+<a href="portal-absensi.html"><span class="nav-icon">☑</span>Absensi</a>
+<button class="search-btn" onclick="openSearch()">⌕</button>
+<a class="ppdb-btn" href="#" onclick="coming(event)">▣ &nbsp; PPDB</a>
+</nav></div>
+</header>
+
+<section class="hero"><div class="container hero-inner"><div class="hero-copy">
+<div class="breadcrumb">⌂ &nbsp; Beranda &nbsp;›&nbsp; <span>Data Guru</span></div>
+<h1>Data Guru<span>CLC PERMODALAN</span></h1>
+<p>Tenaga pendidik yang berdedikasi untuk membangun generasi masa depan yang lebih baik.</p>
+<div class="quote">👨‍🏫 &nbsp; “Guru hebat, generasi hebat, masa depan cerah.”</div>
+</div></div></section>
+
+<section class="category-wrap"><div class="container category-grid">
+<button class="category active" onclick="setTKB('TKB MORISEM 3',this)"><div class="cat-icon">🏫</div><div><div class="cat-title">Guru TKB MORISEM 3</div><div class="cat-sub">Tenaga pendidik di TKB Morisem 3</div></div><div class="cat-arrow">›</div></button>
+<button class="category" onclick="setTKB('TKB PERMODALAN',this)"><div class="cat-icon">🏫</div><div><div class="cat-title">Guru TKB PERMODALAN</div><div class="cat-sub">Tenaga pendidik di TKB Permodalan</div></div><div class="cat-arrow">›</div></button>
+<button class="category" onclick="setTKB('TKB LADANG TAS',this)"><div class="cat-icon">🏫</div><div><div class="cat-title">Guru TKB LADANG TAS</div><div class="cat-sub">Tenaga pendidik di TKB Ladang Tas</div></div><div class="cat-arrow">›</div></button>
+</div></section>
+
+<main class="section"><div class="container">
+<div class="section-head">
+<div class="heading-left"><div class="heading-icon">👥</div><div><h2 class="section-title">Daftar Guru<small id="schoolTitle">TKB Morisem 3</small></h2></div></div>
+<div class="total"><div class="total-icon">👥</div><div><b>Total Guru</b><strong id="totalNumber">2</strong> <span>Orang</span></div></div>
+</div>
+
+<div class="filters">
+<input id="searchInput" class="input" type="search" placeholder="⌕  Cari nama guru atau mata pelajaran...">
+<select id="jobFilter" class="select"><option value="">Semua Jabatan</option><option>Kepala TKB</option><option>Guru</option></select>
+<select id="statusFilter" class="select"><option value="">Semua Status</option><option>Aktif</option><option>Nonaktif</option></select>
+<button class="filter-btn" onclick="applyFilter()">⌕ &nbsp;Cari</button>
+<button class="reset-btn" onclick="resetFilter()">⟳ &nbsp;Reset</button>
+</div>
+
+<div id="teacherGrid" class="teacher-grid"></div>
+
+<div class="pagination"><div id="pageInfo"></div><div class="pages" id="pages"></div><div class="per-page"><select id="perPage" onchange="changePerPage()"><option>12</option><option>24</option></select><span>data per halaman</span></div></div>
+
+<div class="info-strip">
+<div class="info-box"><div class="info-icon">📖</div><h3>Guru Profesional</h3><p>Tenaga pendidik yang berkualitas dan berpengalaman.</p></div>
+<div class="info-box"><div class="info-icon">💗</div><h3>Pendidikan Bermakna</h3><p>Menciptakan pembelajaran yang menyenangkan.</p></div>
+<div class="info-box"><div class="info-icon">👥</div><h3>Kolaborasi</h3><p>Bersama membangun lingkungan belajar yang positif.</p></div>
+<div class="info-box"><div class="info-icon">🏅</div><h3>Generasi Unggul</h3><p>Melahirkan anak-anak yang berkarakter dan berprestasi.</p></div>
+</div>
+</div></main>
+
+<footer class="footer"><div class="footer-main">
+<div class="footer-brand"><div class="brand-logo">🎓</div><div><strong>CLC PERMODALAN</strong><small>TKB MORISEM 3</small></div></div>
+<div class="footer-info">Pendidikan untuk Masa Depan yang Lebih Baik</div>
+<div class="footer-social">Bersama Membangun Generasi Berprestasi<br>◉ &nbsp;◎ &nbsp;▶ &nbsp;♪ &nbsp; Ikuti kami di media sosial</div>
+</div><div class="footer-bottom">© 2025 CLC Permodalan TKB Morisem 3. All rights reserved. &nbsp; | &nbsp; Pendidikan untuk Semua, Masa Depan untuk Anak Bangsa</div></footer>
+
+<div class="modal" id="detailModal" onclick="closeModal(event)"><div class="modal-box" onclick="event.stopPropagation()"><button class="close" onclick="closeModal()">×</button><h2>Detail Guru</h2><div class="detail-layout"><div class="detail-photo" id="modalPhoto">👨‍🏫</div><div class="detail-lines" id="modalInfo"></div></div></div></div>
+<div class="modal" id="searchModal" onclick="closeSearch(event)"><div class="modal-box" onclick="event.stopPropagation()"><button class="close" onclick="closeSearch()">×</button><h2>Pencarian Website</h2><input class="input" style="width:100%" placeholder="Cari siswa, guru, alumni atau kegiatan..."><p style="color:#6b86a5;font-size:12px">Pencarian global akan dihubungkan pada tahap database baru.</p></div></div>
+
+<script>
+const baseTeachers=[
+ {nama:'Muh Hafis, S.Pd',jabatan:'Kepala TKB',mapel:['Pendidikan','Matematika'],telp:'+60 12-345 6789',email:'muhhafis@clcpermodalan.my',status:'Aktif',avatar:'👨‍🏫'},
+ {nama:'Nurbiah Ahmad, S.Pd',jabatan:'Guru',mapel:['Bahasa Indonesia','IPS'],telp:'+60 11-234 5678',email:'nurbiah@clcpermodalan.my',status:'Aktif',avatar:'👩‍🏫'}
+];
+let currentTKB='TKB MORISEM 3',currentPage=1,perPage=12,filtered=[];
+function dataset(){return baseTeachers.map(t=>({...t,tkb:currentTKB}))}
+function render(){
+ const all=dataset(),q=document.getElementById('searchInput').value.toLowerCase().trim(),job=document.getElementById('jobFilter').value,status=document.getElementById('statusFilter').value;
+ filtered=all.filter(t=>(!q||[t.nama,...t.mapel].join(' ').toLowerCase().includes(q))&&(!job||t.jabatan===job)&&(!status||t.status===status));
+ const total=filtered.length,start=(currentPage-1)*perPage,items=filtered.slice(start,start+perPage);
+ document.getElementById('totalNumber').textContent=total;document.getElementById('schoolTitle').textContent=currentTKB.replace('TKB ','TKB ');
+ document.getElementById('teacherGrid').innerHTML=items.map(t=>`<article class="teacher-card"><div class="teacher-main"><div class="teacher-photo">${t.avatar}</div><div class="teacher-info"><div class="teacher-name">${t.nama}</div><span class="role ${t.jabatan==='Guru'?'pink':''}">${t.jabatan}</span><div class="teacher-meta"><span>⌂ &nbsp;${t.mapel[0]}</span><span>▣ &nbsp;${t.mapel[1]}</span><span>☎ &nbsp;${t.telp}</span><span>✉ &nbsp;${t.email}</span></div></div></div><button class="detail" onclick='showDetail(${JSON.stringify(t)})'>Lihat Detail &nbsp;→</button></article>`).join('');
+ const end=Math.min(start+items.length,total);document.getElementById('pageInfo').textContent=total?`Menampilkan ${start+1} - ${end} dari ${total} guru`:'Tidak ada data guru';renderPages(Math.max(1,Math.ceil(total/perPage)));
+}
+function renderPages(max){let h=`<button class="page" onclick="goPage(${Math.max(1,currentPage-1)})">‹</button>`;for(let i=1;i<=max;i++)h+=`<button class="page ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;h+=`<button class="page" onclick="goPage(${Math.min(max,currentPage+1)})">›</button>`;document.getElementById('pages').innerHTML=h}
+function goPage(p){currentPage=p;render();window.scrollTo({top:document.querySelector('.section').offsetTop-70,behavior:'smooth'})}
+function setTKB(name,el){currentTKB=name;document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));el.classList.add('active');currentPage=1;resetFilter(false)}
+function applyFilter(){currentPage=1;render()}function resetFilter(doRender=true){document.getElementById('searchInput').value='';document.getElementById('jobFilter').value='';document.getElementById('statusFilter').value='';currentPage=1;if(doRender)render()}
+function changePerPage(){perPage=Number(document.getElementById('perPage').value);currentPage=1;render()}
+function showDetail(t){document.getElementById('modalPhoto').textContent=t.avatar;document.getElementById('modalInfo').innerHTML=`<div><strong>Nama:</strong> ${t.nama}</div><div><strong>Jabatan:</strong> ${t.jabatan}</div><div><strong>Mata Pelajaran:</strong> ${t.mapel.join(', ')}</div><div><strong>Status:</strong> ${t.status}</div><div><strong>TKB:</strong> ${t.tkb}</div><div><strong>Telepon:</strong> ${t.telp}</div><div><strong>Email:</strong> ${t.email}</div>`;document.getElementById('detailModal').classList.add('show')}
+function closeModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('detailModal').classList.remove('show')}function openSearch(){document.getElementById('searchModal').classList.add('show')}function closeSearch(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('searchModal').classList.remove('show')}function coming(e){e.preventDefault();alert('Halaman PPDB akan diaktifkan pada tahap berikutnya.')}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeSearch()}});render();
+</script>
+</body>
+</html>
