@@ -82,36 +82,1053 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 <div class="modal" id="searchModal" onclick="closeSearch(event)"><div class="modal-box" onclick="event.stopPropagation()"><button class="close" onclick="closeSearch()">×</button><h2>Pencarian Website</h2><input class="input" style="width:100%" placeholder="Cari siswa, guru, alumni atau kegiatan..."><p style="color:#6b86a5;font-size:12px">Pencarian global akan dihubungkan pada tahap database baru.</p></div></div>
 
 <script>
-const baseAlumni=[
- {nama:'Andi Saputra',tahun:'2022',alamat:'Estate Morisem 3 Blok A',status:'Melanjutkan ke SMA',gender:'L',avatar:'👨‍🎓'},
- {nama:'Nur Aisyah',tahun:'2022',alamat:'Estate Morisem 3 Blok B',status:'Melanjutkan ke SMK',gender:'P',avatar:'👩‍🎓'},
- {nama:'Rizky Maulana',tahun:'2021',alamat:'Estate Morisem 3 Blok C',status:'Bekerja',gender:'L',avatar:'👨‍🎓'},
- {nama:'Siti Rahma',tahun:'2023',alamat:'Estate Morisem 3 Blok A',status:'Melanjutkan ke SMA',gender:'P',avatar:'👩‍🎓'},
- {nama:'Dimas Pratama',tahun:'2021',alamat:'Estate Morisem 3 Blok D',status:'Bekerja',gender:'L',avatar:'👨‍🎓'},
- {nama:'Putri Amelia',tahun:'2023',alamat:'Estate Morisem 3 Blok E',status:'Melanjutkan ke SMK',gender:'P',avatar:'👩‍🎓'},
- {nama:'Fahri Hidayat',tahun:'2022',alamat:'Estate Morisem 3 Blok A',status:'Melanjutkan ke SMA',gender:'L',avatar:'👨‍🎓'},
- {nama:'Maya Sari',tahun:'2020',alamat:'Estate Morisem 3 Blok B',status:'Kuliah (Universitas)',gender:'P',avatar:'👩‍🎓'},
- {nama:'Fajar Nugraha',tahun:'2024',alamat:'Estate Morisem 3 Blok C',status:'Melanjutkan ke SMA',gender:'L',avatar:'👨‍🎓'},
- {nama:'Aulia Putri',tahun:'2024',alamat:'Estate Morisem 3 Blok D',status:'Kuliah (Universitas)',gender:'P',avatar:'👩‍🎓'},
- {nama:'Ilham Ramadhan',tahun:'2025',alamat:'Estate Morisem 3 Blok E',status:'Melanjutkan ke SMK',gender:'L',avatar:'👨‍🎓'},
- {nama:'Nadia Safitri',tahun:'2025',alamat:'Estate Morisem 3 Blok A',status:'Melanjutkan ke SMA',gender:'P',avatar:'👩‍🎓'}
-];
-let currentTKB='TKB MORISEM 3',currentPage=1,perPage=8,filtered=[];
-function dataset(){return baseAlumni.map(a=>({...a,tkb:currentTKB}))}
-function render(){
- const all=dataset(),q=document.getElementById('searchInput').value.toLowerCase().trim(),year=document.getElementById('yearFilter').value,status=document.getElementById('statusFilter').value;
- filtered=all.filter(a=>(!q||[a.nama,a.tahun,a.alamat].join(' ').toLowerCase().includes(q))&&(!year||a.tahun===year)&&(!status||a.status===status));
- const total=filtered.length,start=(currentPage-1)*perPage,items=filtered.slice(start,start+perPage);
- document.getElementById('schoolTitle').textContent=currentTKB.replace('TKB ','TKB ');
- document.getElementById('alumniGrid').innerHTML=items.map(a=>`<article class="alumni-card"><div class="alumni-top"><div class="alumni-photo">${a.avatar}</div><div class="alumni-info"><span class="badge">Lulus ${a.tahun}</span><div class="alumni-name" title="${a.nama}">${a.nama}</div><div class="meta"><span>⌂ &nbsp;${a.alamat}</span><span>▣ &nbsp;${a.status}</span></div></div></div><button class="detail" onclick='showDetail(${JSON.stringify(a)})'>Lihat Detail &nbsp;→</button></article>`).join('');
- const end=Math.min(start+items.length,total);document.getElementById('pageInfo').textContent=total?`Menampilkan ${start+1} - ${end} dari ${total} alumni`:'Tidak ada data alumni';renderPages(Math.max(1,Math.ceil(total/perPage)));
+/* =========================================================
+   DATA ALUMNI - TERHUBUNG KE APPS SCRIPT DATABASE BARU
+   ========================================================= */
+
+const API_URL = 'https://script.google.com/macros/s/AKfycbyfj5mSOO40twAn7YiIPcGZInaQ8NNPx3lpwJ8OaC7pajqPHt2EPKaaHP3lZ3lczFq49w/exec';
+
+let allAlumni = [];
+let currentTKB = 'TKB MORISEM 3';
+let currentPage = 1;
+let perPage = 8;
+let filtered = [];
+
+
+/* =========================================================
+   LOAD DATA ALUMNI
+   ========================================================= */
+function loadAlumni() {
+
+  showLoading();
+
+  const callbackName =
+    'alumniCallback_' + Date.now();
+
+  window[callbackName] = function(response) {
+
+    try {
+
+      if (!response || response.success !== true) {
+        throw new Error(
+          response && response.message
+            ? response.message
+            : 'API tidak mengembalikan data yang valid.'
+        );
+      }
+
+      allAlumni = Array.isArray(response.data)
+        ? response.data.map(normalizeAlumni)
+        : [];
+
+      buildYearOptions();
+      buildStatusOptions();
+      render();
+
+    } catch (error) {
+
+      showError(error.message);
+
+    } finally {
+
+      cleanupJsonp(callbackName);
+
+    }
+  };
+
+
+  const script =
+    document.createElement('script');
+
+  script.src =
+    API_URL +
+    '?action=alumni&callback=' +
+    encodeURIComponent(callbackName);
+
+  script.id = callbackName;
+
+  script.onerror = function() {
+
+    showError(
+      'Tidak dapat terhubung ke database alumni. Pastikan Web App Apps Script masih aktif dan dapat diakses.'
+    );
+
+    cleanupJsonp(callbackName);
+  };
+
+  document.body.appendChild(script);
 }
-function renderPages(max){let h=`<button class="page" onclick="goPage(${Math.max(1,currentPage-1)})">‹</button>`;for(let i=1;i<=max;i++)h+=`<button class="page ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;h+=`<button class="page" onclick="goPage(${Math.min(max,currentPage+1)})">›</button>`;document.getElementById('pages').innerHTML=h}
-function goPage(p){currentPage=p;render();window.scrollTo({top:document.querySelector('.section').offsetTop-70,behavior:'smooth'})}
-function setTKB(name,el){currentTKB=name;document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));el.classList.add('active');currentPage=1;resetFilter(false)}
-function applyFilter(){currentPage=1;render()}function resetFilter(doRender=true){document.getElementById('searchInput').value='';document.getElementById('yearFilter').value='';document.getElementById('statusFilter').value='';currentPage=1;if(doRender)render()}function changePerPage(){perPage=Number(document.getElementById('perPage').value);currentPage=1;render()}
-function showDetail(a){document.getElementById('modalPhoto').textContent=a.avatar;document.getElementById('modalInfo').innerHTML=`<div><strong>Nama:</strong> ${a.nama}</div><div><strong>Tahun Lulus:</strong> ${a.tahun}</div><div><strong>TKB:</strong> ${a.tkb}</div><div><strong>Alamat:</strong> ${a.alamat}</div><div><strong>Status:</strong> ${a.status}</div>`;document.getElementById('detailModal').classList.add('show')}
-function closeModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('detailModal').classList.remove('show')}function openSearch(){document.getElementById('searchModal').classList.add('show')}function closeSearch(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('searchModal').classList.remove('show')}function coming(e){e.preventDefault();alert('Halaman PPDB akan diaktifkan pada tahap berikutnya.')}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeSearch()}});render();
+
+
+function cleanupJsonp(callbackName) {
+
+  const script =
+    document.getElementById(callbackName);
+
+  if (script) script.remove();
+
+  try {
+    delete window[callbackName];
+  } catch (e) {
+    window[callbackName] = undefined;
+  }
+}
+
+
+/* =========================================================
+   LOADING / ERROR
+   ========================================================= */
+function showLoading() {
+
+  const grid =
+    document.getElementById('alumniGrid');
+
+  if (!grid) return;
+
+  grid.innerHTML = `
+    <div style="
+      grid-column:1/-1;
+      background:#fff;
+      border:1px solid #e0edf8;
+      border-radius:14px;
+      padding:45px 20px;
+      text-align:center;
+      color:#6b86a5;
+      box-shadow:var(--shadow);
+    ">
+      <div style="font-size:38px;margin-bottom:10px">⏳</div>
+      <strong style="
+        display:block;
+        color:#073d83;
+        font-size:16px;
+        margin-bottom:6px
+      ">
+        Memuat data alumni...
+      </strong>
+      <span>Mengambil data terbaru dari database.</span>
+    </div>
+  `;
+}
+
+
+function showError(message) {
+
+  const grid =
+    document.getElementById('alumniGrid');
+
+  if (!grid) return;
+
+  grid.innerHTML = `
+    <div style="
+      grid-column:1/-1;
+      background:#fff;
+      border:1px solid #f0d2d2;
+      border-radius:14px;
+      padding:45px 20px;
+      text-align:center;
+      color:#9a5f5f;
+      box-shadow:var(--shadow);
+    ">
+      <div style="font-size:40px;margin-bottom:10px">⚠️</div>
+      <strong style="
+        display:block;
+        color:#9b3030;
+        font-size:16px;
+        margin-bottom:6px
+      ">
+        Gagal memuat data alumni
+      </strong>
+      <span>${escapeHtml(message)}</span>
+    </div>
+  `;
+
+  document.getElementById('statTotal').textContent = '0';
+  document.getElementById('statMale').textContent = '0';
+  document.getElementById('statFemale').textContent = '0';
+  document.getElementById('statStudy').textContent = '0';
+}
+
+
+/* =========================================================
+   NORMALISASI DATA ALUMNI
+   ========================================================= */
+function normalizeAlumni(row) {
+
+  return {
+
+    id:
+      String(row.ID || '').trim(),
+
+    foto:
+      normalizePhotoUrl(row.FOTO),
+
+    nisn:
+      String(row.NISN || '').trim(),
+
+    nama:
+      String(row.NAMA || '').trim(),
+
+    jenisKelamin:
+      String(row.JENIS_KELAMIN || '').trim(),
+
+    tahunLulus:
+      String(row.TAHUN_LULUS || '').trim(),
+
+    kelasTerakhir:
+      String(row.KELAS_TERAKHIR || '').trim(),
+
+    tkb:
+      String(row.TKB || '').trim(),
+
+    estate:
+      String(row.ESTATE || '').trim(),
+
+    sekolahLanjutan:
+      String(row.SEKOLAH_LANJUTAN || '').trim(),
+
+    jurusan:
+      String(row.JURUSAN || '').trim(),
+
+    status:
+      String(row.STATUS || '').trim()
+  };
+}
+
+
+/* =========================================================
+   FOTO GOOGLE DRIVE / URL BIASA
+   ========================================================= */
+function normalizePhotoUrl(value) {
+
+  const url =
+    String(value || '').trim();
+
+  if (!url) return '';
+
+  let match =
+    url.match(
+      /drive\.google\.com\/file\/d\/([^/]+)/i
+    );
+
+  if (match) {
+
+    return (
+      'https://drive.google.com/thumbnail?id=' +
+      match[1] +
+      '&sz=w600'
+    );
+  }
+
+
+  match =
+    url.match(/[?&]id=([^&]+)/i);
+
+  if (
+    url.includes('drive.google.com') &&
+    match
+  ) {
+
+    return (
+      'https://drive.google.com/thumbnail?id=' +
+      match[1] +
+      '&sz=w600'
+    );
+  }
+
+  return url;
+}
+
+
+/* =========================================================
+   HELPER
+   ========================================================= */
+function escapeHtml(value) {
+
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+
+function genderAvatar(gender) {
+
+  const g =
+    String(gender || '').toUpperCase();
+
+  if (
+    g === 'P' ||
+    g === 'PEREMPUAN' ||
+    g === 'F'
+  ) {
+    return '👩‍🎓';
+  }
+
+  return '👨‍🎓';
+}
+
+
+function photoHtml(alumni) {
+
+  if (alumni.foto) {
+
+    return `
+      <img
+        src="${escapeHtml(alumni.foto)}"
+        alt="${escapeHtml(alumni.nama)}"
+        loading="lazy"
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='grid';
+        "
+      >
+      <span style="
+        display:none;
+        width:100%;
+        height:100%;
+        place-items:center;
+        font-size:42px
+      ">
+        ${genderAvatar(alumni.jenisKelamin)}
+      </span>
+    `;
+  }
+
+  return genderAvatar(alumni.jenisKelamin);
+}
+
+
+function normalizeTKB(value) {
+
+  return String(value || '')
+    .trim()
+    .toUpperCase()
+    .replace(/^TKB\s*/i, '')
+    .replace(/\s+/g, ' ');
+}
+
+
+function displayTKB(name) {
+
+  return String(name || '')
+    .replace(/^TKB\s+/i, 'TKB ');
+}
+
+
+/* =========================================================
+   FILTER OPTIONS
+   ========================================================= */
+function buildYearOptions() {
+
+  const select =
+    document.getElementById('yearFilter');
+
+  if (!select) return;
+
+  const current =
+    select.value;
+
+  const years = [
+    ...new Set(
+      allAlumni
+        .map(a => a.tahunLulus)
+        .filter(Boolean)
+    )
+  ];
+
+  years.sort((a, b) =>
+    Number(b) - Number(a)
+  );
+
+  select.innerHTML =
+    '<option value="">Semua Tahun Lulus</option>' +
+    years.map(year =>
+      `<option value="${escapeHtml(year)}">${escapeHtml(year)}</option>`
+    ).join('');
+
+  if (years.includes(current)) {
+    select.value = current;
+  }
+}
+
+
+function buildStatusOptions() {
+
+  const select =
+    document.getElementById('statusFilter');
+
+  if (!select) return;
+
+  const current =
+    select.value;
+
+  const statuses = [
+    ...new Set(
+      allAlumni
+        .map(a => a.status)
+        .filter(Boolean)
+    )
+  ];
+
+  statuses.sort((a, b) =>
+    a.localeCompare(b, 'id')
+  );
+
+  select.innerHTML =
+    '<option value="">Semua Status</option>' +
+    statuses.map(status =>
+      `<option value="${escapeHtml(status)}">${escapeHtml(status)}</option>`
+    ).join('');
+
+  if (statuses.includes(current)) {
+    select.value = current;
+  }
+}
+
+
+/* =========================================================
+   STATISTIK
+   Statistik mengikuti TKB aktif.
+   ========================================================= */
+function renderStats() {
+
+  const activeTKB =
+    normalizeTKB(currentTKB);
+
+  const data =
+    allAlumni.filter(
+      a =>
+        normalizeTKB(a.tkb) === activeTKB
+    );
+
+  const total =
+    data.length;
+
+  const male =
+    data.filter(a => {
+      const g =
+        String(a.jenisKelamin || '')
+          .trim()
+          .toUpperCase();
+
+      return (
+        g === 'L' ||
+        g === 'LAKI-LAKI' ||
+        g === 'LAKI LAKI' ||
+        g === 'M'
+      );
+    }).length;
+
+  const female =
+    data.filter(a => {
+      const g =
+        String(a.jenisKelamin || '')
+          .trim()
+          .toUpperCase();
+
+      return (
+        g === 'P' ||
+        g === 'PEREMPUAN' ||
+        g === 'F'
+      );
+    }).length;
+
+  const study =
+    data.filter(a =>
+      /melanjutkan|kuliah|universitas|sma|smk|sekolah/i
+        .test(a.status || '')
+    ).length;
+
+
+  document.getElementById('statTotal')
+    .textContent = total;
+
+  document.getElementById('statMale')
+    .textContent = male;
+
+  document.getElementById('statFemale')
+    .textContent = female;
+
+  document.getElementById('statStudy')
+    .textContent = study;
+}
+
+
+/* =========================================================
+   RENDER DATA
+   ========================================================= */
+function render() {
+
+  const q =
+    document.getElementById('searchInput')
+      .value
+      .toLowerCase()
+      .trim();
+
+  const year =
+    document.getElementById('yearFilter')
+      .value;
+
+  const status =
+    document.getElementById('statusFilter')
+      .value;
+
+  const activeTKB =
+    normalizeTKB(currentTKB);
+
+
+  filtered =
+    allAlumni.filter(a => {
+
+      const matchesTKB =
+        normalizeTKB(a.tkb) === activeTKB;
+
+      const searchText = [
+        a.nama,
+        a.nisn,
+        a.tahunLulus,
+        a.kelasTerakhir,
+        a.estate,
+        a.sekolahLanjutan,
+        a.jurusan,
+        a.status,
+        a.tkb
+      ].join(' ').toLowerCase();
+
+      const matchesSearch =
+        !q || searchText.includes(q);
+
+      const matchesYear =
+        !year || a.tahunLulus === year;
+
+      const matchesStatus =
+        !status || a.status === status;
+
+      return (
+        matchesTKB &&
+        matchesSearch &&
+        matchesYear &&
+        matchesStatus
+      );
+    });
+
+
+  const total =
+    filtered.length;
+
+  const maxPage =
+    Math.max(
+      1,
+      Math.ceil(total / perPage)
+    );
+
+  if (currentPage > maxPage) {
+    currentPage = maxPage;
+  }
+
+
+  const start =
+    (currentPage - 1) * perPage;
+
+  const items =
+    filtered.slice(
+      start,
+      start + perPage
+    );
+
+
+  document.getElementById('schoolTitle')
+    .textContent = displayTKB(currentTKB);
+
+
+  renderStats();
+
+
+  const grid =
+    document.getElementById('alumniGrid');
+
+
+  if (!items.length) {
+
+    grid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        background:#fff;
+        border:1px solid #e0edf8;
+        border-radius:14px;
+        padding:45px 20px;
+        text-align:center;
+        color:#6b86a5;
+        box-shadow:var(--shadow);
+      ">
+
+        <div style="
+          font-size:45px;
+          margin-bottom:10px
+        ">
+          🎓
+        </div>
+
+        <strong style="
+          display:block;
+          color:#073d83;
+          font-size:16px;
+          margin-bottom:6px
+        ">
+          Tidak ada data alumni
+        </strong>
+
+        <span>
+          Belum ada alumni yang sesuai dengan pencarian atau filter.
+        </span>
+
+      </div>
+    `;
+
+  } else {
+
+    grid.innerHTML =
+      items.map((a, i) => `
+
+        <article class="alumni-card">
+
+          <div class="alumni-top">
+
+            <div class="alumni-photo">
+              ${photoHtml(a)}
+            </div>
+
+            <div class="alumni-info">
+
+              <span class="badge">
+                Lulus ${escapeHtml(a.tahunLulus || '-')}
+              </span>
+
+              <div
+                class="alumni-name"
+                title="${escapeHtml(a.nama)}"
+              >
+                ${escapeHtml(a.nama || '-')}
+              </div>
+
+              <div class="meta">
+
+                <span>
+                  🏫 &nbsp;${escapeHtml(
+                    a.tkb || '-'
+                  )}
+                </span>
+
+                <span>
+                  📚 &nbsp;${escapeHtml(
+                    a.kelasTerakhir || '-'
+                  )}
+                </span>
+
+                <span>
+                  ▣ &nbsp;${escapeHtml(
+                    a.status || '-'
+                  )}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <button
+            class="detail"
+            onclick="showDetail(${i})"
+          >
+            Lihat Detail &nbsp;→
+          </button>
+
+        </article>
+
+      `).join('');
+  }
+
+
+  const end =
+    Math.min(
+      start + items.length,
+      total
+    );
+
+
+  document.getElementById('pageInfo')
+    .textContent =
+      total
+        ? `Menampilkan ${start + 1} - ${end} dari ${total} alumni`
+        : 'Tidak ada data alumni';
+
+
+  renderPages(maxPage);
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+function renderPages(max) {
+
+  const p =
+    document.getElementById('pages');
+
+  let h = '';
+
+  h += `
+    <button
+      class="page"
+      onclick="goPage(${Math.max(
+        1,
+        currentPage - 1
+      )})"
+    >
+      ‹
+    </button>
+  `;
+
+
+  for (
+    let i = 1;
+    i <= max;
+    i++
+  ) {
+
+    if (
+      max > 7 &&
+      i > 5 &&
+      i < max
+    ) {
+
+      if (i === 6) {
+
+        h += `
+          <span
+            class="page"
+            style="border:0;cursor:default"
+          >
+            …
+          </span>
+        `;
+      }
+
+      continue;
+    }
+
+
+    h += `
+      <button
+        class="page ${
+          i === currentPage
+            ? 'active'
+            : ''
+        }"
+        onclick="goPage(${i})"
+      >
+        ${i}
+      </button>
+    `;
+  }
+
+
+  h += `
+    <button
+      class="page"
+      onclick="goPage(${Math.min(
+        max,
+        currentPage + 1
+      )})"
+    >
+      ›
+    </button>
+  `;
+
+
+  p.innerHTML = h;
+}
+
+
+function goPage(p) {
+
+  currentPage = p;
+
+  render();
+
+  window.scrollTo({
+    top:
+      document.querySelector('.section')
+        .offsetTop - 70,
+    behavior: 'smooth'
+  });
+}
+
+
+/* =========================================================
+   PILIH TKB
+   ========================================================= */
+function setTKB(name, el) {
+
+  currentTKB = name;
+  currentPage = 1;
+
+  document.querySelectorAll('.category')
+    .forEach(x =>
+      x.classList.remove('active')
+    );
+
+  el.classList.add('active');
+
+  resetFilter(false);
+}
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+function applyFilter() {
+
+  currentPage = 1;
+
+  render();
+}
+
+
+function resetFilter(doRender = true) {
+
+  document.getElementById('searchInput')
+    .value = '';
+
+  document.getElementById('yearFilter')
+    .value = '';
+
+  document.getElementById('statusFilter')
+    .value = '';
+
+  currentPage = 1;
+
+  if (doRender) {
+    render();
+  }
+}
+
+
+function changePerPage() {
+
+  perPage =
+    Number(
+      document.getElementById('perPage')
+        .value
+    );
+
+  currentPage = 1;
+
+  render();
+}
+
+
+/* =========================================================
+   DETAIL ALUMNI
+   ========================================================= */
+function showDetail(index) {
+
+  const start =
+    (currentPage - 1) * perPage;
+
+  const a =
+    filtered[start + index];
+
+  if (!a) return;
+
+
+  const modalPhoto =
+    document.getElementById('modalPhoto');
+
+
+  if (a.foto) {
+
+    modalPhoto.innerHTML = `
+
+      <img
+        src="${escapeHtml(a.foto)}"
+        alt="${escapeHtml(a.nama)}"
+        style="
+          width:100%;
+          height:100%;
+          object-fit:cover;
+          border-radius:12px
+        "
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='grid';
+        "
+      >
+
+      <span style="
+        display:none;
+        width:100%;
+        height:100%;
+        place-items:center;
+        font-size:55px
+      ">
+        ${genderAvatar(a.jenisKelamin)}
+      </span>
+
+    `;
+
+  } else {
+
+    modalPhoto.textContent =
+      genderAvatar(a.jenisKelamin);
+  }
+
+
+  document.getElementById('modalInfo')
+    .innerHTML = `
+
+      <div>
+        <strong>Nama:</strong>
+        ${escapeHtml(a.nama || '-')}
+      </div>
+
+      <div>
+        <strong>NISN:</strong>
+        ${escapeHtml(a.nisn || '-')}
+      </div>
+
+      <div>
+        <strong>Jenis Kelamin:</strong>
+        ${escapeHtml(a.jenisKelamin || '-')}
+      </div>
+
+      <div>
+        <strong>Tahun Lulus:</strong>
+        ${escapeHtml(a.tahunLulus || '-')}
+      </div>
+
+      <div>
+        <strong>Kelas Terakhir:</strong>
+        ${escapeHtml(a.kelasTerakhir || '-')}
+      </div>
+
+      <div>
+        <strong>TKB:</strong>
+        ${escapeHtml(a.tkb || '-')}
+      </div>
+
+      <div>
+        <strong>Estate:</strong>
+        ${escapeHtml(a.estate || '-')}
+      </div>
+
+      <div>
+        <strong>Sekolah Lanjutan:</strong>
+        ${escapeHtml(a.sekolahLanjutan || '-')}
+      </div>
+
+      <div>
+        <strong>Jurusan:</strong>
+        ${escapeHtml(a.jurusan || '-')}
+      </div>
+
+      <div>
+        <strong>Status:</strong>
+        ${escapeHtml(a.status || '-')}
+      </div>
+
+    `;
+
+
+  document.getElementById('detailModal')
+    .classList.add('show');
+}
+
+
+/* =========================================================
+   SEARCH WEBSITE
+   ========================================================= */
+function openSearch() {
+
+  document.getElementById('searchModal')
+    .classList.add('show');
+}
+
+
+function closeSearch(e) {
+
+  if (
+    e &&
+    e.target !== e.currentTarget
+  ) {
+    return;
+  }
+
+  document.getElementById('searchModal')
+    .classList.remove('show');
+}
+
+
+function closeModal(e) {
+
+  if (
+    e &&
+    e.target !== e.currentTarget
+  ) {
+    return;
+  }
+
+  document.getElementById('detailModal')
+    .classList.remove('show');
+}
+
+
+function coming(e) {
+
+  e.preventDefault();
+
+  alert(
+    'Halaman PPDB akan diaktifkan pada tahap berikutnya.'
+  );
+}
+
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+document.addEventListener(
+  'keydown',
+  function(e) {
+
+    if (e.key === 'Escape') {
+      closeModal();
+      closeSearch();
+    }
+
+    if (
+      e.key === 'Enter' &&
+      document.activeElement ===
+        document.getElementById('searchInput')
+    ) {
+      applyFilter();
+    }
+
+  }
+);
+
+
+/* =========================================================
+   MULAI
+   ========================================================= */
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+    loadAlumni();
+  }
+);
 </script>
 </body>
 </html>
