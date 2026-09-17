@@ -31,8 +31,16 @@
   <form id="form">
     <div class="form-grid">
       <div class="field full"><label>JUDUL KEGIATAN *</label><input id="judul" maxlength="150" required placeholder="Contoh: Upacara Bendera 17 Agustus"></div>
-      <div class="field"><label>KATEGORI *</label><select id="kategori" required></select></div>
-      <div class="field"><label>ATAU TAMBAHKAN KATEGORI BARU</label><input id="kategoriBaru" maxlength="50" placeholder="Contoh: Kesiswaan"></div>
+      <div class="field">
+  <label>KATEGORI</label>
+  <select id="kategori"></select>
+</div>
+      <div class="field">
+  <label>KATEGORI BARU</label>
+  <input id="kategoriBaru"
+         maxlength="50"
+         placeholder="Jika belum ada kategori, tulis kategori baru di sini">
+</div>
       <div class="field full"><label>LOKASI *</label><input id="lokasi" maxlength="150" required placeholder="Contoh: Estate Permodalan 2"></div>
       <div class="field full"><label>FOTO KEGIATAN *</label>
         <div class="drop" onclick="document.getElementById('foto').click()">
@@ -155,7 +163,13 @@ document.getElementById('form').addEventListener('submit',async e=>{
   const kategoriBaru=document.getElementById('kategoriBaru').value.trim();
   const kategori=kategoriBaru||document.getElementById('kategori').value.trim();
   if(!credential){msg(document.getElementById('msg'),'Sesi Google tidak tersedia. Silakan login ulang.');return}
-  if(!kategori){msg(document.getElementById('msg'),'Pilih kategori atau isi kategori baru.');return}
+  if(!kategori){
+  msg(
+    document.getElementById('msg'),
+    'Silakan pilih kategori yang tersedia atau isi Kategori Baru.'
+  );
+  return;
+}
   if(!files.length){msg(document.getElementById('msg'),'Pilih minimal 1 foto kegiatan.');return}
   const btn=document.getElementById('saveBtn');btn.disabled=true;btn.textContent='MENYIAPKAN FOTO...';
   try{
