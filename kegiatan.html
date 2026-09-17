@@ -42,12 +42,11 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 
 .success-popup{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,30,70,.58);align-items:center;justify-content:center;padding:20px}
 .success-popup.show{display:flex}
-.success-popup-box{width:min(420px,100%);background:#fff;border-radius:20px;padding:28px 24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.28);animation:successPop .2s ease-out}
+.success-popup-box{width:min(420px,100%);background:#fff;border-radius:20px;padding:28px 24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.28)}
 .success-icon{width:62px;height:62px;border-radius:50%;margin:0 auto 12px;background:#e9fbf2;color:#167144;display:grid;place-items:center;font-size:32px;font-weight:900}
 .success-popup-box h3{margin:0;color:#073d83;font-size:21px}
 .success-popup-box p{margin:8px 0 18px;color:#6b86a5;font-size:12px;line-height:1.5}
 .success-popup-box button{border:0;border-radius:10px;padding:11px 24px;background:linear-gradient(100deg,#0878df,#0757b8);color:#fff;font-weight:900;cursor:pointer}
-@keyframes successPop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
 
 </style>
 </head>
@@ -87,7 +86,7 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
   <div class="success-popup-box" onclick="event.stopPropagation()">
     <div class="success-icon">✓</div>
     <h3>Kegiatan Berhasil Ditambahkan</h3>
-    <p>Dokumentasi kegiatan sudah berhasil disimpan dan sekarang tampil di halaman kegiatan.</p>
+    <p>Dokumentasi kegiatan berhasil disimpan.</p>
     <button type="button" onclick="closeSuccessPopup()">OK</button>
   </div>
 </div>
@@ -259,19 +258,18 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeS
 function closeSuccessPopup(){
   document.getElementById('successPopup').classList.remove('show');
   try{
-    const cleanUrl = window.location.origin + window.location.pathname;
-    window.history.replaceState({}, document.title, cleanUrl);
+    const cleanUrl=window.location.origin+window.location.pathname;
+    window.history.replaceState({},document.title,cleanUrl);
   }catch(e){}
 }
 
 function checkSaveSuccess(){
-  const params = new URLSearchParams(window.location.search);
-  if(params.get('saved') === '1'){
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('saved')==='1'){
     document.getElementById('successPopup').classList.add('show');
-    // Hapus parameter dari address bar tanpa reload.
     try{
-      const cleanUrl = window.location.origin + window.location.pathname;
-      window.history.replaceState({}, document.title, cleanUrl);
+      const cleanUrl=window.location.origin+window.location.pathname;
+      window.history.replaceState({},document.title,cleanUrl);
     }catch(e){}
   }
 }
