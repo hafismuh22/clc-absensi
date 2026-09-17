@@ -16,16 +16,12 @@
 </style>
 </head>
 <body>
-  <body>
-
 <iframe
   name="uploadFrame"
   id="uploadFrame"
   style="display:none;width:0;height:0;border:0;visibility:hidden"
-  aria-hidden="true">
-</iframe>
+  aria-hidden="true"></iframe>
 
-<div class="wrap"><div class="box">
 <div class="wrap"><div class="box">
 <div class="head"><h1>📸 Admin Kegiatan</h1><p>CLC PERMODALAN • Panel penambahan dokumentasi kegiatan sekolah</p></div>
 <div class="content">
@@ -198,9 +194,15 @@ document.getElementById('form').addEventListener('submit',async e=>{
     add(form,'photos',JSON.stringify(photos));
     document.body.appendChild(form);
     btn.textContent='MENYIMPAN...';
+
+    // Pastikan hasil POST masuk ke iframe tersembunyi,
+    // bukan membuka halaman Apps Script.
+    const uploadFrame=document.getElementById('uploadFrame');
     window.addEventListener('message',receiveUploadResult,{once:true});
+
     form.submit();
-    setTimeout(()=>{if(form.parentNode)form.remove()},2000);
+
+    setTimeout(()=>{if(form.parentNode)form.remove()},3000);
   }catch(err){
     msg(document.getElementById('msg'),err.message||'Gagal memproses foto.');
     btn.disabled=false;btn.textContent='SIMPAN KEGIATAN';
@@ -208,29 +210,43 @@ document.getElementById('form').addEventListener('submit',async e=>{
 });
 function add(form,name,value){const x=document.createElement('input');x.type='hidden';x.name=name;x.value=value;form.appendChild(x)}
 function receiveUploadResult(e){
-  if(!e.data||e.data.source!=='CLC_KEGIATAN_API')return;
+  if(!e.data || e.data.source!=='CLC_KEGIATAN_API') return;
+
   const r=e.data.result;
   const box=document.getElementById('msg');
-  if(r&&r.success){
+  const btn=document.getElementById('saveBtn');
 
-  msg(box,'✓ Kegiatan berhasil ditambahkan.',true);
+  if(r && r.success){
 
-  document.getElementById('form').reset();
-  files=[];
-  renderPreviews();
-  document.getElementById('kategori').value='';
-  document.getElementById('kategoriBaru').value='';
+    btn.disabled=false;
+    btn.textContent='SIMPAN KEGIATAN';
 
-  alert('✓ Kegiatan berhasil ditambahkan!');
+    // Bersihkan form.
+    document.getElementById('form').reset();
+    files=[];
+    renderPreviews();
+    document.getElementById('kategori').value='';
+    document.getElementById('kategoriBaru').value='';
 
-  window.location.href='kegiatan.html';
-  return;
+    // Popup sukses.
+    alert('✓ Kegiatan berhasil ditambahkan!');
 
-}else{
-    msg(box,(r&&r.message)||'Gagal menyimpan kegiatan.');
+    // Kembali ke halaman publik kegiatan pada tab yang sama.
+    window.location.href='kegiatan.html';
+    return;
+
+  }else{
+
+    msg(
+      box,
+      (r && r.message) || 'Gagal menyimpan kegiatan.'
+    );
+
+    btn.disabled=false;
+    btn.textContent='SIMPAN KEGIATAN';
   }
-  const btn=document.getElementById('saveBtn');btn.disabled=false;btn.textContent='SIMPAN KEGIATAN';
 }
+
 function logout(){
   credential='';userEmail='';
   document.getElementById('app').style.display='none';
