@@ -192,59 +192,119 @@ document.getElementById('form').addEventListener('submit',async e=>{
     add(form,'lokasi',document.getElementById('lokasi').value.trim());
     add(form,'deskripsi',document.getElementById('deskripsi').value.trim());
     add(form,'photos',JSON.stringify(photos));
+    // ID unik untuk transaksi ini. Admin akan mengecek hasilnya
+    // melalui endpoint upload-status, bukan postMessage.
+    const requestId='UPL_'+Date.now()+'_'+Math.random().toString(36).slice(2,10);
+    add(form,'requestId',requestId);
+
     document.body.appendChild(form);
     btn.textContent='MENYIMPAN...';
 
-    // Pastikan hasil POST masuk ke iframe tersembunyi,
-    // bukan membuka halaman Apps Script.
-    const uploadFrame=document.getElementById('uploadFrame');
-    window.addEventListener('message',receiveUploadResult,{once:true});
-
     form.submit();
 
-    setTimeout(()=>{if(form.parentNode)form.remove()},3000);
+    // Mulai cek status penyimpanan.
+    pollUploadStatus(requestId);
+
+    setTimeout(()=>{if(form.parentNode)form.remove()},5000);
   }catch(err){
     msg(document.getElementById('msg'),err.message||'Gagal memproses foto.');
     btn.disabled=false;btn.textContent='SIMPAN KEGIATAN';
   }
 });
 function add(form,name,value){const x=document.createElement('input');x.type='hidden';x.name=name;x.value=value;form.appendChild(x)}
-function receiveUploadResult(e){
-  if(!e.data || e.data.source!=='CLC_KEGIATAN_API') return;
-
-  const r=e.data.result;
+async function pollUploadStatus(requestId){
   const box=document.getElementById('msg');
   const btn=document.getElementById('saveBtn');
 
-  if(r && r.success){
+  let attempts=0;
+  const maxAttempts=90;
 
-    btn.disabled=false;
-    btn.textContent='SIMPAN KEGIATAN';
+  async function check(){
+    attempts++;
 
-    // Bersihkan form.
-    document.getElementById('form').reset();
-    files=[];
-    renderPreviews();
-    document.getElementById('kategori').value='';
-    document.getElementById('kategoriBaru').value='';
+    try{
+      const result=await fetchJsonp(API_URL+'?action=upload-status&requestId='+encodeURIComponent(requestId));
 
-    // Popup sukses.
-    alert('✓ Kegiatan berhasil ditambahkan!');
+      if(result && result.pending){
+        if(attempts < maxAttempts){
+          setTimeout(check,1000);
+          return;
+        }
+        msg(box,'Proses masih berjalan. Silakan periksa halaman kegiatan dalam beberapa saat.');
+        btn.disabled=false;
+        btn.textContent='SIMPAN KEGIATAN';
+        return;
+      }
 
-    // Kembali ke halaman publik kegiatan pada tab yang sama.
-    window.location.href='kegiatan.html';
-    return;
+      const r=result && result.result;
 
-  }else{
+      if(r && r.success){
+        btn.disabled=false;
+        btn.textContent='SIMPAN KEGIATAN';
 
-    msg(
-      box,
-      (r && r.message) || 'Gagal menyimpan kegiatan.'
-    );
+        document.getElementById('form').reset();
+        files=[];
+        renderPreviews();
+        document.getElementById('kategori').value='';
+        document.getElementById('kategoriBaru').value='';
 
-    btn.disabled=false;
-    btn.textContent='SIMPAN KEGIATAN';
+        // Kembali ke halaman kegiatan. Popup sukses ditampilkan di sana.
+        window.location.href='kegiatan.html?saved=1&id='+encodeURIComponent(r.id||'');
+        return;
+      }
+
+      msg(box,(r && r.message)||'Gagal menyimpan kegiatan.');
+      btn.disabled=false;
+      btn.textContent='SIMPAN KEGIATAN';
+
+    }catch(err){
+      if(attempts < maxAttempts){
+        setTimeout(check,1000);
+        return;
+      }
+      msg(box,'Tidak dapat memeriksa hasil penyimpanan. Data mungkin masih diproses.');
+      btn.disabled=false;
+      btn.textContent='SIMPAN KEGIATAN';
+    }
   }
+
+  check();
+}
+
+function fetchJsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb='uploadStatusCB_'+Date.now()+'_'+Math.floor(Math.random()*10000);
+    const script=document.createElement('script');
+    let finished=false;
+
+    const timer=setTimeout(()=>{
+      cleanup();
+      reject(new Error('Timeout'));
+    },10000);
+
+    window[cb]=data=>{
+      if(finished)return;
+      finished=true;
+      cleanup();
+      resolve(data);
+    };
+
+    script.onerror=()=>{
+      if(finished)return;
+      finished=true;
+      cleanup();
+      reject(new Error('Gagal menghubungi server.'));
+    };
+
+    function cleanup(){
+      clearTimeout(timer);
+      if(script.parentNode)script.parentNode.removeChild(script);
+      try{delete window[cb]}catch(e){window[cb]=undefined}
+    }
+
+    script.src=url+'&callback='+encodeURIComponent(cb)+'&_='+Date.now();
+    document.body.appendChild(script);
+  });
 }
 
 function logout(){
