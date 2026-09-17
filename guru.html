@@ -116,27 +116,1008 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 <div class="modal" id="searchModal" onclick="closeSearch(event)"><div class="modal-box" onclick="event.stopPropagation()"><button class="close" onclick="closeSearch()">×</button><h2>Pencarian Website</h2><input class="input" style="width:100%" placeholder="Cari siswa, guru, alumni atau kegiatan..."><p style="color:#6b86a5;font-size:12px">Pencarian global akan dihubungkan pada tahap database baru.</p></div></div>
 
 <script>
-const baseTeachers=[
- {nama:'Muh Hafis, S.Pd',jabatan:'Kepala TKB',mapel:['Pendidikan','Matematika'],telp:'+60 12-345 6789',email:'muhhafis@clcpermodalan.my',status:'Aktif',avatar:'👨‍🏫'},
- {nama:'Nurbiah Ahmad, S.Pd',jabatan:'Guru',mapel:['Bahasa Indonesia','IPS'],telp:'+60 11-234 5678',email:'nurbiah@clcpermodalan.my',status:'Aktif',avatar:'👩‍🏫'}
-];
-let currentTKB='TKB MORISEM 3',currentPage=1,perPage=12,filtered=[];
-function dataset(){return baseTeachers.map(t=>({...t,tkb:currentTKB}))}
-function render(){
- const all=dataset(),q=document.getElementById('searchInput').value.toLowerCase().trim(),job=document.getElementById('jobFilter').value,status=document.getElementById('statusFilter').value;
- filtered=all.filter(t=>(!q||[t.nama,...t.mapel].join(' ').toLowerCase().includes(q))&&(!job||t.jabatan===job)&&(!status||t.status===status));
- const total=filtered.length,start=(currentPage-1)*perPage,items=filtered.slice(start,start+perPage);
- document.getElementById('totalNumber').textContent=total;document.getElementById('schoolTitle').textContent=currentTKB.replace('TKB ','TKB ');
- document.getElementById('teacherGrid').innerHTML=items.map(t=>`<article class="teacher-card"><div class="teacher-main"><div class="teacher-photo">${t.avatar}</div><div class="teacher-info"><div class="teacher-name">${t.nama}</div><span class="role ${t.jabatan==='Guru'?'pink':''}">${t.jabatan}</span><div class="teacher-meta"><span>⌂ &nbsp;${t.mapel[0]}</span><span>▣ &nbsp;${t.mapel[1]}</span><span>☎ &nbsp;${t.telp}</span><span>✉ &nbsp;${t.email}</span></div></div></div><button class="detail" onclick='showDetail(${JSON.stringify(t)})'>Lihat Detail &nbsp;→</button></article>`).join('');
- const end=Math.min(start+items.length,total);document.getElementById('pageInfo').textContent=total?`Menampilkan ${start+1} - ${end} dari ${total} guru`:'Tidak ada data guru';renderPages(Math.max(1,Math.ceil(total/perPage)));
+/* =========================================================
+   DATA GURU - TERHUBUNG KE APPS SCRIPT DATABASE BARU
+   ========================================================= */
+
+const API_URL = 'https://script.google.com/macros/s/AKfycbyfj5mSOO40twAn7YiIPcGZInaQ8NNPx3lpwJ8OaC7pajqPHt2EPKaaHP3lZ3lczFq49w/exec';
+
+let allTeachers = [];
+let currentTKB = 'TKB MORISEM 3';
+let currentPage = 1;
+let perPage = 12;
+let filtered = [];
+
+
+/* =========================================================
+   LOAD DATA GURU
+   ========================================================= */
+function loadTeachers() {
+
+  showLoading();
+
+  const callbackName =
+    'teacherCallback_' + Date.now();
+
+  window[callbackName] = function(response) {
+
+    try {
+
+      if (!response || response.success !== true) {
+        throw new Error(
+          response && response.message
+            ? response.message
+            : 'API tidak mengembalikan data yang valid.'
+        );
+      }
+
+      allTeachers = Array.isArray(response.data)
+        ? response.data.map(normalizeTeacher)
+        : [];
+
+      buildJobOptions();
+      buildStatusOptions();
+      render();
+
+    } catch (error) {
+
+      showError(error.message);
+
+    } finally {
+
+      cleanupJsonp(callbackName);
+
+    }
+  };
+
+
+  const script =
+    document.createElement('script');
+
+  script.src =
+    API_URL +
+    '?action=guru&callback=' +
+    encodeURIComponent(callbackName);
+
+  script.id = callbackName;
+
+  script.onerror = function() {
+
+    showError(
+      'Tidak dapat terhubung ke database guru. Pastikan Web App Apps Script masih aktif dan dapat diakses.'
+    );
+
+    cleanupJsonp(callbackName);
+  };
+
+
+  document.body.appendChild(script);
 }
-function renderPages(max){let h=`<button class="page" onclick="goPage(${Math.max(1,currentPage-1)})">‹</button>`;for(let i=1;i<=max;i++)h+=`<button class="page ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;h+=`<button class="page" onclick="goPage(${Math.min(max,currentPage+1)})">›</button>`;document.getElementById('pages').innerHTML=h}
-function goPage(p){currentPage=p;render();window.scrollTo({top:document.querySelector('.section').offsetTop-70,behavior:'smooth'})}
-function setTKB(name,el){currentTKB=name;document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));el.classList.add('active');currentPage=1;resetFilter(false)}
-function applyFilter(){currentPage=1;render()}function resetFilter(doRender=true){document.getElementById('searchInput').value='';document.getElementById('jobFilter').value='';document.getElementById('statusFilter').value='';currentPage=1;if(doRender)render()}
-function changePerPage(){perPage=Number(document.getElementById('perPage').value);currentPage=1;render()}
-function showDetail(t){document.getElementById('modalPhoto').textContent=t.avatar;document.getElementById('modalInfo').innerHTML=`<div><strong>Nama:</strong> ${t.nama}</div><div><strong>Jabatan:</strong> ${t.jabatan}</div><div><strong>Mata Pelajaran:</strong> ${t.mapel.join(', ')}</div><div><strong>Status:</strong> ${t.status}</div><div><strong>TKB:</strong> ${t.tkb}</div><div><strong>Telepon:</strong> ${t.telp}</div><div><strong>Email:</strong> ${t.email}</div>`;document.getElementById('detailModal').classList.add('show')}
-function closeModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('detailModal').classList.remove('show')}function openSearch(){document.getElementById('searchModal').classList.add('show')}function closeSearch(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('searchModal').classList.remove('show')}function coming(e){e.preventDefault();alert('Halaman PPDB akan diaktifkan pada tahap berikutnya.')}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeSearch()}});render();
+
+
+function cleanupJsonp(callbackName) {
+
+  const script =
+    document.getElementById(callbackName);
+
+  if (script) script.remove();
+
+  try {
+    delete window[callbackName];
+  } catch (e) {
+    window[callbackName] = undefined;
+  }
+}
+
+
+/* =========================================================
+   LOADING / ERROR
+   ========================================================= */
+function showLoading() {
+
+  const grid =
+    document.getElementById('teacherGrid');
+
+  if (!grid) return;
+
+  grid.innerHTML = `
+    <div style="
+      grid-column:1/-1;
+      background:#fff;
+      border:1px solid #e0edf8;
+      border-radius:14px;
+      padding:45px 20px;
+      text-align:center;
+      color:#6b86a5;
+      box-shadow:var(--shadow);
+    ">
+      <div style="font-size:38px;margin-bottom:10px">⏳</div>
+
+      <strong style="
+        display:block;
+        color:#073d83;
+        font-size:16px;
+        margin-bottom:6px
+      ">
+        Memuat data guru...
+      </strong>
+
+      <span>Mengambil data terbaru dari database.</span>
+    </div>
+  `;
+}
+
+
+function showError(message) {
+
+  const grid =
+    document.getElementById('teacherGrid');
+
+  if (!grid) return;
+
+  grid.innerHTML = `
+    <div style="
+      grid-column:1/-1;
+      background:#fff;
+      border:1px solid #f0d2d2;
+      border-radius:14px;
+      padding:45px 20px;
+      text-align:center;
+      color:#9a5f5f;
+      box-shadow:var(--shadow);
+    ">
+      <div style="font-size:40px;margin-bottom:10px">⚠️</div>
+
+      <strong style="
+        display:block;
+        color:#9b3030;
+        font-size:16px;
+        margin-bottom:6px
+      ">
+        Gagal memuat data guru
+      </strong>
+
+      <span>${escapeHtml(message)}</span>
+    </div>
+  `;
+
+  document.getElementById('totalNumber')
+    .textContent = '0';
+}
+
+
+/* =========================================================
+   NORMALISASI DATA GURU
+   ========================================================= */
+function normalizeTeacher(row) {
+
+  return {
+
+    id: String(row.ID || '').trim(),
+
+    foto: normalizePhotoUrl(row.FOTO),
+
+    nip: String(row.NIP || '').trim(),
+
+    nama: String(row.NAMA || '').trim(),
+
+    jenisKelamin:
+      String(row.JENIS_KELAMIN || '').trim(),
+
+    tempatLahir:
+      String(row.TEMPAT_LAHIR || '').trim(),
+
+    tanggalLahir:
+      String(row.TANGGAL_LAHIR || '').trim(),
+
+    jabatan:
+      String(row.JABATAN || '').trim(),
+
+    mataPelajaran:
+      String(row.MATA_PELAJARAN || '').trim(),
+
+    tkb:
+      String(row.TKB || '').trim(),
+
+    estate:
+      String(row.ESTATE || '').trim(),
+
+    nomorHp:
+      String(row.NOMOR_HP || '').trim(),
+
+    status:
+      String(row.STATUS || '').trim()
+  };
+}
+
+
+/* =========================================================
+   FOTO
+   ========================================================= */
+function normalizePhotoUrl(value) {
+
+  const url =
+    String(value || '').trim();
+
+  if (!url) return '';
+
+  let match =
+    url.match(
+      /drive\.google\.com\/file\/d\/([^/]+)/i
+    );
+
+  if (match) {
+
+    return (
+      'https://drive.google.com/thumbnail?id=' +
+      match[1] +
+      '&sz=w600'
+    );
+  }
+
+
+  match =
+    url.match(/[?&]id=([^&]+)/i);
+
+  if (
+    url.includes('drive.google.com') &&
+    match
+  ) {
+
+    return (
+      'https://drive.google.com/thumbnail?id=' +
+      match[1] +
+      '&sz=w600'
+    );
+  }
+
+  return url;
+}
+
+
+/* =========================================================
+   HELPER
+   ========================================================= */
+function escapeHtml(value) {
+
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+
+function genderAvatar(gender) {
+
+  const g =
+    String(gender || '').toUpperCase();
+
+  if (
+    g === 'P' ||
+    g === 'PEREMPUAN' ||
+    g === 'F'
+  ) {
+    return '👩‍🏫';
+  }
+
+  return '👨‍🏫';
+}
+
+
+function photoHtml(teacher) {
+
+  if (teacher.foto) {
+
+    return `
+      <img
+        src="${escapeHtml(teacher.foto)}"
+        alt="${escapeHtml(teacher.nama)}"
+        loading="lazy"
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='grid';
+        "
+      >
+
+      <span style="
+        display:none;
+        width:100%;
+        height:100%;
+        place-items:center;
+        font-size:60px
+      ">
+        ${genderAvatar(teacher.jenisKelamin)}
+      </span>
+    `;
+  }
+
+  return genderAvatar(teacher.jenisKelamin);
+}
+
+
+function normalizeText(value) {
+
+  return String(value || '')
+    .trim()
+    .toLowerCase();
+}
+
+
+function normalizeTKB(value) {
+
+  return String(value || '')
+    .trim()
+    .toUpperCase()
+    .replace(/^TKB\s*/i, '')
+    .replace(/\s+/g, ' ');
+}
+
+
+function displayTKB(name) {
+
+  return String(name || '')
+    .replace(/^TKB\s+/i, 'TKB ');
+}
+
+
+/* =========================================================
+   FILTER OPTIONS
+   ========================================================= */
+function buildJobOptions() {
+
+  const select =
+    document.getElementById('jobFilter');
+
+  if (!select) return;
+
+  const current =
+    select.value;
+
+  const jobs = [
+    ...new Set(
+      allTeachers
+        .map(t => t.jabatan)
+        .filter(Boolean)
+    )
+  ];
+
+  jobs.sort((a, b) =>
+    a.localeCompare(b, 'id')
+  );
+
+  select.innerHTML =
+    '<option value="">Semua Jabatan</option>' +
+    jobs.map(job =>
+      `<option value="${escapeHtml(job)}">${escapeHtml(job)}</option>`
+    ).join('');
+
+  if (jobs.includes(current)) {
+    select.value = current;
+  }
+}
+
+
+function buildStatusOptions() {
+
+  const select =
+    document.getElementById('statusFilter');
+
+  if (!select) return;
+
+  const current =
+    select.value;
+
+  const statuses = [
+    ...new Set(
+      allTeachers
+        .map(t => t.status)
+        .filter(Boolean)
+    )
+  ];
+
+  statuses.sort((a, b) =>
+    a.localeCompare(b, 'id')
+  );
+
+  select.innerHTML =
+    '<option value="">Semua Status</option>' +
+    statuses.map(status =>
+      `<option value="${escapeHtml(status)}">${escapeHtml(status)}</option>`
+    ).join('');
+
+  if (statuses.includes(current)) {
+    select.value = current;
+  }
+}
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function render() {
+
+  const q =
+    document.getElementById('searchInput')
+      .value
+      .toLowerCase()
+      .trim();
+
+  const job =
+    document.getElementById('jobFilter')
+      .value;
+
+  const status =
+    document.getElementById('statusFilter')
+      .value;
+
+  const activeTKB =
+    normalizeTKB(currentTKB);
+
+
+  filtered =
+    allTeachers.filter(t => {
+
+      const matchesTKB =
+        normalizeTKB(t.tkb) === activeTKB;
+
+      const searchText = [
+        t.nama,
+        t.nip,
+        t.mataPelajaran,
+        t.jabatan,
+        t.estate,
+        t.tkb
+      ].join(' ').toLowerCase();
+
+      const matchesSearch =
+        !q || searchText.includes(q);
+
+      const matchesJob =
+        !job || t.jabatan === job;
+
+      const matchesStatus =
+        !status || t.status === status;
+
+      return (
+        matchesTKB &&
+        matchesSearch &&
+        matchesJob &&
+        matchesStatus
+      );
+    });
+
+
+  const total =
+    filtered.length;
+
+  const maxPage =
+    Math.max(
+      1,
+      Math.ceil(total / perPage)
+    );
+
+  if (currentPage > maxPage) {
+    currentPage = maxPage;
+  }
+
+
+  const start =
+    (currentPage - 1) * perPage;
+
+  const items =
+    filtered.slice(
+      start,
+      start + perPage
+    );
+
+
+  document.getElementById('totalNumber')
+    .textContent = total;
+
+  document.getElementById('schoolTitle')
+    .textContent = displayTKB(currentTKB);
+
+
+  const grid =
+    document.getElementById('teacherGrid');
+
+
+  if (!items.length) {
+
+    grid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        background:#fff;
+        border:1px solid #e0edf8;
+        border-radius:14px;
+        padding:45px 20px;
+        text-align:center;
+        color:#6b86a5;
+        box-shadow:var(--shadow);
+      ">
+
+        <div style="
+          font-size:45px;
+          margin-bottom:10px
+        ">
+          👨‍🏫
+        </div>
+
+        <strong style="
+          display:block;
+          color:#073d83;
+          font-size:16px;
+          margin-bottom:6px
+        ">
+          Tidak ada data guru
+        </strong>
+
+        <span>
+          Belum ada guru yang sesuai dengan pencarian atau filter.
+        </span>
+
+      </div>
+    `;
+
+  } else {
+
+    grid.innerHTML =
+      items.map((t, i) => `
+
+        <article class="teacher-card">
+
+          <div class="teacher-main">
+
+            <div class="teacher-photo">
+              ${photoHtml(t)}
+            </div>
+
+            <div class="teacher-info">
+
+              <div
+                class="teacher-name"
+                title="${escapeHtml(t.nama)}"
+              >
+                ${escapeHtml(t.nama || '-')}
+              </div>
+
+              <span class="role ${
+                normalizeText(t.jabatan) === 'guru'
+                  ? 'pink'
+                  : ''
+              }">
+                ${escapeHtml(t.jabatan || '-')}
+              </span>
+
+              <div class="teacher-meta">
+
+                <span>
+                  📚 &nbsp;${escapeHtml(
+                    t.mataPelajaran || '-'
+                  )}
+                </span>
+
+                <span>
+                  🏫 &nbsp;${escapeHtml(
+                    t.tkb || '-'
+                  )}
+                </span>
+
+                <span>
+                  ☎ &nbsp;${escapeHtml(
+                    t.nomorHp || '-'
+                  )}
+                </span>
+
+                <span>
+                  ● &nbsp;${escapeHtml(
+                    t.status || '-'
+                  )}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <button
+            class="detail"
+            onclick="showDetail(${i})"
+          >
+            Lihat Detail &nbsp;→
+          </button>
+
+        </article>
+
+      `).join('');
+  }
+
+
+  const end =
+    Math.min(
+      start + items.length,
+      total
+    );
+
+
+  document.getElementById('pageInfo')
+    .textContent =
+      total
+        ? `Menampilkan ${start + 1} - ${end} dari ${total} guru`
+        : 'Tidak ada data guru';
+
+
+  renderPages(maxPage);
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+function renderPages(max) {
+
+  const p =
+    document.getElementById('pages');
+
+  let h = '';
+
+  h += `
+    <button
+      class="page"
+      onclick="goPage(${Math.max(
+        1,
+        currentPage - 1
+      )})"
+    >
+      ‹
+    </button>
+  `;
+
+
+  for (
+    let i = 1;
+    i <= max;
+    i++
+  ) {
+
+    if (
+      max > 7 &&
+      i > 5 &&
+      i < max
+    ) {
+
+      if (i === 6) {
+
+        h += `
+          <span
+            class="page"
+            style="border:0;cursor:default"
+          >
+            …
+          </span>
+        `;
+      }
+
+      continue;
+    }
+
+
+    h += `
+      <button
+        class="page ${
+          i === currentPage
+            ? 'active'
+            : ''
+        }"
+        onclick="goPage(${i})"
+      >
+        ${i}
+      </button>
+    `;
+  }
+
+
+  h += `
+    <button
+      class="page"
+      onclick="goPage(${Math.min(
+        max,
+        currentPage + 1
+      )})"
+    >
+      ›
+    </button>
+  `;
+
+
+  p.innerHTML = h;
+}
+
+
+function goPage(p) {
+
+  currentPage = p;
+
+  render();
+
+  window.scrollTo({
+    top:
+      document.querySelector('.section')
+        .offsetTop - 70,
+    behavior: 'smooth'
+  });
+}
+
+
+/* =========================================================
+   PILIH TKB
+   ========================================================= */
+function setTKB(name, el) {
+
+  currentTKB = name;
+  currentPage = 1;
+
+  document.querySelectorAll('.category')
+    .forEach(x =>
+      x.classList.remove('active')
+    );
+
+  el.classList.add('active');
+
+  resetFilter(false);
+}
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+function applyFilter() {
+
+  currentPage = 1;
+
+  render();
+}
+
+
+function resetFilter(doRender = true) {
+
+  document.getElementById('searchInput')
+    .value = '';
+
+  document.getElementById('jobFilter')
+    .value = '';
+
+  document.getElementById('statusFilter')
+    .value = '';
+
+  currentPage = 1;
+
+  if (doRender) {
+    render();
+  }
+}
+
+
+function changePerPage() {
+
+  perPage =
+    Number(
+      document.getElementById('perPage')
+        .value
+    );
+
+  currentPage = 1;
+
+  render();
+}
+
+
+/* =========================================================
+   DETAIL GURU
+   ========================================================= */
+function showDetail(index) {
+
+  const start =
+    (currentPage - 1) * perPage;
+
+  const t =
+    filtered[start + index];
+
+  if (!t) return;
+
+
+  const modalPhoto =
+    document.getElementById('modalPhoto');
+
+
+  if (t.foto) {
+
+    modalPhoto.innerHTML = `
+
+      <img
+        src="${escapeHtml(t.foto)}"
+        alt="${escapeHtml(t.nama)}"
+        style="
+          width:100%;
+          height:100%;
+          object-fit:cover;
+          border-radius:12px
+        "
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='grid';
+        "
+      >
+
+      <span style="
+        display:none;
+        width:100%;
+        height:100%;
+        place-items:center;
+        font-size:55px
+      ">
+        ${genderAvatar(t.jenisKelamin)}
+      </span>
+
+    `;
+
+  } else {
+
+    modalPhoto.textContent =
+      genderAvatar(t.jenisKelamin);
+  }
+
+
+  document.getElementById('modalInfo')
+    .innerHTML = `
+
+      <div>
+        <strong>Nama:</strong>
+        ${escapeHtml(t.nama || '-')}
+      </div>
+
+      <div>
+        <strong>NIP:</strong>
+        ${escapeHtml(t.nip || '-')}
+      </div>
+
+      <div>
+        <strong>Jenis Kelamin:</strong>
+        ${escapeHtml(t.jenisKelamin || '-')}
+      </div>
+
+      <div>
+        <strong>Tempat Lahir:</strong>
+        ${escapeHtml(t.tempatLahir || '-')}
+      </div>
+
+      <div>
+        <strong>Tanggal Lahir:</strong>
+        ${escapeHtml(t.tanggalLahir || '-')}
+      </div>
+
+      <div>
+        <strong>Jabatan:</strong>
+        ${escapeHtml(t.jabatan || '-')}
+      </div>
+
+      <div>
+        <strong>Mata Pelajaran:</strong>
+        ${escapeHtml(t.mataPelajaran || '-')}
+      </div>
+
+      <div>
+        <strong>TKB:</strong>
+        ${escapeHtml(t.tkb || '-')}
+      </div>
+
+      <div>
+        <strong>Estate:</strong>
+        ${escapeHtml(t.estate || '-')}
+      </div>
+
+      <div>
+        <strong>Nomor HP:</strong>
+        ${escapeHtml(t.nomorHp || '-')}
+      </div>
+
+      <div>
+        <strong>Status:</strong>
+        ${escapeHtml(t.status || '-')}
+      </div>
+
+    `;
+
+
+  document.getElementById('detailModal')
+    .classList.add('show');
+}
+
+
+function closeModal(e) {
+
+  if (
+    e &&
+    e.target !== e.currentTarget
+  ) {
+    return;
+  }
+
+  document.getElementById('detailModal')
+    .classList.remove('show');
+}
+
+
+/* =========================================================
+   SEARCH WEBSITE
+   ========================================================= */
+function openSearch() {
+
+  document.getElementById('searchModal')
+    .classList.add('show');
+}
+
+
+function closeSearch(e) {
+
+  if (
+    e &&
+    e.target !== e.currentTarget
+  ) {
+    return;
+  }
+
+  document.getElementById('searchModal')
+    .classList.remove('show');
+}
+
+
+function coming(e) {
+
+  e.preventDefault();
+
+  alert(
+    'Halaman PPDB akan diaktifkan pada tahap berikutnya.'
+  );
+}
+
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+document.addEventListener(
+  'keydown',
+  function(e) {
+
+    if (e.key === 'Escape') {
+      closeModal();
+      closeSearch();
+    }
+
+    if (
+      e.key === 'Enter' &&
+      document.activeElement ===
+        document.getElementById('searchInput')
+    ) {
+      applyFilter();
+    }
+
+  }
+);
+
+
+/* =========================================================
+   MULAI
+   ========================================================= */
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+    loadTeachers();
+  }
+);
 </script>
 </body>
 </html>
