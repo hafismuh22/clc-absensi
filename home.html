@@ -222,7 +222,7 @@ img{max-width:100%;display:block}
 }
 .stats-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:18px;
 }
 .stat-card{
@@ -379,6 +379,7 @@ img{max-width:100%;display:block}
   .container{width:min(100% - 32px,1320px)}
 }
 @media(max-width:900px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
   .site-header{height:auto;position:relative}
   .nav-wrap{min-height:70px;flex-wrap:wrap;padding:9px 14px}
   .main-nav{order:3;flex-basis:100%;overflow-x:auto;justify-content:flex-start;padding-bottom:4px}
@@ -654,7 +655,7 @@ img{max-width:100%;display:block}
 
 <script>
 /* ================= DATABASE STATISTIK ================= */
-const HOME_API_URL = "https://script.google.com/macros/s/AKfycbyfj5mSOO40twAn7YiIPcGZInaQ8NNPx3lpwJ8OaC7pajqPHt2EPKaaHP3l3z3lczFq49w/exec";
+const HOME_API_URL = "https://script.google.com/macros/s/AKfycbyfj5mSOO40twAn7YiIPcGZInaQ8NNPx3lpwJ8OaC7pajqPHt2EPKaaHP3l3Z3l3czFq49w/exec";
 
 
 function fetchHomeData(action){
@@ -734,7 +735,6 @@ async function loadHomeStats(){
 
 document.addEventListener("DOMContentLoaded",loadHomeStats);
 
-<script>
 function openSearch(){
   document.getElementById('searchOverlay').classList.add('show');
   setTimeout(()=>document.getElementById('searchInput').focus(),100);
