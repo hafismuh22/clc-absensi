@@ -655,7 +655,7 @@ img{max-width:100%;display:block}
 
 <script>
 /* ================= DATABASE STATISTIK ================= */
-const HOME_API_URL = "https://script.google.com/macros/s/AKfycbyfj5mSOO40twAn7YiIPcGZInaQ8NNPx3lpwJ8OaC7pajqPHt2EPKaaHP3l3Z3l3czFq49w/exec";
+const HOME_API_URL = "https://script.google.com/macros/s/AKfycbyfj5mSOO40twAn7YiIPcGZInaQ8NNPx3lpwJ8OaC7pajqPHt2EPKaaHP3lZ3lczFq49w/exec";
 
 
 function fetchHomeData(action){
@@ -690,7 +690,7 @@ function fetchHomeData(action){
 function normalizeTKB(value){
   return String(value ?? "")
     .trim()
-    .replace(/\\s+/g," ")
+    .replace(/\s+/g," ")
     .toUpperCase()
     .replace(/^TKB\\s+/,"TKB ");
 }
