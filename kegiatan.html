@@ -29,11 +29,16 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 .empty{display:none;text-align:center;padding:45px;background:#fff;border:1px dashed #cbdfee;border-radius:15px;color:#6b86a5}.empty.show{display:block}
 
 .footer{background:linear-gradient(105deg,#06448c,#0875d5);color:#fff}.footer-main{max-width:1320px;margin:auto;padding:23px 24px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:30px;align-items:center}.footer-brand{display:flex;align-items:center;gap:11px}.footer-brand .brand-logo{width:46px;height:46px}.footer-brand strong{font-size:16px}.footer-brand small{display:block;margin-top:4px}.footer-info{text-align:center;font-size:14px}.footer-social{text-align:right;font-size:12px}.footer-bottom{background:rgba(0,31,78,.34);padding:11px 24px;text-align:center;font-size:10px}
-.modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,30,70,.65);align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{width:min(850px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.28);position:relative}.close{position:absolute;right:14px;top:12px;border:0;background:#eef7ff;color:#0757b8;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:21px}.modal-box h2{margin:0 45px 6px 0;color:#073d83}.modal-meta{font-size:12px;color:#6b86a5;margin-bottom:14px}.modal-photo{width:100%;height:330px;border-radius:13px;background:linear-gradient(135deg,#dff4ff,#65b3ea);display:grid;place-items:center;font-size:80px;overflow:hidden}.modal-photo img{width:100%;height:100%;object-fit:cover}.modal-desc{font-size:13px;color:#547394;line-height:1.7;margin-top:14px}
+.modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,30,70,.65);align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{width:min(850px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.28);position:relative}.close{position:absolute;right:14px;top:12px;border:0;background:#eef7ff;color:#0757b8;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:21px}.modal-box h2{margin:0 45px 6px 0;color:#073d83}.modal-meta{font-size:12px;color:#6b86a5;margin-bottom:14px}.modal-photo{width:100%;min-height:330px;border-radius:13px;background:linear-gradient(135deg,#dff4ff,#65b3ea);display:grid;place-items:center;font-size:80px;overflow:hidden}.modal-gallery{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}.modal-gallery img{width:100%;height:210px;object-fit:cover;border-radius:9px}.modal-photo img{max-width:100%;object-fit:cover}@media(max-width:600px){.modal-gallery{grid-template-columns:repeat(2,1fr)}.modal-gallery img{height:145px}}.modal-desc{font-size:13px;color:#547394;line-height:1.7;margin-top:14px}
 
 @media(max-width:1150px){.nav-wrap{padding:0 14px;gap:8px}.brand-text strong{font-size:14px}.brand-text small{font-size:11px}.main-nav a{padding-left:6px;padding-right:6px;font-size:10px}.container{width:min(100% - 30px,1320px)}.category-grid{grid-template-columns:repeat(3,1fr)}.gallery{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:850px){.site-header{position:relative}.nav-wrap{height:auto;min-height:68px;flex-wrap:wrap;padding:8px 12px}.main-nav{order:3;flex-basis:100%;overflow-x:auto;justify-content:flex-start}.main-nav a{padding:10px 8px 12px}.main-nav a.active:after{bottom:2px}.hero,.hero-inner{min-height:410px}.hero-copy{width:70%}.hero h1{font-size:43px}.hero h1 span{font-size:28px}.category-grid{grid-template-columns:repeat(3,1fr)}.toolbar{align-items:stretch;flex-direction:column}.search-input{width:100%}.footer-main{grid-template-columns:1fr;text-align:center}.footer-brand{justify-content:center}.footer-social{text-align:center}}
 @media(max-width:600px){.container{width:calc(100% - 20px)}.hero{min-height:490px;background:linear-gradient(90deg,rgba(241,251,255,.96),rgba(241,251,255,.78)),url("assets/hero-kegiatan.jpg") center/cover no-repeat}.hero-inner{min-height:490px;align-items:flex-start}.hero-copy{width:100%;padding-top:35px}.hero h1{font-size:39px}.hero h1 span{font-size:25px}.hero p{font-size:13px}.category-grid{grid-template-columns:repeat(2,1fr)}.category{min-height:84px}.section-head{align-items:flex-start}.counter{font-size:10px}.gallery{grid-template-columns:1fr 1fr;gap:9px}.activity-photo{height:145px}.activity-body{padding:10px}.activity-title{font-size:13px}.activity-desc{font-size:9px}.activity-foot{font-size:9px}.modal-photo{height:230px}}
+
+.add-btn{height:43px;border:0;border-radius:10px;padding:0 16px;background:linear-gradient(100deg,#0878df,#0757b8);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 7px 18px rgba(7,87,184,.2);white-space:nowrap}.add-btn:hover{transform:translateY(-1px)}
+.data-loading{grid-column:1/-1;background:#fff;border:1px solid #dfecf8;border-radius:15px;padding:55px 20px;text-align:center;color:#6b86a5;box-shadow:var(--shadow)}.data-loading strong{display:block;color:#073d83;font-size:16px;margin:8px 0 5px}
+.gallery-empty{grid-column:1/-1}
+@media(max-width:600px){.add-btn{width:100%}}
 </style>
 </head>
 <body>
@@ -61,7 +66,7 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 
 <main class="section"><div class="container">
 <div class="section-head"><div class="heading-left"><div class="heading-icon">📸</div><div><h2 class="section-title">Dokumentasi Kegiatan<small id="categoryTitle">Semua Kegiatan</small></h2></div></div><div class="counter"><strong id="count">9</strong> Kegiatan</div></div>
-<div class="toolbar"><input id="searchInput" class="search-input" type="search" placeholder="⌕  Cari kegiatan..."><div class="view-toggle"><button class="view-btn active" id="gridBtn" onclick="setView('grid')">▦</button><button class="view-btn" id="listBtn" onclick="setView('list')">☰</button></div></div>
+<div class="toolbar"><input id="searchInput" class="search-input" type="search" placeholder="⌕  Cari kegiatan..."><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="add-btn" type="button" onclick="openAdmin()">＋ Tambah Kegiatan</button><div class="view-toggle"><button class="view-btn active" id="gridBtn" onclick="setView('grid')">▦</button><button class="view-btn" id="listBtn" onclick="setView('list')">☰</button></div></div></div>
 <div id="gallery" class="gallery"></div><div id="empty" class="empty">📭<br><strong>Tidak ada kegiatan ditemukan.</strong><br>Silakan gunakan kata kunci lain.</div>
 </div></main>
 
@@ -70,33 +75,172 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 <div class="modal" id="activityModal" onclick="closeModal(event)"><div class="modal-box" onclick="event.stopPropagation()"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle"></h2><div class="modal-meta" id="modalMeta"></div><div class="modal-photo" id="modalPhoto">📸</div><div class="modal-desc" id="modalDesc"></div></div></div>
 <div class="modal" id="searchModal" onclick="closeSearch(event)"><div class="modal-box" style="max-width:620px" onclick="event.stopPropagation()"><button class="close" onclick="closeSearch()">×</button><h2>Pencarian Website</h2><input class="search-input" style="width:100%" placeholder="Cari siswa, guru, alumni atau kegiatan..."><p style="color:#6b86a5;font-size:12px">Pencarian global akan dihubungkan pada tahap database baru.</p></div></div>
 
+
 <script>
-const activities=[
- {title:'Class Meeting Semester',cat:'Class Meeting',date:'15 Mei 2025',place:'CLC Permodalan',icon:'🏆',desc:'Kegiatan class meeting untuk mempererat kebersamaan dan sportivitas antar siswa.'},
- {title:'Kegiatan Pramuka',cat:'Pramuka',date:'10 Mei 2025',place:'TKB Morisem 3',icon:'⛺',desc:'Kegiatan pramuka untuk melatih kemandirian, kedisiplinan, dan kerja sama siswa.'},
- {title:'Upacara Bendera',cat:'Upacara',date:'2 Mei 2025',place:'Lapangan Sekolah',icon:'🇮🇩',desc:'Pelaksanaan upacara bendera sebagai pembiasaan disiplin dan cinta tanah air.'},
- {title:'Lomba 17 Agustus',cat:'Lomba',date:'17 Agustus 2025',place:'Estate Permodalan',icon:'🥇',desc:'Semarak perlombaan kemerdekaan bersama siswa dan warga lingkungan sekolah.'},
- {title:'Kegiatan Literasi',cat:'Lainnya',date:'8 April 2025',place:'Ruang Kelas',icon:'📚',desc:'Kegiatan membaca dan berbagi cerita untuk meningkatkan budaya literasi siswa.'},
- {title:'Senam Bersama',cat:'Lainnya',date:'28 Maret 2025',place:'Halaman Sekolah',icon:'🏃',desc:'Aktivitas olahraga bersama untuk menjaga kesehatan dan kebugaran siswa.'},
- {title:'Lomba Akademik',cat:'Lomba',date:'20 Maret 2025',place:'CLC Permodalan',icon:'📖',desc:'Kompetisi akademik untuk meningkatkan motivasi belajar dan rasa percaya diri.'},
- {title:'Latihan Baris Berbaris',cat:'Upacara',date:'12 Maret 2025',place:'Lapangan Sekolah',icon:'🇮🇩',desc:'Latihan kedisiplinan dan kekompakan melalui kegiatan baris-berbaris.'},
- {title:'Kegiatan Kebersihan Sekolah',cat:'Lainnya',date:'5 Maret 2025',place:'Lingkungan Sekolah',icon:'🌱',desc:'Gotong royong menjaga kebersihan dan menciptakan lingkungan belajar yang nyaman.'}
-];
-let currentCat='Semua',view='grid';
-function render(){
- const q=document.getElementById('searchInput').value.toLowerCase().trim();
- const data=activities.filter(a=>(currentCat==='Semua'||a.cat===currentCat)&&(!q||[a.title,a.cat,a.date,a.place,a.desc].join(' ').toLowerCase().includes(q)));
- document.getElementById('count').textContent=data.length;document.getElementById('categoryTitle').textContent=currentCat==='Semua'?'Semua Kegiatan':currentCat;
- const gallery=document.getElementById('gallery');gallery.className='gallery'+(view==='list'?' list-view':'');
- gallery.innerHTML=data.map((a,i)=>`<article class="activity-card" onclick='showActivity(${JSON.stringify(a)})'><div class="activity-photo"><span>${a.icon}</span><span class="activity-badge">${a.cat}</span><span class="activity-date">${a.date}</span></div><div class="activity-body"><div class="activity-title">${a.title}</div><div class="activity-desc">${a.desc}</div><div class="activity-foot"><span>⌂ &nbsp;${a.place}</span><span class="see">Lihat Detail →</span></div></div></article>`).join('');
- document.getElementById('empty').classList.toggle('show',data.length===0);
+const API_URL = 'PASTE_URL_KEGIATAN_WEB_APP_DI_SINI';
+
+/* Ganti setelah Admin Web App selesai dibuat. */
+const ADMIN_APP_URL = 'kegiatan_admin.html';
+
+let activities = [];
+let currentCat = 'Semua';
+let view = 'grid';
+
+function escapeHtml(v){
+  return String(v ?? '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
-function setCat(cat,el){currentCat=cat;document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));el.classList.add('active');render()}
-function setView(v){view=v;document.getElementById('gridBtn').classList.toggle('active',v==='grid');document.getElementById('listBtn').classList.toggle('active',v==='list');const style=document.getElementById('listStyle');if(v==='list'){if(!style){const s=document.createElement('style');s.id='listStyle';s.textContent='.list-view{grid-template-columns:1fr!important}.list-view .activity-card{display:grid;grid-template-columns:260px 1fr}.list-view .activity-photo{height:100%;min-height:175px}.list-view .activity-body{display:flex;flex-direction:column;justify-content:center}.list-view .activity-desc{max-width:720px}';document.head.appendChild(s)}}else if(style)style.remove();render()}
-function showActivity(a){document.getElementById('modalTitle').textContent=a.title;document.getElementById('modalMeta').textContent=`${a.cat}  •  ${a.date}  •  ${a.place}`;document.getElementById('modalPhoto').textContent=a.icon;document.getElementById('modalDesc').textContent=a.desc;document.getElementById('activityModal').classList.add('show')}
-function closeModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('activityModal').classList.remove('show')}
-function openSearch(){document.getElementById('searchModal').classList.add('show')}function closeSearch(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('searchModal').classList.remove('show')}function coming(e){e.preventDefault();alert('Halaman PPDB akan diaktifkan pada tahap berikutnya.')}
-document.getElementById('searchInput').addEventListener('input',render);document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeSearch()}});render();
+
+function normalizePhotoUrl(value){
+  const url = String(value || '').trim();
+  if(!url) return '';
+  let m = url.match(/drive\.google\.com\/file\/d\/([^/]+)/i);
+  if(m) return 'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w900';
+  m = url.match(/[?&]id=([^&]+)/i);
+  if(url.includes('drive.google.com') && m) return 'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w900';
+  return url;
+}
+
+function normalizeActivity(row){
+  const photos = Array.isArray(row.fotos) ? row.fotos.map(normalizePhotoUrl).filter(Boolean) : [];
+  return {
+    id: String(row.ID || row.id || '').trim(),
+    title: String(row.JUDUL || row.judul || '').trim(),
+    cat: String(row.KATEGORI || row.kategori || 'Lainnya').trim() || 'Lainnya',
+    date: String(row.TANGGAL || row.tanggal || '').trim(),
+    place: String(row.LOKASI || row.lokasi || '').trim(),
+    desc: String(row.DESKRIPSI || row.deskripsi || '').trim(),
+    status: String(row.STATUS || row.status || 'AKTIF').trim(),
+    createdBy: String(row.DIBUAT_OLEH || row.dibuatOleh || '').trim(),
+    photos
+  };
+}
+
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb = 'kegiatanCB_' + Date.now() + '_' + Math.floor(Math.random()*10000);
+    const s = document.createElement('script');
+    const timer = setTimeout(()=>{ cleanup(); reject(new Error('Timeout')); },15000);
+    window[cb] = data => { cleanup(); resolve(data); };
+    s.onerror = ()=>{ cleanup(); reject(new Error('Gagal menghubungi database kegiatan.')); };
+    function cleanup(){
+      clearTimeout(timer);
+      if(s.parentNode) s.parentNode.removeChild(s);
+      try{ delete window[cb]; }catch(e){ window[cb]=undefined; }
+    }
+    s.src = url + '&callback=' + encodeURIComponent(cb) + '&_=' + Date.now();
+    document.body.appendChild(s);
+  });
+}
+
+async function loadActivities(){
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '<div class="data-loading"><div style="font-size:38px">⏳</div><strong>Memuat kegiatan...</strong><span>Mengambil dokumentasi terbaru dari database.</span></div>';
+  try{
+    const res = await jsonp(API_URL + '?action=kegiatan');
+    if(!res || res.success === false) throw new Error(res?.message || res?.error || 'API tidak mengembalikan data yang valid.');
+    activities = Array.isArray(res.data) ? res.data.map(normalizeActivity) : [];
+    buildCategories(res.categories);
+    render();
+  }catch(err){
+    gallery.innerHTML = '<div class="data-loading"><div style="font-size:38px">⚠️</div><strong>Gagal memuat kegiatan</strong><span>'+escapeHtml(err.message)+'</span></div>';
+    document.getElementById('count').textContent='0';
+  }
+}
+
+function buildCategories(serverCategories){
+  const cats = Array.isArray(serverCategories) && serverCategories.length
+    ? serverCategories
+    : [...new Set(activities.map(a=>a.cat).filter(Boolean))];
+  const wrap = document.querySelector('.category-grid');
+  const icons = {'Class Meeting':'🏆','Pramuka':'⛺','Upacara':'🇮🇩','Lomba':'🥇','Lainnya':'✨'};
+  wrap.innerHTML =
+    '<button class="category active" onclick="setCat(\'Semua\',this)"><div class="cat-icon">▦</div><div class="cat-title">Semua Kegiatan</div><div class="cat-sub">Seluruh dokumentasi</div></button>' +
+    cats.map(c=>'<button class="category" onclick="setCat('+JSON.stringify(c)+',this)"><div class="cat-icon">'+(icons[c]||'📌')+'</div><div class="cat-title">'+escapeHtml(c)+'</div><div class="cat-sub">Dokumentasi kegiatan</div></button>').join('');
+}
+
+function photoBlock(a){
+  const first = a.photos[0];
+  if(first) return '<img src="'+escapeHtml(first)+'" alt="'+escapeHtml(a.title)+'" loading="lazy" onerror="this.style.display=\'none\'">';
+  return '<span>📸</span>';
+}
+
+function render(){
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const data = activities.filter(a =>
+    a.status.toUpperCase() !== 'NONAKTIF' &&
+    (currentCat==='Semua' || a.cat===currentCat) &&
+    (!q || [a.title,a.cat,a.date,a.place,a.desc].join(' ').toLowerCase().includes(q))
+  );
+  document.getElementById('count').textContent = data.length;
+  document.getElementById('categoryTitle').textContent = currentCat==='Semua'?'Semua Kegiatan':currentCat;
+  const gallery=document.getElementById('gallery');
+  gallery.className='gallery'+(view==='list'?' list-view':'');
+  gallery.innerHTML=data.map(a=>{
+    const badge = a.photos.length ? '<span class="activity-badge">'+a.photos.length+' FOTO</span>' : '<span class="activity-badge">'+escapeHtml(a.cat)+'</span>';
+    return '<article class="activity-card" onclick=\'showActivity('+JSON.stringify(a).replace(/'/g,"&#39;")+')\'><div class="activity-photo">'+photoBlock(a)+badge+'<span class="activity-date">'+escapeHtml(a.date)+'</span></div><div class="activity-body"><div class="activity-title">'+escapeHtml(a.title)+'</div><div class="activity-desc">'+escapeHtml(a.desc)+'</div><div class="activity-foot"><span>⌂ &nbsp;'+escapeHtml(a.place)+'</span><span class="see">Lihat Detail →</span></div></div></article>';
+  }).join('');
+  document.getElementById('empty').classList.toggle('show',data.length===0);
+}
+
+function setCat(cat,el){
+  currentCat=cat;
+  document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));
+  if(el) el.classList.add('active');
+  render();
+}
+
+function setView(v){
+  view=v;
+  document.getElementById('gridBtn').classList.toggle('active',v==='grid');
+  document.getElementById('listBtn').classList.toggle('active',v==='list');
+  const style=document.getElementById('listStyle');
+  if(v==='list'){
+    if(!style){
+      const s=document.createElement('style');
+      s.id='listStyle';
+      s.textContent='.list-view{grid-template-columns:1fr!important}.list-view .activity-card{display:grid;grid-template-columns:260px 1fr}.list-view .activity-photo{height:100%;min-height:175px}.list-view .activity-body{display:flex;flex-direction:column;justify-content:center}.list-view .activity-desc{max-width:720px}';
+      document.head.appendChild(s);
+    }
+  }else if(style) style.remove();
+  render();
+}
+
+function showActivity(a){
+  document.getElementById('modalTitle').textContent=a.title;
+  document.getElementById('modalMeta').textContent=(a.cat||'Lainnya')+'  •  '+(a.date||'')+'  •  '+(a.place||'');
+  const photos = a.photos || [];
+  if(photos.length){
+    document.getElementById('modalPhoto').innerHTML = '<div class="modal-gallery">'+photos.map((p,i)=>'<img src="'+escapeHtml(p)+'" alt="Foto '+(i+1)+'" loading="lazy">').join('')+'</div>';
+  }else{
+    document.getElementById('modalPhoto').innerHTML='📸';
+  }
+  document.getElementById('modalDesc').textContent=a.desc||'';
+  document.getElementById('activityModal').classList.add('show');
+}
+
+function closeModal(e){
+  if(e&&e.target!==e.currentTarget)return;
+  document.getElementById('activityModal').classList.remove('show');
+}
+
+function openAdmin(){
+  if(!ADMIN_APP_URL || ADMIN_APP_URL.indexOf('http')!==0){
+    alert('Admin Kegiatan belum diaktifkan. Setelah Web App Admin selesai dibuat, masukkan URL-nya ke variabel ADMIN_APP_URL pada kegiatan.html.');
+    return;
+  }
+  window.location.href=ADMIN_APP_URL;
+}
+
+function openSearch(){document.getElementById('searchModal').classList.add('show')}
+function closeSearch(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('searchModal').classList.remove('show')}
+function coming(e){e.preventDefault();alert('Halaman PPDB akan diaktifkan pada tahap berikutnya.')}
+
+document.getElementById('searchInput').addEventListener('input',render);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeSearch()}});
+loadActivities();
 </script>
+
 </body>
 </html>
