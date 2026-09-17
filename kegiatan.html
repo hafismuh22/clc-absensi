@@ -39,6 +39,16 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 .data-loading{grid-column:1/-1;background:#fff;border:1px solid #dfecf8;border-radius:15px;padding:55px 20px;text-align:center;color:#6b86a5;box-shadow:var(--shadow)}.data-loading strong{display:block;color:#073d83;font-size:16px;margin:8px 0 5px}
 .gallery-empty{grid-column:1/-1}
 @media(max-width:600px){.add-btn{width:100%}}
+
+.success-popup{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,30,70,.58);align-items:center;justify-content:center;padding:20px}
+.success-popup.show{display:flex}
+.success-popup-box{width:min(420px,100%);background:#fff;border-radius:20px;padding:28px 24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.28);animation:successPop .2s ease-out}
+.success-icon{width:62px;height:62px;border-radius:50%;margin:0 auto 12px;background:#e9fbf2;color:#167144;display:grid;place-items:center;font-size:32px;font-weight:900}
+.success-popup-box h3{margin:0;color:#073d83;font-size:21px}
+.success-popup-box p{margin:8px 0 18px;color:#6b86a5;font-size:12px;line-height:1.5}
+.success-popup-box button{border:0;border-radius:10px;padding:11px 24px;background:linear-gradient(100deg,#0878df,#0757b8);color:#fff;font-weight:900;cursor:pointer}
+@keyframes successPop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+
 </style>
 </head>
 <body>
@@ -72,6 +82,16 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 
 <footer class="footer"><div class="footer-main"><div class="footer-brand"><div class="brand-logo">🎓</div><div><strong>CLC PERMODALAN</strong><small>TKB MORISEM 3</small></div></div><div class="footer-info">Pendidikan untuk Masa Depan yang Lebih Baik</div><div class="footer-social">Bersama Membangun Generasi Berprestasi<br>◉ &nbsp;◎ &nbsp;▶ &nbsp;♪ &nbsp; Ikuti kami di media sosial</div></div><div class="footer-bottom">© 2025 CLC Permodalan TKB Morisem 3. All rights reserved. &nbsp; | &nbsp; Pendidikan untuk Semua, Masa Depan untuk Anak Bangsa</div></footer>
 
+
+<div class="success-popup" id="successPopup">
+  <div class="success-popup-box" onclick="event.stopPropagation()">
+    <div class="success-icon">✓</div>
+    <h3>Kegiatan Berhasil Ditambahkan</h3>
+    <p>Dokumentasi kegiatan sudah berhasil disimpan dan sekarang tampil di halaman kegiatan.</p>
+    <button type="button" onclick="closeSuccessPopup()">OK</button>
+  </div>
+</div>
+
 <div class="modal" id="activityModal" onclick="closeModal(event)"><div class="modal-box" onclick="event.stopPropagation()"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle"></h2><div class="modal-meta" id="modalMeta"></div><div class="modal-photo" id="modalPhoto">📸</div><div class="modal-desc" id="modalDesc"></div></div></div>
 <div class="modal" id="searchModal" onclick="closeSearch(event)"><div class="modal-box" style="max-width:620px" onclick="event.stopPropagation()"><button class="close" onclick="closeSearch()">×</button><h2>Pencarian Website</h2><input class="search-input" style="width:100%" placeholder="Cari siswa, guru, alumni atau kegiatan..."><p style="color:#6b86a5;font-size:12px">Pencarian global akan dihubungkan pada tahap database baru.</p></div></div>
 
@@ -80,7 +100,7 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 const API_URL = 'https://script.google.com/macros/s/AKfycbzBylupvLuK8hMBX4Oguvhgi5pHXjnpyjm5y1K2F2be3HJUJ2mnNPDtZzWIwv7mUdaJ/exec';
 
 /* Ganti setelah Admin Web App selesai dibuat. */
-const ADMIN_APP_URL = 'https://hafismuh22.github.io/clc-absensi/kegiatan_admin.html';
+const ADMIN_APP_URL = 'kegiatan_admin.html';
 
 let activities = [];
 let currentCat = 'Semua';
@@ -226,11 +246,7 @@ function closeModal(e){
 }
 
 function openAdmin(){
-  if(!ADMIN_APP_URL || ADMIN_APP_URL.indexOf('http')!==0){
-    alert('Admin Kegiatan belum diaktifkan. Setelah Web App Admin selesai dibuat, masukkan URL-nya ke variabel ADMIN_APP_URL pada kegiatan.html.');
-    return;
-  }
-  window.location.href=ADMIN_APP_URL;
+  window.location.href='kegiatan_admin.html';
 }
 
 function openSearch(){document.getElementById('searchModal').classList.add('show')}
@@ -239,6 +255,28 @@ function coming(e){e.preventDefault();alert('Halaman PPDB akan diaktifkan pada t
 
 document.getElementById('searchInput').addEventListener('input',render);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeSearch()}});
+
+function closeSuccessPopup(){
+  document.getElementById('successPopup').classList.remove('show');
+  try{
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+  }catch(e){}
+}
+
+function checkSaveSuccess(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('saved') === '1'){
+    document.getElementById('successPopup').classList.add('show');
+    // Hapus parameter dari address bar tanpa reload.
+    try{
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }catch(e){}
+  }
+}
+
+checkSaveSuccess();
 loadActivities();
 </script>
 
