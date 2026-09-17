@@ -224,69 +224,833 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 </div>
 
 <script>
-const baseStudents=[
- ['Annisa Putri','Kelas 7','Estate Morisem 3 Blok A','NISN 1234567890','SMP','👧'],
- ['Budi Santoso','Kelas 8','Estate Morisem 3 Blok B','NISN 1234567891','SMP','👦'],
- ['Citra Lestari','Kelas 9','Estate Morisem 3 Blok C','NISN 1234567892','SMP','👧'],
- ['Dimas Pratama','Kelas 7','Estate Morisem 3 Blok A','NISN 1234567893','SMP','👦'],
- ['Elsa Ramadhani','Kelas 8','Estate Morisem 3 Blok D','NISN 1234567894','SMP','👧'],
- ['Fahmi Hidayat','Kelas 9','Estate Morisem 3 Blok E','NISN 1234567895','SMP','👦'],
- ['Gita Amelia','Kelas 7','Estate Morisem 3 Blok A','NISN 1234567896','SMP','👧'],
- ['Hadi Saputra','Kelas 8','Estate Morisem 3 Blok B','NISN 1234567897','SMP','👦'],
- ['Indra Maulana','Kelas 9','Estate Morisem 3 Blok C','NISN 1234567898','SMP','👦'],
- ['Jihan Aulia','Kelas 7','Estate Morisem 3 Blok D','NISN 1234567899','SMP','👧'],
- ['Kevin Saputra','Kelas 8','Estate Morisem 3 Blok E','NISN 1234567800','SMP','👦'],
- ['Laila Fitri','Kelas 9','Estate Morisem 3 Blok A','NISN 1234567801','SMP','👧'],
- ['Maya Sari','Kelas 8','Estate Morisem 3 Blok B','NISN 1234567802','SMP','👧'],
- ['Rizky Maulana','Kelas 9','Estate Morisem 3 Blok C','NISN 1234567803','SMP','👦'],
- ['Putri Amelia','Kelas 8','Estate Morisem 3 Blok E','NISN 1234567804','SMP','👧'],
- ['Fajar Nugraha','Kelas 7','Estate Morisem 3 Blok D','NISN 1234567805','SMP','👦']
-];
-let currentTKB='TKB MORISEM 3', currentPage=1, perPage=12, filtered=[];
-function dataset(){return baseStudents.map((s,i)=>({...Object.fromEntries(['nama','kelas','alamat','nisn','jenjang','avatar'].map((k,j)=>[k,s[j]])),tkb:currentTKB}))}
-function render(){
- const all=dataset();
- const q=document.getElementById('searchInput').value.toLowerCase().trim();
- const cls=document.getElementById('classFilter').value;
- const lev=document.getElementById('levelFilter').value;
- filtered=all.filter(s=>(!q||[s.nama,s.alamat,s.nisn].join(' ').toLowerCase().includes(q))&&(!cls||s.kelas===cls)&&(!lev||s.jenjang===lev));
- const total=filtered.length, start=(currentPage-1)*perPage, items=filtered.slice(start,start+perPage);
- document.getElementById('totalNumber').textContent=total;
- document.getElementById('schoolTitle').textContent=currentTKB.replace('TKB ','TKB ');
- document.getElementById('studentGrid').innerHTML=items.map((s,i)=>`
- <article class="student-card">
-  <div class="student-top">
-   <div class="student-photo">${s.avatar}</div>
-   <div class="student-info">
-    <span class="badge ${s.kelas==='Kelas 9'?'green':''}">${s.kelas}</span>
-    <div class="student-name" title="${s.nama}">${s.nama}</div>
-    <div class="meta"><span>⌂ &nbsp;${s.alamat}</span><span>▣ &nbsp;${s.nisn}</span></div>
-   </div>
-  </div>
-  <button class="detail" onclick='showDetail(${JSON.stringify(s)})'>Lihat Detail &nbsp;→</button>
- </article>`).join('');
- const end=Math.min(start+items.length,total);
- document.getElementById('pageInfo').textContent=total?`Menampilkan ${start+1} - ${end} dari ${total} siswa`:'Tidak ada data siswa';
- renderPages(Math.max(1,Math.ceil(total/perPage)));
+/* =========================================================
+   DATA SISWA - TERHUBUNG KE APPS SCRIPT DATABASE BARU
+   ========================================================= */
+
+const API_URL = 'https://script.google.com/macros/s/AKfycbyfj5mSOO40twAn7YiIPcGZInaQ8NNPx3lpwJ8OaC7pajqPHt2EPKaaHP3lZ3lczFq49w/exec';
+
+let allStudents = [];
+let currentTKB = 'TKB MORISEM 3';
+let currentPage = 1;
+let perPage = 12;
+let filtered = [];
+
+
+/* =========================================================
+   JSONP - UNTUK GITHUB PAGES + APPS SCRIPT
+   ========================================================= */
+function loadStudents() {
+  showLoading();
+
+  const callbackName = 'studentCallback_' + Date.now();
+
+  window[callbackName] = function(response) {
+    try {
+      if (!response || response.success !== true) {
+        throw new Error(
+          response && response.message
+            ? response.message
+            : 'API tidak mengembalikan data yang valid.'
+        );
+      }
+
+      allStudents = Array.isArray(response.data)
+        ? response.data.map(normalizeStudent)
+        : [];
+
+      buildClassOptions();
+      render();
+
+    } catch (error) {
+      showError(error.message);
+    } finally {
+      cleanupJsonp(callbackName);
+    }
+  };
+
+  const script = document.createElement('script');
+
+  script.src =
+    API_URL +
+    '?action=siswa&callback=' +
+    encodeURIComponent(callbackName);
+
+  script.id = callbackName;
+
+  script.onerror = function() {
+    showError(
+      'Tidak dapat terhubung ke database. Pastikan Web App Apps Script masih aktif dan aksesnya dapat digunakan.'
+    );
+
+    cleanupJsonp(callbackName);
+  };
+
+  document.body.appendChild(script);
 }
-function renderPages(max){
- const p=document.getElementById('pages');let h='';
- h+=`<button class="page" onclick="goPage(${Math.max(1,currentPage-1)})">‹</button>`;
- for(let i=1;i<=max;i++){if(max>7&&i>5&&i<max){if(i===6)h+='<span class="page" style="border:0;cursor:default">…</span>';continue}h+=`<button class="page ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`}
- h+=`<button class="page" onclick="goPage(${Math.min(max,currentPage+1)})">›</button>`;p.innerHTML=h;
+
+
+function cleanupJsonp(callbackName) {
+  const script = document.getElementById(callbackName);
+
+  if (script) script.remove();
+
+  try {
+    delete window[callbackName];
+  } catch (e) {
+    window[callbackName] = undefined;
+  }
 }
-function goPage(p){currentPage=p;render();window.scrollTo({top:document.querySelector('.section').offsetTop-70,behavior:'smooth'})}
-function setTKB(name,el){currentTKB=name;document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));el.classList.add('active');currentPage=1;resetFilter(false)}
-function applyFilter(){currentPage=1;render()}
-function resetFilter(doRender=true){document.getElementById('searchInput').value='';document.getElementById('classFilter').value='';document.getElementById('levelFilter').value='';currentPage=1;if(doRender)render()}
-function changePerPage(){perPage=Number(document.getElementById('perPage').value);currentPage=1;render()}
-function showDetail(s){document.getElementById('modalPhoto').textContent=s.avatar;document.getElementById('modalInfo').innerHTML=`<div><strong>Nama:</strong> ${s.nama}</div><div><strong>Kelas:</strong> ${s.kelas}</div><div><strong>NISN:</strong> ${s.nisn.replace('NISN ','')}</div><div><strong>Jenjang:</strong> ${s.jenjang}</div><div><strong>TKB:</strong> ${s.tkb}</div><div><strong>Alamat:</strong> ${s.alamat}</div>`;document.getElementById('detailModal').classList.add('show')}
-function closeModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('detailModal').classList.remove('show')}
-function openSearch(){document.getElementById('searchModal').classList.add('show')}
-function closeSearch(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('searchModal').classList.remove('show')}
-function coming(e){e.preventDefault();alert('Halaman PPDB akan diaktifkan pada tahap berikutnya.')}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeSearch()}})
-render();
+
+
+/* =========================================================
+   TAMPILAN LOADING
+   ========================================================= */
+function showLoading() {
+  const grid = document.getElementById('studentGrid');
+
+  if (!grid) return;
+
+  grid.innerHTML = `
+    <div style="
+      grid-column:1/-1;
+      background:#fff;
+      border:1px solid #e0edf8;
+      border-radius:14px;
+      padding:45px 20px;
+      text-align:center;
+      color:#6b86a5;
+      box-shadow:var(--shadow);
+    ">
+      <div style="font-size:38px;margin-bottom:10px">⏳</div>
+      <strong style="display:block;color:#073d83;font-size:16px;margin-bottom:6px">
+        Memuat data siswa...
+      </strong>
+      <span>Mengambil data terbaru dari database.</span>
+    </div>
+  `;
+}
+
+
+function showError(message) {
+  const grid = document.getElementById('studentGrid');
+
+  if (!grid) return;
+
+  grid.innerHTML = `
+    <div style="
+      grid-column:1/-1;
+      background:#fff;
+      border:1px solid #f0d2d2;
+      border-radius:14px;
+      padding:45px 20px;
+      text-align:center;
+      color:#9a5f5f;
+      box-shadow:var(--shadow);
+    ">
+      <div style="font-size:40px;margin-bottom:10px">⚠️</div>
+      <strong style="display:block;color:#9b3030;font-size:16px;margin-bottom:6px">
+        Gagal memuat data siswa
+      </strong>
+      <span>${escapeHtml(message)}</span>
+    </div>
+  `;
+
+  document.getElementById('totalNumber').textContent = '0';
+}
+
+
+/* =========================================================
+   NORMALISASI DATA SPREADSHEET
+   ========================================================= */
+function normalizeStudent(row) {
+  const kelasRaw = String(row.KELAS || '').trim();
+
+  return {
+    id: String(row.ID || '').trim(),
+    foto: normalizePhotoUrl(row.FOTO),
+    nisn: String(row.NISN || '').trim(),
+    nama: String(row.NAMA || '').trim(),
+    jenisKelamin: String(row.JENIS_KELAMIN || '').trim(),
+    tempatLahir: String(row.TEMPAT_LAHIR || '').trim(),
+    tanggalLahir: String(row.TANGGAL_LAHIR || '').trim(),
+    kelas: formatKelas(kelasRaw),
+    kelasRaw: kelasRaw,
+    jenjang: detectJenjang(kelasRaw),
+    tkb: String(row.TKB || '').trim(),
+    estate: String(row.ESTATE || '').trim(),
+    namaAyah: String(row.NAMA_AYAH || '').trim(),
+    namaIbu: String(row.NAMA_IBU || '').trim(),
+    nomorHp: String(row.NOMOR_HP || '').trim(),
+    status: String(row.STATUS || '').trim()
+  };
+}
+
+
+/* =========================================================
+   FOTO
+   Mendukung URL biasa dan link Google Drive
+   ========================================================= */
+function normalizePhotoUrl(value) {
+  const url = String(value || '').trim();
+
+  if (!url) return '';
+
+  let match = url.match(/drive\.google\.com\/file\/d\/([^/]+)/i);
+
+  if (match) {
+    return 'https://drive.google.com/thumbnail?id=' +
+      match[1] +
+      '&sz=w600';
+  }
+
+  match = url.match(/[?&]id=([^&]+)/i);
+
+  if (url.includes('drive.google.com') && match) {
+    return 'https://drive.google.com/thumbnail?id=' +
+      match[1] +
+      '&sz=w600';
+  }
+
+  return url;
+}
+
+
+/* =========================================================
+   JENJANG
+   DATA_SISWA tidak memiliki kolom JENJANG.
+   Otomatis:
+   Kelas 1-6 = SD
+   Kelas 7-9 = SMP
+   ========================================================= */
+function detectJenjang(kelas) {
+  const value = String(kelas || '').toUpperCase();
+
+  if (value.includes('SMP')) return 'SMP';
+  if (value.includes('SD')) return 'SD';
+
+  const match = value.match(/\d+/);
+
+  if (match) {
+    const number = Number(match[0]);
+
+    if (number >= 1 && number <= 6) return 'SD';
+    if (number >= 7 && number <= 9) return 'SMP';
+  }
+
+  return '';
+}
+
+
+/* =========================================================
+   FORMAT KELAS
+   ========================================================= */
+function formatKelas(value) {
+  const v = String(value || '').trim();
+
+  if (!v) return '-';
+
+  if (/^kelas\s+/i.test(v)) {
+    return v.replace(/^kelas\s+/i, 'Kelas ');
+  }
+
+  if (/^\d+$/.test(v)) {
+    return 'Kelas ' + v;
+  }
+
+  return v;
+}
+
+
+/* =========================================================
+   HELPER
+   ========================================================= */
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+
+function genderAvatar(gender) {
+  const g = String(gender || '').toUpperCase();
+
+  if (
+    g === 'P' ||
+    g === 'PEREMPUAN' ||
+    g === 'F'
+  ) {
+    return '👧';
+  }
+
+  return '👦';
+}
+
+
+function photoHtml(student) {
+  if (student.foto) {
+    return `
+      <img
+        src="${escapeHtml(student.foto)}"
+        alt="${escapeHtml(student.nama)}"
+        loading="lazy"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
+      >
+      <span style="display:none;width:100%;height:100%;place-items:center;font-size:42px">
+        ${genderAvatar(student.jenisKelamin)}
+      </span>
+    `;
+  }
+
+  return genderAvatar(student.jenisKelamin);
+}
+
+
+function normalizeText(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase();
+}
+
+
+function displayTKB(name) {
+  return String(name || '')
+    .replace(/^TKB\s+/i, 'TKB ');
+}
+
+
+/* =========================================================
+   FILTER KELAS OTOMATIS DARI DATABASE
+   ========================================================= */
+function buildClassOptions() {
+  const select = document.getElementById('classFilter');
+
+  if (!select) return;
+
+  const current = select.value;
+
+  const classes = [
+    ...new Set(
+      allStudents
+        .map(s => s.kelas)
+        .filter(v => v && v !== '-')
+    )
+  ];
+
+  classes.sort((a, b) => {
+    const ma = a.match(/\d+/);
+    const mb = b.match(/\d+/);
+
+    const na = ma ? Number(ma[0]) : 999;
+    const nb = mb ? Number(mb[0]) : 999;
+
+    if (na !== nb) return na - nb;
+
+    return a.localeCompare(b, 'id');
+  });
+
+  select.innerHTML =
+    '<option value="">Semua Kelas</option>' +
+    classes.map(k =>
+      `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`
+    ).join('');
+
+  if (classes.includes(current)) {
+    select.value = current;
+  }
+}
+
+
+/* =========================================================
+   RENDER DATA
+   ========================================================= */
+function render() {
+
+  const q = document.getElementById('searchInput')
+    .value
+    .toLowerCase()
+    .trim();
+
+  const cls = document.getElementById('classFilter').value;
+  const lev = document.getElementById('levelFilter').value;
+
+  const activeTKB = normalizeText(currentTKB);
+
+  filtered = allStudents.filter(s => {
+
+    const matchesTKB =
+      normalizeText(s.tkb) === activeTKB;
+
+    const searchText = [
+      s.nama,
+      s.estate,
+      s.nisn,
+      s.kelas,
+      s.tkb
+    ].join(' ').toLowerCase();
+
+    const matchesSearch =
+      !q || searchText.includes(q);
+
+    const matchesClass =
+      !cls || s.kelas === cls;
+
+    const matchesLevel =
+      !lev || s.jenjang === lev;
+
+    return (
+      matchesTKB &&
+      matchesSearch &&
+      matchesClass &&
+      matchesLevel
+    );
+  });
+
+  const total = filtered.length;
+
+  const maxPage =
+    Math.max(1, Math.ceil(total / perPage));
+
+  if (currentPage > maxPage) {
+    currentPage = maxPage;
+  }
+
+  const start =
+    (currentPage - 1) * perPage;
+
+  const items =
+    filtered.slice(start, start + perPage);
+
+  document.getElementById('totalNumber')
+    .textContent = total;
+
+  document.getElementById('schoolTitle')
+    .textContent = displayTKB(currentTKB);
+
+  const grid =
+    document.getElementById('studentGrid');
+
+  if (!items.length) {
+
+    grid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        background:#fff;
+        border:1px solid #e0edf8;
+        border-radius:14px;
+        padding:45px 20px;
+        text-align:center;
+        color:#6b86a5;
+        box-shadow:var(--shadow);
+      ">
+        <div style="font-size:45px;margin-bottom:10px">👨‍🎓</div>
+
+        <strong style="
+          display:block;
+          color:#073d83;
+          font-size:16px;
+          margin-bottom:6px
+        ">
+          Tidak ada data siswa
+        </strong>
+
+        <span>
+          Belum ada siswa yang sesuai dengan pencarian atau filter.
+        </span>
+      </div>
+    `;
+
+  } else {
+
+    grid.innerHTML = items.map((s, i) => `
+      <article class="student-card">
+
+        <div class="student-top">
+
+          <div class="student-photo">
+            ${photoHtml(s)}
+          </div>
+
+          <div class="student-info">
+
+            <span class="badge ${
+              s.kelas === 'Kelas 9' ? 'green' : ''
+            }">
+              ${escapeHtml(s.kelas)}
+            </span>
+
+            <div
+              class="student-name"
+              title="${escapeHtml(s.nama)}"
+            >
+              ${escapeHtml(s.nama || '-')}
+            </div>
+
+            <div class="meta">
+              <span>
+                ⌂ &nbsp;${escapeHtml(s.estate || '-')}
+              </span>
+
+              <span>
+                ▣ &nbsp;${escapeHtml(s.nisn || '-')}
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <button
+          class="detail"
+          onclick="showDetail(${i})"
+        >
+          Lihat Detail &nbsp;→
+        </button>
+
+      </article>
+    `).join('');
+  }
+
+  const end =
+    Math.min(start + items.length, total);
+
+  document.getElementById('pageInfo')
+    .textContent =
+      total
+        ? `Menampilkan ${start + 1} - ${end} dari ${total} siswa`
+        : 'Tidak ada data siswa';
+
+  renderPages(maxPage);
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+function renderPages(max) {
+
+  const p =
+    document.getElementById('pages');
+
+  let h = '';
+
+  h += `
+    <button
+      class="page"
+      onclick="goPage(${Math.max(1, currentPage - 1)})"
+    >
+      ‹
+    </button>
+  `;
+
+  for (let i = 1; i <= max; i++) {
+
+    if (max > 7 && i > 5 && i < max) {
+
+      if (i === 6) {
+        h += `
+          <span
+            class="page"
+            style="border:0;cursor:default"
+          >
+            …
+          </span>
+        `;
+      }
+
+      continue;
+    }
+
+    h += `
+      <button
+        class="page ${i === currentPage ? 'active' : ''}"
+        onclick="goPage(${i})"
+      >
+        ${i}
+      </button>
+    `;
+  }
+
+  h += `
+    <button
+      class="page"
+      onclick="goPage(${Math.min(max, currentPage + 1)})"
+    >
+      ›
+    </button>
+  `;
+
+  p.innerHTML = h;
+}
+
+
+function goPage(p) {
+
+  currentPage = p;
+
+  render();
+
+  window.scrollTo({
+    top:
+      document.querySelector('.section').offsetTop - 70,
+    behavior: 'smooth'
+  });
+}
+
+
+/* =========================================================
+   PILIH TKB
+   ========================================================= */
+function setTKB(name, el) {
+
+  currentTKB = name;
+  currentPage = 1;
+
+  document.querySelectorAll('.category')
+    .forEach(x => x.classList.remove('active'));
+
+  el.classList.add('active');
+
+  resetFilter(false);
+}
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+function applyFilter() {
+  currentPage = 1;
+  render();
+}
+
+
+function resetFilter(doRender = true) {
+
+  document.getElementById('searchInput').value = '';
+  document.getElementById('classFilter').value = '';
+  document.getElementById('levelFilter').value = '';
+
+  currentPage = 1;
+
+  if (doRender) {
+    render();
+  }
+}
+
+
+function changePerPage() {
+
+  perPage =
+    Number(
+      document.getElementById('perPage').value
+    );
+
+  currentPage = 1;
+
+  render();
+}
+
+
+/* =========================================================
+   DETAIL SISWA
+   ========================================================= */
+function showDetail(index) {
+
+  const start =
+    (currentPage - 1) * perPage;
+
+  const s =
+    filtered[start + index];
+
+  if (!s) return;
+
+  const modalPhoto =
+    document.getElementById('modalPhoto');
+
+  if (s.foto) {
+
+    modalPhoto.innerHTML = `
+      <img
+        src="${escapeHtml(s.foto)}"
+        alt="${escapeHtml(s.nama)}"
+        style="
+          width:100%;
+          height:100%;
+          object-fit:cover;
+          border-radius:12px
+        "
+        onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
+      >
+
+      <span style="
+        display:none;
+        width:100%;
+        height:100%;
+        place-items:center;
+        font-size:55px
+      ">
+        ${genderAvatar(s.jenisKelamin)}
+      </span>
+    `;
+
+  } else {
+
+    modalPhoto.textContent =
+      genderAvatar(s.jenisKelamin);
+  }
+
+  document.getElementById('modalInfo')
+    .innerHTML = `
+
+      <div>
+        <strong>Nama:</strong>
+        ${escapeHtml(s.nama || '-')}
+      </div>
+
+      <div>
+        <strong>NISN:</strong>
+        ${escapeHtml(s.nisn || '-')}
+      </div>
+
+      <div>
+        <strong>Jenis Kelamin:</strong>
+        ${escapeHtml(s.jenisKelamin || '-')}
+      </div>
+
+      <div>
+        <strong>Tempat Lahir:</strong>
+        ${escapeHtml(s.tempatLahir || '-')}
+      </div>
+
+      <div>
+        <strong>Tanggal Lahir:</strong>
+        ${escapeHtml(s.tanggalLahir || '-')}
+      </div>
+
+      <div>
+        <strong>Kelas:</strong>
+        ${escapeHtml(s.kelas || '-')}
+      </div>
+
+      <div>
+        <strong>Jenjang:</strong>
+        ${escapeHtml(s.jenjang || '-')}
+      </div>
+
+      <div>
+        <strong>TKB:</strong>
+        ${escapeHtml(s.tkb || '-')}
+      </div>
+
+      <div>
+        <strong>Estate:</strong>
+        ${escapeHtml(s.estate || '-')}
+      </div>
+
+      <div>
+        <strong>Nama Ayah:</strong>
+        ${escapeHtml(s.namaAyah || '-')}
+      </div>
+
+      <div>
+        <strong>Nama Ibu:</strong>
+        ${escapeHtml(s.namaIbu || '-')}
+      </div>
+
+      <div>
+        <strong>Nomor HP:</strong>
+        ${escapeHtml(s.nomorHp || '-')}
+      </div>
+
+      <div>
+        <strong>Status:</strong>
+        ${escapeHtml(s.status || '-')}
+      </div>
+    `;
+
+  document.getElementById('detailModal')
+    .classList.add('show');
+}
+
+
+function closeModal(e) {
+
+  if (
+    e &&
+    e.target !== e.currentTarget
+  ) {
+    return;
+  }
+
+  document.getElementById('detailModal')
+    .classList.remove('show');
+}
+
+
+/* =========================================================
+   SEARCH WEBSITE
+   ========================================================= */
+function openSearch() {
+  document.getElementById('searchModal')
+    .classList.add('show');
+}
+
+
+function closeSearch(e) {
+
+  if (
+    e &&
+    e.target !== e.currentTarget
+  ) {
+    return;
+  }
+
+  document.getElementById('searchModal')
+    .classList.remove('show');
+}
+
+
+function coming(e) {
+  e.preventDefault();
+
+  alert(
+    'Halaman PPDB akan diaktifkan pada tahap berikutnya.'
+  );
+}
+
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+document.addEventListener('keydown', function(e) {
+
+  if (e.key === 'Escape') {
+    closeModal();
+    closeSearch();
+  }
+
+  if (
+    e.key === 'Enter' &&
+    document.activeElement ===
+      document.getElementById('searchInput')
+  ) {
+    applyFilter();
+  }
+});
+
+
+/* =========================================================
+   MULAI
+   ========================================================= */
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+    loadStudents();
+  }
+);
 </script>
 </body>
 </html>
