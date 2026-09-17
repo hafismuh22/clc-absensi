@@ -410,7 +410,7 @@ img{max-width:100%;display:block}
   .hero-copy{width:100%;padding-top:30px;align-self:flex-start}
   .hero h1{font-size:39px}
   .hero p{font-size:13px}
-  .stats-grid,.quick-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}.quick-grid{grid-template-columns:1fr}
   .stat-card{min-height:115px}
   .stat-number{font-size:34px}
   .section{padding:31px 0}
@@ -480,28 +480,37 @@ img{max-width:100%;display:block}
     <div class="stat-card">
       <div class="stat-icon">👩‍🏫</div>
       <div>
-        <div class="stat-number">6</div>
+        <div class="stat-number" id="statGuru">—</div>
         <div class="stat-label">Jumlah Guru</div>
-        <div class="stat-note">Guru profesional dan berdedikasi untuk masa depan anak bangsa.</div>
+        <div class="stat-note">Data guru dari seluruh TKB yang terdaftar.</div>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon">🎓</div>
       <div>
-        <div class="stat-number">208</div>
+        <div class="stat-number" id="statSiswa">—</div>
         <div class="stat-label">Jumlah Siswa</div>
-        <div class="stat-note">Murid aktif dari jenjang SD dan SMP.</div>
+        <div class="stat-note">Data siswa dari jenjang SD dan SMP.</div>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon">🏫</div>
       <div>
-        <div class="stat-number">3</div>
+        <div class="stat-number" id="statTKB">—</div>
         <div class="stat-label">TKB</div>
-        <div class="stat-note">Tempat, Kegiatan, Belajar (TKB) Morisem 3, Permodalan dan Ladang Tas.</div>
+        <div class="stat-note">Jumlah TKB berdasarkan data yang tersedia di database.</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🎖️</div>
+      <div>
+        <div class="stat-number" id="statAlumni">—</div>
+        <div class="stat-label">Jumlah Alumni</div>
+        <div class="stat-note">Data alumni yang tersimpan dalam database sekolah.</div>
       </div>
     </div>
   </div>
+  <div id="statsStatus" style="text-align:center;font-size:11px;color:#7895b4;margin:8px 0 0;min-height:15px;"></div>
 </section>
 
 <section class="section">
@@ -642,6 +651,88 @@ img{max-width:100%;display:block}
     </p>
   </div>
 </div>
+
+<script>
+/* ================= DATABASE STATISTIK ================= */
+const HOME_API_URL = "https://script.google.com/macros/s/AKfycbyfj5mSOO40twAn7YiIPcGZInaQ8NNPx3lpwJ8OaC7pajqPHt2EPKaaHP3l3z3lczFq49w/exec";
+
+
+function fetchHomeData(action){
+  return new Promise((resolve,reject)=>{
+    const callback = "homeCB_" + action + "_" + Date.now() + "_" + Math.floor(Math.random()*10000);
+    const script = document.createElement("script");
+    const timer = setTimeout(()=>{
+      cleanup();
+      reject(new Error("Timeout"));
+    },15000);
+
+    window[callback] = data => {
+      cleanup();
+      resolve(data);
+    };
+
+    function cleanup(){
+      clearTimeout(timer);
+      if(script.parentNode) script.parentNode.removeChild(script);
+      try{ delete window[callback]; }catch(e){ window[callback]=undefined; }
+    }
+
+    script.onerror=()=>{
+      cleanup();
+      reject(new Error("Gagal menghubungi database"));
+    };
+    script.src = HOME_API_URL + "?action=" + encodeURIComponent(action) + "&callback=" + callback + "&_=" + Date.now();
+    document.body.appendChild(script);
+  });
+}
+
+function normalizeTKB(value){
+  return String(value ?? "")
+    .trim()
+    .replace(/\\s+/g," ")
+    .toUpperCase()
+    .replace(/^TKB\\s+/,"TKB ");
+}
+
+async function loadHomeStats(){
+  const status=document.getElementById("statsStatus");
+  try{
+    status.textContent="Memuat data terbaru…";
+    const [siswa,guru,alumni]=await Promise.all([
+      fetchHomeData("siswa"),
+      fetchHomeData("guru"),
+      fetchHomeData("alumni")
+    ]);
+
+    if(!siswa || siswa.success===false) throw new Error("Data siswa tidak dapat dimuat");
+    if(!guru || guru.success===false) throw new Error("Data guru tidak dapat dimuat");
+    if(!alumni || alumni.success===false) throw new Error("Data alumni tidak dapat dimuat");
+
+    const siswaData=Array.isArray(siswa.data)?siswa.data:[];
+    const guruData=Array.isArray(guru.data)?guru.data:[];
+    const alumniData=Array.isArray(alumni.data)?alumni.data:[];
+
+    const tkbs=new Set();
+    [siswaData,guruData,alumniData].forEach(list=>{
+      list.forEach(item=>{
+        const t=normalizeTKB(item.TKB ?? item.tkb);
+        if(t) tkbs.add(t);
+      });
+    });
+
+    document.getElementById("statSiswa").textContent=siswaData.length.toLocaleString("id-ID");
+    document.getElementById("statGuru").textContent=guruData.length.toLocaleString("id-ID");
+    document.getElementById("statAlumni").textContent=alumniData.length.toLocaleString("id-ID");
+    document.getElementById("statTKB").textContent=tkbs.size.toLocaleString("id-ID");
+
+    status.textContent="Data diperbarui otomatis dari database sekolah.";
+  }catch(error){
+    console.error("Statistik beranda:",error);
+    status.textContent="Statistik belum dapat dimuat. Silakan refresh halaman.";
+  }
+}
+
+document.addEventListener("DOMContentLoaded",loadHomeStats);
 
 <script>
 function openSearch(){
