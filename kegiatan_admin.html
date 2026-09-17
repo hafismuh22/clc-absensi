@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Kegiatan - CLC PERMODALAN</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f9ff;color:#123b73}
+.wrap{max-width:920px;margin:35px auto;padding:0 18px}.box{background:#fff;border:1px solid #dcebf8;border-radius:22px;box-shadow:0 15px 45px rgba(10,80,150,.12);overflow:hidden}
+.head{background:linear-gradient(105deg,#06468f,#0878df);color:#fff;padding:28px 30px}.head h1{margin:0;font-size:25px}.head p{margin:7px 0 0;opacity:.88;font-size:13px}
+.content{padding:28px}.login{text-align:center;padding:35px}.login h2{color:#073d83;margin:0 0 8px}.login p{color:#6b86a5;font-size:13px;line-height:1.6}.user{display:flex;align-items:center;justify-content:space-between;gap:15px;background:#edf7ff;border:1px solid #d5eaf9;border-radius:14px;padding:12px 15px;margin-bottom:20px}.user strong{display:block;color:#073d83}.user span{font-size:11px;color:#6b86a5}.btn-out{border:1px solid #cfe2f2;background:#fff;color:#0757b8;border-radius:9px;padding:9px 12px;font-weight:800;cursor:pointer}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{margin-bottom:2px}.field.full{grid-column:1/-1}.field label{display:block;font-size:11px;font-weight:900;color:#315b83;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;border:1px solid #cfe1f1;border-radius:10px;padding:12px 13px;outline:none;color:#244f78;background:#fff}.field textarea{min-height:130px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:#1682df;box-shadow:0 0 0 3px #e5f3ff}
+.drop{border:2px dashed #bcdaf1;border-radius:13px;padding:22px;text-align:center;background:#f8fcff;cursor:pointer}.drop:hover{border-color:#1682df}.drop strong{display:block;color:#0757b8}.drop span{font-size:11px;color:#6b86a5}.previews{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}.preview{position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;background:#eaf5ff}.preview img{width:100%;height:100%;object-fit:cover}.preview button{position:absolute;right:4px;top:4px;border:0;background:rgba(0,0,0,.62);color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer}.actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.save{border:0;border-radius:10px;padding:13px 22px;background:linear-gradient(100deg,#0878df,#0757b8);color:#fff;font-weight:900;cursor:pointer}.save:disabled{opacity:.55;cursor:not-allowed}.msg{display:none;border-radius:10px;padding:12px 14px;margin-top:16px;font-size:12px}.msg.show{display:block}.ok{background:#e9fbf2;color:#167144;border:1px solid #bde9d0}.err{background:#fff0f0;color:#9b3030;border:1px solid #f0caca}.note{font-size:10px;color:#7895b4;margin-top:8px;line-height:1.5}
+@media(max-width:650px){.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.previews{grid-template-columns:repeat(3,1fr)}.content{padding:20px}.head{padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="box">
+<div class="head"><h1>📸 Admin Kegiatan</h1><p>CLC PERMODALAN • Panel penambahan dokumentasi kegiatan sekolah</p></div>
+<div class="content">
+<div id="loginBox" class="login">
+  <h2>Akses Pengelola Kegiatan</h2>
+  <p>Silakan masuk menggunakan akun Google yang sudah terdaftar sebagai Admin Kegiatan.</p>
+  <div id="googleButton" style="display:flex;justify-content:center;margin-top:18px"></div>
+  <div id="loginMsg" class="msg"></div>
+</div>
+
+<div id="app" style="display:none">
+  <div class="user"><div><strong id="userName">Admin</strong><span id="userEmail"></span></div><button class="btn-out" onclick="logout()">Keluar</button></div>
+  <form id="form">
+    <div class="form-grid">
+      <div class="field full"><label>JUDUL KEGIATAN *</label><input id="judul" maxlength="150" required placeholder="Contoh: Upacara Bendera 17 Agustus"></div>
+      <div class="field"><label>KATEGORI *</label><select id="kategori" required></select></div>
+      <div class="field"><label>ATAU TAMBAHKAN KATEGORI BARU</label><input id="kategoriBaru" maxlength="50" placeholder="Contoh: Kesiswaan"></div>
+      <div class="field full"><label>LOKASI *</label><input id="lokasi" maxlength="150" required placeholder="Contoh: Estate Permodalan 2"></div>
+      <div class="field full"><label>FOTO KEGIATAN *</label>
+        <div class="drop" onclick="document.getElementById('foto').click()">
+          <strong>＋ PILIH BEBERAPA FOTO</strong><span>JPG/PNG • Maksimal 30 foto • Foto akan disimpan di Google Drive</span>
+        </div>
+        <input id="foto" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+        <div id="previews" class="previews"></div>
+        <div class="note">Sistem otomatis mengecilkan foto agar proses upload lebih ringan.</div>
+      </div>
+      <div class="field full"><label>DESKRIPSI KEGIATAN</label><textarea id="deskripsi" maxlength="3000" placeholder="Ceritakan singkat tentang kegiatan..."></textarea></div>
+    </div>
+    <div class="actions"><button class="save" id="saveBtn" type="submit">SIMPAN KEGIATAN</button></div>
+    <div id="msg" class="msg"></div>
+  </form>
+</div>
+</div></div></div>
+
+<script>
+const API_URL='PASTE_URL_KEGIATAN_WEB_APP_DI_SINI';
+const GOOGLE_CLIENT_ID='GANTI_DENGAN_GOOGLE_WEB_CLIENT_ID';
+
+let credential='';
+let userEmail='';
+let files=[];
+
+function msg(el,text,ok=false){el.className='msg show '+(ok?'ok':'err');el.textContent=text}
+function clearMsg(el){el.className='msg';el.textContent=''}
+
+window.onload=function(){
+  if(GOOGLE_CLIENT_ID.includes('GANTI_')) {
+    msg(document.getElementById('loginMsg'),'Google Client ID belum dikonfigurasi. Setelah membuat OAuth Web Client ID, masukkan ke GOOGLE_CLIENT_ID pada file ini.');
+    return;
+  }
+  google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,callback:handleCredentialResponse});
+  google.accounts.id.renderButton(document.getElementById('googleButton'),{theme:'outline',size:'large',shape:'pill',text:'signin_with',width:280});
+};
+
+async function handleCredentialResponse(response){
+  credential=response.credential||'';
+  try{
+    const result=await checkAdmin(credential);
+    if(!result.success) throw new Error(result.message||'Akun tidak memiliki izin.');
+    userEmail=result.email||'';
+    document.getElementById('userName').textContent=result.nama||'Admin Kegiatan';
+    document.getElementById('userEmail').textContent=userEmail;
+    document.getElementById('loginBox').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadCategories();
+  }catch(e){
+    credential='';
+    msg(document.getElementById('loginMsg'),e.message||'Login gagal.');
+  }
+}
+
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb='adminCB_'+Date.now()+'_'+Math.floor(Math.random()*10000);
+    const s=document.createElement('script');let done=false;
+    const timer=setTimeout(()=>{finish();reject(new Error('Server tidak merespons.'))},15000);
+    window[cb]=d=>{finish();resolve(d)};
+    s.onerror=()=>{finish();reject(new Error('Gagal menghubungi server.'))};
+    function finish(){if(done)return;done=true;clearTimeout(timer);if(s.parentNode)s.remove();try{delete window[cb]}catch(e){}}
+    s.src=url+'&callback='+encodeURIComponent(cb)+'&_='+Date.now();
+    document.body.appendChild(s);
+  });
+}
+async function checkAdmin(token){
+  return await jsonp(API_URL+'?action=admin-check&token='+encodeURIComponent(token));
+}
+async function loadCategories(){
+  try{
+    const r=await jsonp(API_URL+'?action=categories');
+    const cats=Array.isArray(r.data)?r.data:[];
+    const sel=document.getElementById('kategori');
+    sel.innerHTML='<option value="">Pilih kategori...</option>'+cats.map(c=>'<option>'+esc(c)+'</option>').join('');
+  }catch(e){
+    document.getElementById('kategori').innerHTML='<option value="">Lainnya</option>';
+  }
+}
+function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+
+document.getElementById('foto').addEventListener('change',e=>{
+  files=Array.from(e.target.files||[]);
+  if(files.length>30){files=files.slice(0,30);alert('Maksimal 30 foto.');}
+  renderPreviews();
+});
+function renderPreviews(){
+  const p=document.getElementById('previews');p.innerHTML='';
+  files.forEach((f,i)=>{
+    const u=URL.createObjectURL(f);
+    const d=document.createElement('div');d.className='preview';
+    d.innerHTML='<img src="'+u+'"><button type="button" onclick="removeFile('+i+')">×</button>';
+    p.appendChild(d);
+  });
+}
+function removeFile(i){files.splice(i,1);renderPreviews()}
+
+function compress(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>{
+      const img=new Image();
+      img.onload=()=>{
+        const max=1600;
+        let w=img.width,h=img.height;
+        if(Math.max(w,h)>max){const scale=max/Math.max(w,h);w=Math.round(w*scale);h=Math.round(h*scale)}
+        const c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        resolve({name:file.name.replace(/\.[^.]+$/,'')+'.jpg',type:'image/jpeg',data:c.toDataURL('image/jpeg',0.78)});
+      };
+      img.onerror=reject;img.src=reader.result;
+    };
+    reader.onerror=reject;reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById('form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  clearMsg(document.getElementById('msg'));
+  const kategoriBaru=document.getElementById('kategoriBaru').value.trim();
+  const kategori=kategoriBaru||document.getElementById('kategori').value.trim();
+  if(!credential){msg(document.getElementById('msg'),'Sesi Google tidak tersedia. Silakan login ulang.');return}
+  if(!kategori){msg(document.getElementById('msg'),'Pilih kategori atau isi kategori baru.');return}
+  if(!files.length){msg(document.getElementById('msg'),'Pilih minimal 1 foto kegiatan.');return}
+  const btn=document.getElementById('saveBtn');btn.disabled=true;btn.textContent='MENYIAPKAN FOTO...';
+  try{
+    const photos=[];
+    for(let i=0;i<files.length;i++){
+      btn.textContent='MEMPROSES FOTO '+(i+1)+' / '+files.length;
+      photos.push(await compress(files[i]));
+    }
+    const form=document.createElement('form');
+    form.method='POST';form.action=API_URL;form.target='uploadFrame';form.style.display='none';
+    add(form,'token',credential);
+    add(form,'judul',document.getElementById('judul').value.trim());
+    add(form,'kategori',kategori);
+    add(form,'lokasi',document.getElementById('lokasi').value.trim());
+    add(form,'deskripsi',document.getElementById('deskripsi').value.trim());
+    add(form,'photos',JSON.stringify(photos));
+    document.body.appendChild(form);
+    btn.textContent='MENYIMPAN...';
+    window.addEventListener('message',receiveUploadResult,{once:true});
+    form.submit();
+    setTimeout(()=>{if(form.parentNode)form.remove()},2000);
+  }catch(err){
+    msg(document.getElementById('msg'),err.message||'Gagal memproses foto.');
+    btn.disabled=false;btn.textContent='SIMPAN KEGIATAN';
+  }
+});
+function add(form,name,value){const x=document.createElement('input');x.type='hidden';x.name=name;x.value=value;form.appendChild(x)}
+function receiveUploadResult(e){
+  if(!e.data||e.data.source!=='CLC_KEGIATAN_API')return;
+  const r=e.data.result;
+  const box=document.getElementById('msg');
+  if(r&&r.success){
+    msg(box,'✓ '+r.message+' ID: '+r.id, true);
+    document.getElementById('form').reset();files=[];renderPreviews();
+    document.getElementById('kategori').value='';
+  }else{
+    msg(box,(r&&r.message)||'Gagal menyimpan kegiatan.');
+  }
+  const btn=document.getElementById('saveBtn');btn.disabled=false;btn.textContent='SIMPAN KEGIATAN';
+}
+function logout(){
+  credential='';userEmail='';
+  document.getElementById('app').style.display='none';
+  document.getElementById('loginBox').style.display='block';
+}
+</script>
+</body>
+</html>
