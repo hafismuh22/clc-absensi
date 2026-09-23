@@ -28,46 +28,41 @@
       font-family: inherit;
     }
 
-    /* =========================
-       CONTAINER
-    ========================= */
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
 
     .container {
       width: 100%;
-      max-width: 1200px;
+      max-width: 1180px;
       margin: auto;
-      padding: 25px 18px 50px;
+      padding: 22px 16px 50px;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
+    /* =====================================================
+       HERO
+    ===================================================== */
 
     .hero {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(
-        135deg,
-        #0d47a1,
-        #1565c0,
-        #1976d2
-      );
+      background: linear-gradient(135deg, #0d47a1, #1565c0, #1976d2);
       color: white;
       border-radius: 22px;
-      padding: 38px 35px;
-      margin-bottom: 22px;
-      box-shadow: 0 12px 35px rgba(13, 71, 161, 0.20);
+      padding: 34px 32px;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 35px rgba(13, 71, 161, .20);
     }
 
     .hero::before {
       content: "";
       position: absolute;
-      width: 230px;
-      height: 230px;
+      width: 260px;
+      height: 260px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.07);
-      right: -70px;
-      top: -80px;
+      background: rgba(255,255,255,.07);
+      right: -80px;
+      top: -110px;
     }
 
     .hero::after {
@@ -76,9 +71,9 @@
       width: 150px;
       height: 150px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      right: 100px;
-      bottom: -100px;
+      background: rgba(255,255,255,.05);
+      right: 160px;
+      bottom: -110px;
     }
 
     .hero-content {
@@ -87,12 +82,14 @@
     }
 
     .hero-badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 7px 12px;
       border-radius: 30px;
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.18);
-      font-size: 12px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.20);
+      font-size: 11px;
       font-weight: 700;
       margin-bottom: 12px;
     }
@@ -104,187 +101,540 @@
     }
 
     .hero p {
-      margin: 10px 0 0;
+      margin: 8px 0 0;
       font-size: 14px;
-      opacity: 0.92;
+      opacity: .92;
     }
 
-    /* =========================
-       MENU CARD
-    ========================= */
+    /* =====================================================
+       TOP MENU
+    ===================================================== */
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      margin-bottom: 22px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
     }
 
     .menu-card {
+      border: 1px solid #e1e8f0;
       background: white;
-      border-radius: 18px;
-      padding: 22px;
-      border: 1px solid #e5eaf1;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      border-radius: 17px;
+      padding: 18px;
       cursor: pointer;
-      transition: 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 17px;
+      gap: 13px;
+      transition: .2s ease;
+      box-shadow: 0 4px 18px rgba(0,0,0,.045);
     }
 
     .menu-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      border-color: #bbd7f7;
+      transform: translateY(-2px);
+      border-color: #b9d5f4;
+      box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    }
+
+    .menu-card.active {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 2px rgba(25,118,210,.08);
     }
 
     .menu-icon {
-      width: 58px;
-      height: 58px;
-      flex: 0 0 58px;
-      border-radius: 16px;
+      width: 50px;
+      height: 50px;
+      flex: 0 0 50px;
+      border-radius: 14px;
       background: #e3f2fd;
       color: #1565c0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 27px;
+      font-size: 24px;
     }
 
     .menu-card h3 {
-      margin: 0 0 5px;
-      font-size: 17px;
+      margin: 0 0 4px;
       color: #0d47a1;
+      font-size: 15px;
     }
 
     .menu-card p {
       margin: 0;
-      color: #6b7280;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* =====================================================
+       SECTION
+    ===================================================== */
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e3e9f0;
+      border-radius: 19px;
+      padding: 22px;
+      margin-bottom: 17px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.05);
+    }
+
+    .section-title {
+      margin: 0;
+      color: #0d47a1;
+      font-size: 20px;
+    }
+
+    .section-subtitle {
+      margin: 6px 0 0;
+      color: #64748b;
       font-size: 13px;
       line-height: 1.5;
     }
 
-    .menu-arrow {
-      margin-left: auto;
-      color: #94a3b8;
+    /* =====================================================
+       PIN
+    ===================================================== */
+
+    .pin-card {
+      max-width: 470px;
+      margin: 35px auto;
+      text-align: center;
+    }
+
+    .pin-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin: 0 auto 17px;
+      background: #e3f2fd;
+      color: #1565c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .pin-card h2 {
+      margin: 0;
+      color: #0d47a1;
       font-size: 22px;
     }
 
-    /* =========================
-       CONTENT CARD
-    ========================= */
-
-    .content-card {
-      background: white;
-      border-radius: 20px;
-      border: 1px solid #e5eaf1;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-      overflow: hidden;
-    }
-
-    .content-header {
-      padding: 22px 24px;
-      border-bottom: 1px solid #e8edf3;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .content-title {
-      margin: 0;
-      color: #0d47a1;
-      font-size: 19px;
-    }
-
-    .content-subtitle {
-      margin: 5px 0 0;
-      color: #6b7280;
+    .pin-card p {
+      color: #64748b;
       font-size: 13px;
+      line-height: 1.5;
+      margin: 8px 0 20px;
     }
 
-    /* =========================
-       FILTER
-    ========================= */
+    /* =====================================================
+       FORM
+    ===================================================== */
 
-    .filter-area {
-      padding: 18px 24px;
-      background: #f8fafc;
-      border-bottom: 1px solid #e8edf3;
-
+    .form-grid {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr auto;
-      gap: 10px;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 13px;
+      margin-top: 20px;
     }
 
-    .input-box,
-    .select-box {
-      width: 100%;
-      height: 44px;
-      border: 1px solid #d9e1ea;
-      border-radius: 10px;
-      background: white;
-      padding: 0 13px;
-      outline: none;
+    .form-group {
+      margin-bottom: 3px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #374151;
       font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select {
+      width: 100%;
+      height: 45px;
+      border: 1px solid #d7dee8;
+      border-radius: 10px;
+      padding: 0 13px;
+      font-size: 13px;
+      outline: none;
+      background: white;
       color: #334155;
     }
 
-    .input-box:focus,
-    .select-box:focus {
+    input:focus,
+    select:focus {
       border-color: #1976d2;
-      box-shadow: 0 0 0 3px rgba(25,118,210,0.10);
+      box-shadow: 0 0 0 3px rgba(25,118,210,.10);
     }
 
-    .refresh-button {
+    /* =====================================================
+       DOCUMENT BOX
+    ===================================================== */
+
+    .document-box {
+      border: 1px solid #e0e7ef;
+      border-radius: 15px;
+      padding: 17px;
+      background: #fafcff;
+      margin-top: 14px;
+    }
+
+    .document-header {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 13px;
+    }
+
+    .document-icon {
+      width: 44px;
       height: 44px;
+      border-radius: 11px;
+      background: #e3f2fd;
+      color: #1565c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      flex: 0 0 44px;
+    }
+
+    .document-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .document-subtitle {
+      margin-top: 3px;
+      color: #64748b;
+      font-size: 11px;
+    }
+
+    .upload-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* =====================================================
+       BUTTON
+    ===================================================== */
+
+    .button {
       border: none;
       border-radius: 10px;
-      background: #1565c0;
-      color: white;
-      padding: 0 16px;
-      cursor: pointer;
-      font-weight: 700;
+      padding: 11px 17px;
+      min-height: 43px;
       font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s ease;
     }
 
-    .refresh-button:hover {
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .button-primary {
+      background: #1565c0;
+      color: white;
+    }
+
+    .button-primary:hover {
       background: #0d47a1;
     }
 
-    /* =========================
+    .button-secondary {
+      background: #edf2f7;
+      color: #334155;
+    }
+
+    .button-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .button-danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .button-full {
+      width: 100%;
+    }
+
+    /* =====================================================
+       PREVIEW
+    ===================================================== */
+
+    .preview-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+      gap: 11px;
+      margin-top: 14px;
+    }
+
+    .preview-card {
+      position: relative;
+      background: white;
+      border: 1px solid #dbe3ec;
+      border-radius: 11px;
+      padding: 5px;
+      overflow: hidden;
+    }
+
+    .preview-card img {
+      width: 100%;
+      height: 115px;
+      object-fit: cover;
+      display: block;
+      border-radius: 8px;
+      background: #f1f5f9;
+    }
+
+    .preview-number {
+      position: absolute;
+      left: 9px;
+      top: 9px;
+      background: rgba(0,0,0,.65);
+      color: white;
+      border-radius: 20px;
+      padding: 4px 7px;
+      font-size: 10px;
+    }
+
+    .preview-delete {
+      position: absolute;
+      right: 7px;
+      top: 7px;
+      width: 27px;
+      height: 27px;
+      border: none;
+      border-radius: 50%;
+      background: #dc2626;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    /* =====================================================
+       MESSAGE
+    ===================================================== */
+
+    .message {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .message-error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .message-success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .message-info {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    /* =====================================================
+       LOADING
+    ===================================================== */
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      color: #1565c0;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      border: 4px solid #dbeafe;
+      border-top-color: #1565c0;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =====================================================
+       SUCCESS
+    ===================================================== */
+
+    .success-box {
+      display: none;
+      text-align: center;
+      max-width: 600px;
+      margin: 25px auto;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #16a34a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .success-box h2 {
+      margin: 0;
+      color: #166534;
+      font-size: 24px;
+    }
+
+    .success-box > p {
+      color: #64748b;
+      font-size: 13px;
+      margin: 8px 0 22px;
+    }
+
+    .student-info {
+      text-align: left;
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 9px 0;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 13px;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      color: #64748b;
+    }
+
+    .info-value {
+      color: #1e293b;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .status-complete {
+      color: #16a34a;
+    }
+
+    .status-incomplete {
+      color: #dc2626;
+    }
+
+    .success-buttons {
+      display: flex;
+      gap: 9px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* =====================================================
+       STATUS FILTER
+    ===================================================== */
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr auto;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: 13px;
+      border: 1px solid #e7edf3;
+    }
+
+    .refresh-button {
+      border: none;
+      height: 45px;
+      padding: 0 16px;
+      border-radius: 10px;
+      background: #1565c0;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* =====================================================
        TABLE
-    ========================= */
+    ===================================================== */
 
     .table-wrapper {
       width: 100%;
       overflow-x: auto;
+      margin-top: 18px;
     }
 
     table {
       width: 100%;
-      min-width: 900px;
+      min-width: 920px;
       border-collapse: collapse;
     }
 
     th {
+      padding: 13px 11px;
       background: #f1f5f9;
-      color: #475569;
-      font-size: 12px;
-      font-weight: 700;
-      text-align: left;
-      padding: 14px 12px;
       border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      font-size: 11px;
+      color: #475569;
       white-space: nowrap;
     }
 
     td {
-      padding: 14px 12px;
+      padding: 13px 11px;
       border-bottom: 1px solid #edf1f5;
-      font-size: 13px;
+      font-size: 12px;
       color: #334155;
-      vertical-align: middle;
+      white-space: nowrap;
     }
 
     tbody tr:hover {
@@ -296,19 +646,12 @@
       color: #1e293b;
     }
 
-    /* =========================
-       DOCUMENT STATUS
-    ========================= */
-
     .doc-status {
       display: inline-flex;
-      align-items: center;
-      gap: 5px;
       padding: 5px 9px;
       border-radius: 20px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      white-space: nowrap;
     }
 
     .doc-yes {
@@ -322,113 +665,74 @@
     }
 
     .status-badge {
-      display: inline-block;
-      padding: 6px 11px;
+      display: inline-flex;
+      padding: 6px 10px;
       border-radius: 20px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      white-space: nowrap;
     }
 
-    .status-complete {
+    .status-badge.complete {
       background: #dcfce7;
       color: #166534;
     }
 
-    .status-incomplete {
+    .status-badge.incomplete {
       background: #fef3c7;
       color: #92400e;
     }
 
-    /* =========================
-       LOADING
-    ========================= */
-
-    .loading {
-      padding: 45px 20px;
-      text-align: center;
-      color: #64748b;
-    }
-
-    .spinner {
-      width: 35px;
-      height: 35px;
-      margin: 0 auto 12px;
-      border-radius: 50%;
-      border: 4px solid #dbeafe;
-      border-top-color: #1565c0;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* =========================
+    /* =====================================================
        EMPTY
-    ========================= */
+    ===================================================== */
 
     .empty {
-      padding: 50px 20px;
-      text-align: center;
-      color: #64748b;
       display: none;
+      text-align: center;
+      padding: 45px 20px;
+      color: #64748b;
     }
 
     .empty-icon {
-      font-size: 40px;
-      margin-bottom: 10px;
+      font-size: 38px;
+      margin-bottom: 8px;
     }
 
     .empty h3 {
-      margin: 0 0 6px;
+      margin: 0 0 5px;
       color: #334155;
+      font-size: 16px;
     }
 
     .empty p {
       margin: 0;
-      font-size: 13px;
-    }
-
-    /* =========================
-       ERROR
-    ========================= */
-
-    .error-box {
-      display: none;
-      margin: 18px 24px;
-      padding: 13px 15px;
-      border-radius: 10px;
-      background: #fee2e2;
-      color: #991b1b;
-      font-size: 13px;
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    .footer {
-      text-align: center;
-      padding: 25px 10px 5px;
-      color: #94a3b8;
       font-size: 12px;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
+    /* =====================================================
+       FOOTER
+    ===================================================== */
 
-    @media (max-width: 700px) {
+    .footer {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 11px;
+      line-height: 1.6;
+      padding: 20px 10px 0;
+    }
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 800px) {
 
       .container {
         padding: 12px 10px 35px;
       }
 
       .hero {
-        padding: 28px 22px;
+        padding: 27px 21px;
         border-radius: 17px;
       }
 
@@ -440,26 +744,24 @@
         grid-template-columns: 1fr;
       }
 
-      .menu-card {
-        padding: 18px;
-      }
-
-      .content-header {
-        padding: 18px;
-        align-items: flex-start;
-      }
-
-      .filter-area {
+      .form-grid {
         grid-template-columns: 1fr;
-        padding: 15px;
+      }
+
+      .filter-grid {
+        grid-template-columns: 1fr;
       }
 
       .refresh-button {
         width: 100%;
       }
 
-      .error-box {
-        margin: 15px;
+      .card {
+        padding: 17px;
+      }
+
+      .success-buttons .button {
+        width: 100%;
       }
     }
   </style>
@@ -469,9 +771,9 @@
 
 <div class="container">
 
-  <!-- =========================
+  <!-- ===================================================
        HERO
-  ========================= -->
+  ==================================================== -->
 
   <section class="hero">
 
@@ -494,15 +796,16 @@
   </section>
 
 
-  <!-- =========================
+  <!-- ===================================================
        MENU
-  ========================= -->
+  ==================================================== -->
 
-  <section class="menu-grid">
+  <div class="menu-grid">
 
     <div
-      class="menu-card"
-      onclick="bukaUpload()"
+      id="menuUpload"
+      class="menu-card active"
+      onclick="bukaSection('upload')"
     >
 
       <div class="menu-icon">
@@ -512,26 +815,22 @@
       <div>
 
         <h3>
-          Upload Dokumen Siswa
+          Upload Dokumen
         </h3>
 
         <p>
-          Upload foto siswa, kartu keluarga,
-          dan akta lahir.
+          Upload foto siswa, KK dan akta lahir.
         </p>
 
-      </div>
-
-      <div class="menu-arrow">
-        ›
       </div>
 
     </div>
 
 
     <div
+      id="menuStatus"
       class="menu-card"
-      onclick="scrollKeStatus()"
+      onclick="bukaSection('status')"
     >
 
       <div class="menu-icon">
@@ -541,254 +840,812 @@
       <div>
 
         <h3>
-          Lihat Status Dokumen
+          Status Dokumen
         </h3>
 
         <p>
-          Periksa kelengkapan dokumen
-          siswa.
+          Periksa kelengkapan dokumen siswa.
         </p>
 
       </div>
 
-      <div class="menu-arrow">
-        ›
-      </div>
-
     </div>
 
-  </section>
 
+    <div
+      class="menu-card"
+      onclick="kembaliKeWebsite()"
+    >
 
-  <!-- =========================
-       STATUS
-  ========================= -->
-
-  <section
-    class="content-card"
-    id="statusSection"
-  >
-
-    <div class="content-header">
+      <div class="menu-icon">
+        🏠
+      </div>
 
       <div>
 
-        <h2 class="content-title">
-          Status Dokumen Siswa
-        </h2>
+        <h3>
+          Kembali
+        </h3>
 
-        <p class="content-subtitle">
-          Daftar kelengkapan dokumen siswa
-          CLC Permodalan TKB Morisem 3
+        <p>
+          Kembali ke halaman utama sekolah.
         </p>
 
       </div>
 
     </div>
 
-
-    <!-- FILTER -->
-
-    <div class="filter-area">
-
-      <input
-        type="text"
-        id="searchInput"
-        class="input-box"
-        placeholder="🔎 Cari nama siswa..."
-        oninput="renderTable()"
-      >
+  </div>
 
 
-      <select
-        id="kelasFilter"
-        class="select-box"
-        onchange="renderTable()"
-      >
+  <!-- ===================================================
+       UPLOAD SECTION
+  ==================================================== -->
 
-        <option value="">
-          Semua Kelas
-        </option>
+  <section
+    id="uploadSection"
+    class="section active"
+  >
 
-        <option value="TKB">
-          TKB
-        </option>
-
-        <option value="5">
-          Kelas 5
-        </option>
-
-        <option value="6">
-          Kelas 6
-        </option>
-
-        <option value="7">
-          Kelas 7
-        </option>
-
-        <option value="8">
-          Kelas 8
-        </option>
-
-        <option value="9">
-          Kelas 9
-        </option>
-
-      </select>
-
-
-      <select
-        id="estateFilter"
-        class="select-box"
-        onchange="renderTable()"
-      >
-
-        <option value="">
-          Semua Estate
-        </option>
-
-        <option value="Morisem">
-          Morisem
-        </option>
-
-        <option value="Permodalan">
-          Permodalan
-        </option>
-
-        <option value="Ladang Tas">
-          Ladang Tas
-        </option>
-
-        <option value="Lainnya">
-          Lainnya
-        </option>
-
-      </select>
-
-
-      <button
-        class="refresh-button"
-        onclick="ambilData()"
-      >
-        ↻ Refresh
-      </button>
-
-    </div>
-
-
-    <!-- ERROR -->
+    <!-- PIN -->
 
     <div
-      id="errorBox"
-      class="error-box"
-    ></div>
-
-
-    <!-- LOADING -->
-
-    <div
-      id="loading"
-      class="loading"
+      id="pinArea"
+      class="card pin-card"
     >
 
-      <div class="spinner"></div>
-
-      Memuat data dokumen siswa...
-
-    </div>
-
-
-    <!-- EMPTY -->
-
-    <div
-      id="empty"
-      class="empty"
-    >
-
-      <div class="empty-icon">
-        📂
+      <div class="pin-icon">
+        🔐
       </div>
 
-      <h3>
-        Data tidak ditemukan
-      </h3>
+      <h2>
+        Akses Upload Dokumen
+      </h2>
 
       <p>
-        Belum ada data siswa yang sesuai
-        dengan pencarian.
+        Masukkan PIN untuk melanjutkan
+        ke halaman upload dokumen siswa.
       </p>
+
+      <div
+        id="pinMessage"
+        class="message message-error"
+      ></div>
+
+      <input
+        type="password"
+        id="pinInput"
+        placeholder="Masukkan PIN"
+        inputmode="numeric"
+        maxlength="10"
+        onkeydown="if(event.key==='Enter') cekPIN()"
+      >
+
+      <br>
+
+      <button
+        id="pinButton"
+        class="button button-primary button-full"
+        style="margin-top:10px;"
+        onclick="cekPIN()"
+      >
+        🔓 Masuk
+      </button>
+
+      <div
+        id="pinLoading"
+        class="loading"
+      >
+
+        <div class="spinner"></div>
+
+        Memeriksa PIN...
+
+      </div>
 
     </div>
 
 
-    <!-- TABLE -->
+    <!-- FORM -->
 
     <div
-      id="tableWrapper"
-      class="table-wrapper"
+      id="uploadArea"
       style="display:none;"
     >
 
-      <table>
+      <div
+        id="formMessage"
+        class="message"
+      ></div>
 
-        <thead>
 
-          <tr>
+      <!-- DATA SISWA -->
 
-            <th>
-              NO
-            </th>
+      <div class="card">
 
-            <th>
-              NAMA SISWA
-            </th>
+        <h2 class="section-title">
+          Data Siswa
+        </h2>
 
-            <th>
-              KELAS
-            </th>
+        <p class="section-subtitle">
+          Masukkan data dasar siswa sebelum
+          mengunggah dokumen.
+        </p>
 
-            <th>
-              ESTATE
-            </th>
 
-            <th>
-              FOTO SISWA
-            </th>
+        <div class="form-grid">
 
-            <th>
-              KARTU KELUARGA
-            </th>
+          <div class="form-group">
 
-            <th>
-              AKTA LAHIR
-            </th>
+            <label>
+              Nama Siswa
+            </label>
 
-            <th>
-              STATUS
-            </th>
+            <input
+              type="text"
+              id="nama"
+              placeholder="Masukkan nama siswa"
+              autocomplete="off"
+            >
 
-          </tr>
+          </div>
 
-        </thead>
 
-        <tbody id="tableBody">
-        </tbody>
+          <div class="form-group">
 
-      </table>
+            <label>
+              Kelas
+            </label>
+
+            <select id="kelas">
+
+              <option value="">
+                Pilih Kelas
+              </option>
+
+              <option value="TKB">
+                TKB
+              </option>
+
+              <option value="5">
+                Kelas 5
+              </option>
+
+              <option value="6">
+                Kelas 6
+              </option>
+
+              <option value="7">
+                Kelas 7
+              </option>
+
+              <option value="8">
+                Kelas 8
+              </option>
+
+              <option value="9">
+                Kelas 9
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Estate
+            </label>
+
+            <select id="estate">
+
+              <option value="">
+                Pilih Estate
+              </option>
+
+              <option value="Morisem">
+                Morisem
+              </option>
+
+              <option value="Permodalan">
+                Permodalan
+              </option>
+
+              <option value="Ladang Tas">
+                Ladang Tas
+              </option>
+
+              <option value="Lainnya">
+                Lainnya
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- DOKUMEN -->
+
+      <div class="card">
+
+        <h2 class="section-title">
+          Dokumen Siswa
+        </h2>
+
+        <p class="section-subtitle">
+          Setiap kategori dapat berisi satu atau
+          beberapa foto.
+        </p>
+
+
+        <!-- FOTO SISWA -->
+
+        <div class="document-box">
+
+          <div class="document-header">
+
+            <div class="document-icon">
+              📷
+            </div>
+
+            <div>
+
+              <div class="document-title">
+                Foto Siswa
+              </div>
+
+              <div class="document-subtitle">
+                Ambil menggunakan kamera atau pilih dari galeri.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="upload-buttons">
+
+            <button
+              type="button"
+              class="button button-primary"
+              onclick="bukaKamera('fotoSiswa')"
+            >
+              📷 Kamera
+            </button>
+
+            <button
+              type="button"
+              class="button button-secondary"
+              onclick="bukaGaleri('fotoSiswa')"
+            >
+              🖼 Galeri
+            </button>
+
+          </div>
+
+
+          <input
+            type="file"
+            id="camera-fotoSiswa"
+            accept="image/*"
+            capture="environment"
+            style="display:none;"
+            onchange="pilihFoto(event,'fotoSiswa')"
+          >
+
+          <input
+            type="file"
+            id="gallery-fotoSiswa"
+            accept="image/*"
+            multiple
+            style="display:none;"
+            onchange="pilihFoto(event,'fotoSiswa')"
+          >
+
+
+          <div
+            id="preview-fotoSiswa"
+            class="preview-container"
+          ></div>
+
+        </div>
+
+
+        <!-- KK -->
+
+        <div class="document-box">
+
+          <div class="document-header">
+
+            <div class="document-icon">
+              👨‍👩‍👧
+            </div>
+
+            <div>
+
+              <div class="document-title">
+                Kartu Keluarga
+              </div>
+
+              <div class="document-subtitle">
+                Bisa menggunakan kamera atau beberapa foto galeri.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="upload-buttons">
+
+            <button
+              type="button"
+              class="button button-primary"
+              onclick="bukaKamera('kartuKeluarga')"
+            >
+              📷 Kamera
+            </button>
+
+            <button
+              type="button"
+              class="button button-secondary"
+              onclick="bukaGaleri('kartuKeluarga')"
+            >
+              🖼 Galeri
+            </button>
+
+          </div>
+
+
+          <input
+            type="file"
+            id="camera-kartuKeluarga"
+            accept="image/*"
+            capture="environment"
+            style="display:none;"
+            onchange="pilihFoto(event,'kartuKeluarga')"
+          >
+
+          <input
+            type="file"
+            id="gallery-kartuKeluarga"
+            accept="image/*"
+            multiple
+            style="display:none;"
+            onchange="pilihFoto(event,'kartuKeluarga')"
+          >
+
+
+          <div
+            id="preview-kartuKeluarga"
+            class="preview-container"
+          ></div>
+
+        </div>
+
+
+        <!-- AKTA -->
+
+        <div class="document-box">
+
+          <div class="document-header">
+
+            <div class="document-icon">
+              📄
+            </div>
+
+            <div>
+
+              <div class="document-title">
+                Akta Lahir
+              </div>
+
+              <div class="document-subtitle">
+                Bisa menggunakan kamera atau beberapa foto galeri.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="upload-buttons">
+
+            <button
+              type="button"
+              class="button button-primary"
+              onclick="bukaKamera('aktaLahir')"
+            >
+              📷 Kamera
+            </button>
+
+            <button
+              type="button"
+              class="button button-secondary"
+              onclick="bukaGaleri('aktaLahir')"
+            >
+              🖼 Galeri
+            </button>
+
+          </div>
+
+
+          <input
+            type="file"
+            id="camera-aktaLahir"
+            accept="image/*"
+            capture="environment"
+            style="display:none;"
+            onchange="pilihFoto(event,'aktaLahir')"
+          >
+
+          <input
+            type="file"
+            id="gallery-aktaLahir"
+            accept="image/*"
+            multiple
+            style="display:none;"
+            onchange="pilihFoto(event,'aktaLahir')"
+          >
+
+
+          <div
+            id="preview-aktaLahir"
+            class="preview-container"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- SIMPAN -->
+
+      <div class="card">
+
+        <button
+          id="saveButton"
+          class="button button-primary button-full"
+          onclick="simpanDokumen()"
+        >
+          💾 Simpan Dokumen
+        </button>
+
+
+        <div
+          id="saveLoading"
+          class="loading"
+        >
+
+          <div class="spinner"></div>
+
+          Sedang mengupload dokumen...
+          <br>
+          Jangan tutup halaman ini.
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SUCCESS -->
+
+    <div
+      id="successArea"
+      class="card success-box"
+    >
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h2>
+        Dokumen Berhasil Disimpan
+      </h2>
+
+      <p>
+        Data dan dokumen siswa berhasil
+        tersimpan ke database sekolah.
+      </p>
+
+
+      <div class="student-info">
+
+        <div class="info-row">
+
+          <span class="info-label">
+            Nama
+          </span>
+
+          <span
+            id="resultNama"
+            class="info-value"
+          ></span>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span class="info-label">
+            Kelas
+          </span>
+
+          <span
+            id="resultKelas"
+            class="info-value"
+          ></span>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span class="info-label">
+            Estate
+          </span>
+
+          <span
+            id="resultEstate"
+            class="info-value"
+          ></span>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span class="info-label">
+            Status
+          </span>
+
+          <span
+            id="resultStatus"
+            class="info-value"
+          ></span>
+
+        </div>
+
+      </div>
+
+
+      <div class="success-buttons">
+
+        <button
+          class="button button-primary"
+          onclick="uploadSiswaLain()"
+        >
+          ＋ Upload Siswa Lain
+        </button>
+
+        <button
+          class="button button-secondary"
+          onclick="bukaSection('status')"
+        >
+          📋 Lihat Status
+
+        </button>
+
+      </div>
 
     </div>
 
   </section>
 
 
-  <!-- =========================
-       FOOTER
-  ========================= -->
+  <!-- ===================================================
+       STATUS SECTION
+  ==================================================== -->
+
+  <section
+    id="statusSection"
+    class="section"
+  >
+
+    <div class="card">
+
+      <h2 class="section-title">
+        Status Dokumen Siswa
+      </h2>
+
+      <p class="section-subtitle">
+        Daftar kelengkapan dokumen siswa
+        CLC Permodalan TKB Morisem 3.
+      </p>
+
+
+      <div class="filter-grid">
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="🔎 Cari nama siswa..."
+          oninput="renderTable()"
+        >
+
+
+        <select
+          id="filterKelas"
+          onchange="renderTable()"
+        >
+
+          <option value="">
+            Semua Kelas
+          </option>
+
+          <option value="TKB">
+            TKB
+          </option>
+
+          <option value="5">
+            Kelas 5
+          </option>
+
+          <option value="6">
+            Kelas 6
+          </option>
+
+          <option value="7">
+            Kelas 7
+          </option>
+
+          <option value="8">
+            Kelas 8
+          </option>
+
+          <option value="9">
+            Kelas 9
+          </option>
+
+        </select>
+
+
+        <select
+          id="filterEstate"
+          onchange="renderTable()"
+        >
+
+          <option value="">
+            Semua Estate
+          </option>
+
+          <option value="Morisem">
+            Morisem
+          </option>
+
+          <option value="Permodalan">
+            Permodalan
+          </option>
+
+          <option value="Ladang Tas">
+            Ladang Tas
+          </option>
+
+          <option value="Lainnya">
+            Lainnya
+          </option>
+
+        </select>
+
+
+        <button
+          class="refresh-button"
+          onclick="ambilStatus()"
+        >
+          ↻ Refresh
+        </button>
+
+      </div>
+
+
+      <div
+        id="statusError"
+        class="message message-error"
+      ></div>
+
+
+      <div
+        id="statusLoading"
+        class="loading"
+        style="display:block;"
+      >
+
+        <div class="spinner"></div>
+
+        Memuat data siswa...
+
+      </div>
+
+
+      <div
+        id="statusEmpty"
+        class="empty"
+      >
+
+        <div class="empty-icon">
+          📂
+        </div>
+
+        <h3>
+          Data tidak ditemukan
+        </h3>
+
+        <p>
+          Tidak ada siswa yang sesuai dengan pencarian.
+        </p>
+
+      </div>
+
+
+      <div
+        id="tableWrapper"
+        class="table-wrapper"
+        style="display:none;"
+      >
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                NO
+              </th>
+
+              <th>
+                NAMA SISWA
+              </th>
+
+              <th>
+                KELAS
+              </th>
+
+              <th>
+                ESTATE
+              </th>
+
+              <th>
+                FOTO SISWA
+              </th>
+
+              <th>
+                KARTU KELUARGA
+              </th>
+
+              <th>
+                AKTA LAHIR
+              </th>
+
+              <th>
+                STATUS
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="tableBody"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
 
   <div class="footer">
 
     CLC PERMODALAN TKB MORISEM 3<br>
-
     Sistem Informasi Dokumen Siswa
 
   </div>
@@ -798,307 +1655,1620 @@
 
 <script>
 
-  /* =========================================================
-     KONFIGURASI
-  ========================================================= */
+/* =====================================================
+   KONFIGURASI
+===================================================== */
 
-  const DOCUMENT_API_URL =
-    "https://script.google.com/macros/s/AKfycbyQNN6KU92qBhk130NFRlyL2Roj3gSoVbChWrWZ8Cc7ai2S--DQgCLs9L_fIKvYQ70t/exec";
-
-
-  /*
-   * URL halaman upload Apps Script.
-   */
-
-  const UPLOAD_URL =
-    DOCUMENT_API_URL;
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbyQNN6KU92qBhk130NFRlyL2Roj3gSoVbChWrWZ8Cc7ai2S--DQgCLs9L_fIKvYQ70t/exec";
 
 
-  /* =========================================================
-     DATA
-  ========================================================= */
+/*
+ * URL halaman utama.
+ *
+ * Karena dokumen.html berada di repository
+ * yang sama, kita kembali menggunakan home.html.
+ */
+const HOME_URL = "home.html";
 
-  let semuaData = [];
+
+/*
+ * Data file.
+ */
+let files = {
+
+  fotoSiswa: [],
+
+  kartuKeluarga: [],
+
+  aktaLahir: []
+
+};
 
 
-  /* =========================================================
-     BUKA UPLOAD
-  ========================================================= */
+/*
+ * Data status siswa.
+ */
+let semuaData = [];
 
-  function bukaUpload() {
 
-    window.location.href = UPLOAD_URL;
+/*
+ * PIN yang berhasil diverifikasi.
+ *
+ * PIN tidak dikirim ke URL.
+ */
+let pinTerverifikasi = "";
+
+
+/* =====================================================
+   MENU SECTION
+===================================================== */
+
+function bukaSection(section) {
+
+  const uploadSection =
+    document.getElementById(
+      "uploadSection"
+    );
+
+  const statusSection =
+    document.getElementById(
+      "statusSection"
+    );
+
+  const menuUpload =
+    document.getElementById(
+      "menuUpload"
+    );
+
+  const menuStatus =
+    document.getElementById(
+      "menuStatus"
+    );
+
+
+  if (section === "upload") {
+
+    uploadSection.classList.add("active");
+
+    statusSection.classList.remove("active");
+
+    menuUpload.classList.add("active");
+
+    menuStatus.classList.remove("active");
+
+    return;
 
   }
 
 
-  /* =========================================================
-     SCROLL STATUS
-  ========================================================= */
+  if (section === "status") {
 
-  function scrollKeStatus() {
+    uploadSection.classList.remove("active");
 
-    document
-      .getElementById("statusSection")
-      .scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+    statusSection.classList.add("active");
+
+    menuUpload.classList.remove("active");
+
+    menuStatus.classList.add("active");
+
+
+    ambilStatus();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+}
+
+
+/* =====================================================
+   KEMBALI WEBSITE
+===================================================== */
+
+function kembaliKeWebsite() {
+
+  window.location.href =
+    HOME_URL;
+
+}
+
+
+/* =====================================================
+   CEK PIN
+===================================================== */
+
+async function cekPIN() {
+
+  const pinInput =
+    document.getElementById(
+      "pinInput"
+    );
+
+  const pinMessage =
+    document.getElementById(
+      "pinMessage"
+    );
+
+  const pinButton =
+    document.getElementById(
+      "pinButton"
+    );
+
+  const pinLoading =
+    document.getElementById(
+      "pinLoading"
+    );
+
+
+  const pin =
+    pinInput.value.trim();
+
+
+  if (!pin) {
+
+    pinMessage.innerText =
+      "Silakan masukkan PIN.";
+
+    pinMessage.style.display =
+      "block";
+
+    return;
 
   }
 
 
-  /* =========================================================
-     AMBIL DATA API
-  ========================================================= */
+  pinMessage.style.display =
+    "none";
 
-  function ambilData() {
+  pinButton.disabled = true;
 
-    const loading =
-      document.getElementById("loading");
-
-    const tableWrapper =
-      document.getElementById("tableWrapper");
-
-    const empty =
-      document.getElementById("empty");
-
-    const errorBox =
-      document.getElementById("errorBox");
+  pinLoading.style.display =
+    "block";
 
 
-    loading.style.display = "block";
+  try {
 
-    tableWrapper.style.display = "none";
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
 
-    empty.style.display = "none";
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-    errorBox.style.display = "none";
+          body: JSON.stringify({
 
+            action: "cekPIN",
 
-    /*
-     * JSONP
-     *
-     * Kita menggunakan callback karena
-     * halaman ini berada di GitHub/site lain.
-     */
+            pin: pin
 
-    const callbackName =
-      "dokumenCallback_" +
-      Date.now();
-
-
-    window[callbackName] =
-      function(response) {
-
-        try {
-
-          if (
-            !response ||
-            response.success !== true
-          ) {
-
-            tampilkanError(
-              response &&
-              response.message
-                ? response.message
-                : "Data dokumen gagal dimuat."
-            );
-
-            return;
-
-          }
-
-
-          semuaData =
-            Array.isArray(response.data)
-              ? response.data
-              : [];
-
-
-          renderTable();
-
+          })
         }
-
-        catch(error) {
-
-          tampilkanError(
-            "Data berhasil diterima tetapi tidak dapat ditampilkan."
-          );
-
-        }
-
-        finally {
-
-          loading.style.display =
-            "none";
-
-        }
+      );
 
 
-        /*
-         * Hapus callback setelah selesai.
-         */
-
-        try {
-
-          delete window[callbackName];
-
-        }
-
-        catch(e) {}
-
-      };
+    const result =
+      await response.json();
 
 
-    const script =
-      document.createElement("script");
+    if (
+      result &&
+      result.success === true
+    ) {
 
+      pinTerverifikasi =
+        pin;
 
-    script.src =
-      DOCUMENT_API_URL +
-      "?action=status&callback=" +
-      encodeURIComponent(callbackName);
-
-
-    script.onerror =
-      function() {
-
-        loading.style.display =
-          "none";
-
-        tampilkanError(
-          "Tidak dapat terhubung ke server dokumen."
-        );
-
-
-        try {
-
-          delete window[callbackName];
-
-        }
-
-        catch(e) {}
-
-      };
-
-
-    document
-      .body
-      .appendChild(script);
-
-  }
-
-
-  /* =========================================================
-     RENDER TABLE
-  ========================================================= */
-
-  function renderTable() {
-
-    const search =
       document
-        .getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const kelas =
-      document
-        .getElementById("kelasFilter")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const estate =
-      document
-        .getElementById("estateFilter")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const hasil =
-      semuaData.filter(function(item) {
-
-        const nama =
-          String(item.nama || "")
-            .toLowerCase();
-
-        const itemKelas =
-          String(item.kelas || "")
-            .toLowerCase();
-
-        const itemEstate =
-          String(item.estate || "")
-            .toLowerCase();
-
-
-        const cocokNama =
-          !search ||
-          nama.includes(search);
-
-
-        const cocokKelas =
-          !kelas ||
-          itemKelas === kelas;
-
-
-        const cocokEstate =
-          !estate ||
-          itemEstate === estate;
-
-
-        return (
-          cocokNama &&
-          cocokKelas &&
-          cocokEstate
-        );
-
-      });
-
-
-    const tbody =
-      document.getElementById("tableBody");
-
-
-    const tableWrapper =
-      document.getElementById("tableWrapper");
-
-
-    const empty =
-      document.getElementById("empty");
-
-
-    tbody.innerHTML = "";
-
-
-    if (!hasil.length) {
-
-      tableWrapper.style.display =
+        .getElementById(
+          "pinArea"
+        )
+        .style.display =
         "none";
 
-      empty.style.display =
+      document
+        .getElementById(
+          "uploadArea"
+        )
+        .style.display =
         "block";
 
-      return;
+
+    } else {
+
+      pinMessage.innerText =
+        "PIN yang dimasukkan salah.";
+
+      pinMessage.style.display =
+        "block";
 
     }
 
 
-    empty.style.display =
-      "none";
+  } catch (error) {
 
-    tableWrapper.style.display =
+    pinMessage.innerText =
+      "Tidak dapat terhubung ke server.";
+
+    pinMessage.style.display =
       "block";
 
+  }
 
-    hasil.forEach(function(item, index) {
+
+  pinButton.disabled =
+    false;
+
+  pinLoading.style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   KAMERA
+===================================================== */
+
+function bukaKamera(kategori) {
+
+  const input =
+    document.getElementById(
+      "camera-" + kategori
+    );
+
+  input.value = "";
+
+  input.click();
+
+}
+
+
+/* =====================================================
+   GALERI
+===================================================== */
+
+function bukaGaleri(kategori) {
+
+  const input =
+    document.getElementById(
+      "gallery-" + kategori
+    );
+
+  input.value = "";
+
+  input.click();
+
+}
+
+
+/* =====================================================
+   PILIH FOTO
+===================================================== */
+
+function pilihFoto(
+  event,
+  kategori
+) {
+
+  const selectedFiles =
+    Array.from(
+      event.target.files || []
+    );
+
+
+  if (
+    !selectedFiles.length
+  ) {
+
+    return;
+
+  }
+
+
+  selectedFiles.forEach(
+    function(file) {
+
+      if (
+        !file.type.startsWith(
+          "image/"
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      const preview =
+        URL.createObjectURL(
+          file
+        );
+
+
+      const item = {
+
+        file: file,
+
+        data: null,
+
+        preview: preview,
+
+        mimeType:
+          file.type ||
+          "image/jpeg",
+
+        name:
+          file.name ||
+          "Foto"
+
+      };
+
+
+      files[kategori]
+        .push(item);
+
+
+      tampilkanPreview(
+        kategori
+      );
+
+
+      kompresFoto(file)
+
+        .then(
+          function(dataURL) {
+
+            item.data =
+              dataURL;
+
+          }
+        )
+
+        .catch(
+          function() {
+
+            const reader =
+              new FileReader();
+
+
+            reader.onload =
+              function(e) {
+
+                item.data =
+                  e.target.result;
+
+              };
+
+
+            reader.readAsDataURL(
+              file
+            );
+
+          }
+        );
+
+    }
+  );
+
+
+  /*
+   * Supaya file yang sama
+   * dapat dipilih lagi.
+   */
+  event.target.value = "";
+
+}
+
+
+/* =====================================================
+   KOMPRES FOTO
+===================================================== */
+
+function kompresFoto(file) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(e) {
+
+          const img =
+            new Image();
+
+
+          img.onload =
+            function() {
+
+              let width =
+                img.width;
+
+              let height =
+                img.height;
+
+
+              const maxSize =
+                1600;
+
+
+              if (
+                width > maxSize ||
+                height > maxSize
+              ) {
+
+                if (
+                  width > height
+                ) {
+
+                  height =
+                    height *
+                    maxSize /
+                    width;
+
+                  width =
+                    maxSize;
+
+                } else {
+
+                  width =
+                    width *
+                    maxSize /
+                    height;
+
+                  height =
+                    maxSize;
+
+                }
+
+              }
+
+
+              const canvas =
+                document.createElement(
+                  "canvas"
+                );
+
+
+              canvas.width =
+                Math.round(width);
+
+              canvas.height =
+                Math.round(height);
+
+
+              const ctx =
+                canvas.getContext(
+                  "2d"
+                );
+
+
+              ctx.drawImage(
+                img,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+              );
+
+
+              try {
+
+                const dataURL =
+                  canvas.toDataURL(
+                    "image/jpeg",
+                    0.82
+                  );
+
+
+                resolve(
+                  dataURL
+                );
+
+
+              } catch(error) {
+
+                reject(error);
+
+              }
+
+            };
+
+
+          img.onerror =
+            function() {
+
+              reject(
+                new Error(
+                  "Foto tidak dapat diproses."
+                )
+              );
+
+            };
+
+
+          img.src =
+            e.target.result;
+
+        };
+
+
+      reader.onerror =
+        function() {
+
+          reject(
+            new Error(
+              "File tidak dapat dibaca."
+            )
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   PREVIEW
+===================================================== */
+
+function tampilkanPreview(
+  kategori
+) {
+
+  const container =
+    document.getElementById(
+      "preview-" + kategori
+    );
+
+
+  container.innerHTML = "";
+
+
+  files[kategori].forEach(
+    function(item, index) {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "preview-card";
+
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+
+      img.src =
+        item.preview;
+
+
+      img.alt =
+        "Preview " +
+        (index + 1);
+
+
+      card.appendChild(
+        img
+      );
+
+
+      const number =
+        document.createElement(
+          "div"
+        );
+
+
+      number.className =
+        "preview-number";
+
+
+      number.innerText =
+        "#" +
+        (index + 1);
+
+
+      card.appendChild(
+        number
+      );
+
+
+      const deleteButton =
+        document.createElement(
+          "button"
+        );
+
+
+      deleteButton.type =
+        "button";
+
+      deleteButton.className =
+        "preview-delete";
+
+      deleteButton.innerHTML =
+        "×";
+
+      deleteButton.title =
+        "Hapus foto";
+
+
+      deleteButton.onclick =
+        function() {
+
+          hapusFoto(
+            kategori,
+            index
+          );
+
+        };
+
+
+      card.appendChild(
+        deleteButton
+      );
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   HAPUS FOTO
+===================================================== */
+
+function hapusFoto(
+  kategori,
+  index
+) {
+
+  const item =
+    files[kategori][index];
+
+
+  if (
+    item &&
+    item.preview
+  ) {
+
+    try {
+
+      URL.revokeObjectURL(
+        item.preview
+      );
+
+    } catch(e) {}
+
+  }
+
+
+  files[kategori]
+    .splice(
+      index,
+      1
+    );
+
+
+  tampilkanPreview(
+    kategori
+  );
+
+}
+
+
+/* =====================================================
+   SIMPAN DOKUMEN
+===================================================== */
+
+async function simpanDokumen() {
+
+  const nama =
+    document
+      .getElementById(
+        "nama"
+      )
+      .value
+      .trim();
+
+
+  const kelas =
+    document
+      .getElementById(
+        "kelas"
+      )
+      .value
+      .trim();
+
+
+  const estate =
+    document
+      .getElementById(
+        "estate"
+      )
+      .value
+      .trim();
+
+
+  if (!nama) {
+
+    tampilkanPesan(
+      "Silakan masukkan nama siswa.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (!kelas) {
+
+    tampilkanPesan(
+      "Silakan pilih kelas.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (!estate) {
+
+    tampilkanPesan(
+      "Silakan pilih estate.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const totalFile =
+    files.fotoSiswa.length +
+    files.kartuKeluarga.length +
+    files.aktaLahir.length;
+
+
+  if (
+    totalFile === 0
+  ) {
+
+    tampilkanPesan(
+      "Silakan pilih minimal satu dokumen.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Pastikan kompresi selesai.
+   */
+  const belumSiap =
+    Object.keys(files)
+      .some(
+        function(kategori) {
+
+          return files[kategori]
+            .some(
+              function(item) {
+
+                return !item.data;
+
+              }
+            );
+
+        }
+      );
+
+
+  if (belumSiap) {
+
+    tampilkanPesan(
+      "Foto masih sedang diproses. Tunggu beberapa detik lalu coba lagi.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (!pinTerverifikasi) {
+
+    tampilkanPesan(
+      "Sesi upload tidak valid. Silakan masukkan PIN kembali.",
+      "error"
+    );
+
+    document
+      .getElementById(
+        "pinArea"
+      )
+      .style.display =
+      "block";
+
+    document
+      .getElementById(
+        "uploadArea"
+      )
+      .style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  const saveButton =
+    document.getElementById(
+      "saveButton"
+    );
+
+  const saveLoading =
+    document.getElementById(
+      "saveLoading"
+    );
+
+
+  saveButton.disabled =
+    true;
+
+  saveButton.innerText =
+    "Sedang menyimpan...";
+
+  saveLoading.style.display =
+    "block";
+
+
+  /*
+   * Data yang dikirim ke backend.
+   */
+  const data = {
+
+    action:
+      "simpanDokumen",
+
+    pin:
+      pinTerverifikasi,
+
+    nama:
+      nama,
+
+    kelas:
+      kelas,
+
+    estate:
+      estate,
+
+    fotoSiswa:
+      files.fotoSiswa.map(
+        function(item) {
+
+          return {
+
+            data:
+              item.data,
+
+            mimeType:
+              item.mimeType,
+
+            name:
+              item.name
+
+          };
+
+        }
+      ),
+
+    kartuKeluarga:
+      files.kartuKeluarga.map(
+        function(item) {
+
+          return {
+
+            data:
+              item.data,
+
+            mimeType:
+              item.mimeType,
+
+            name:
+              item.name
+
+          };
+
+        }
+      ),
+
+    aktaLahir:
+      files.aktaLahir.map(
+        function(item) {
+
+          return {
+
+            data:
+              item.data,
+
+            mimeType:
+              item.mimeType,
+
+            name:
+              item.name
+
+          };
+
+        }
+      )
+
+  };
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body:
+            JSON.stringify(data)
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result &&
+        result.message
+          ? result.message
+          : "Dokumen gagal disimpan."
+      );
+
+    }
+
+
+    tampilkanHasil(
+      result
+    );
+
+
+  } catch(error) {
+
+    tampilkanPesan(
+      error.message ||
+      "Terjadi kesalahan saat menyimpan dokumen.",
+      "error"
+    );
+
+
+  } finally {
+
+    saveButton.disabled =
+      false;
+
+    saveButton.innerText =
+      "💾 Simpan Dokumen";
+
+    saveLoading.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* =====================================================
+   HASIL
+===================================================== */
+
+function tampilkanHasil(
+  result
+) {
+
+  document
+    .getElementById(
+      "uploadArea"
+    )
+    .style.display =
+    "none";
+
+
+  document
+    .getElementById(
+      "successArea"
+    )
+    .style.display =
+    "block";
+
+
+  document
+    .getElementById(
+      "resultNama"
+    )
+    .innerText =
+    result.nama || "-";
+
+
+  document
+    .getElementById(
+      "resultKelas"
+    )
+    .innerText =
+    result.kelas || "-";
+
+
+  document
+    .getElementById(
+      "resultEstate"
+    )
+    .innerText =
+    result.estate || "-";
+
+
+  const statusElement =
+    document.getElementById(
+      "resultStatus"
+    );
+
+
+  const status =
+    String(
+      result.status || ""
+    ).toUpperCase();
+
+
+  statusElement.innerText =
+    status || "TERSIMPAN";
+
+
+  statusElement.className =
+    "info-value";
+
+
+  if (
+    status === "LENGKAP"
+  ) {
+
+    statusElement.classList.add(
+      "status-complete"
+    );
+
+  } else {
+
+    statusElement.classList.add(
+      "status-incomplete"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   UPLOAD SISWA LAIN
+===================================================== */
+
+function uploadSiswaLain() {
+
+  resetForm();
+
+
+  document
+    .getElementById(
+      "successArea"
+    )
+    .style.display =
+    "none";
+
+
+  document
+    .getElementById(
+      "uploadArea"
+    )
+    .style.display =
+    "block";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =====================================================
+   RESET FORM
+===================================================== */
+
+function resetForm() {
+
+  Object.keys(files)
+    .forEach(
+      function(kategori) {
+
+        files[kategori]
+          .forEach(
+            function(item) {
+
+              if (
+                item.preview
+              ) {
+
+                try {
+
+                  URL.revokeObjectURL(
+                    item.preview
+                  );
+
+                } catch(e) {}
+
+              }
+
+            }
+          );
+
+      }
+    );
+
+
+  files = {
+
+    fotoSiswa: [],
+
+    kartuKeluarga: [],
+
+    aktaLahir: []
+
+  };
+
+
+  document
+    .getElementById(
+      "nama"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "kelas"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "estate"
+    )
+    .value = "";
+
+
+  [
+    "fotoSiswa",
+    "kartuKeluarga",
+    "aktaLahir"
+  ]
+  .forEach(
+    function(kategori) {
+
+      tampilkanPreview(
+        kategori
+      );
+
+    }
+  );
+
+
+  document
+    .querySelectorAll(
+      'input[type="file"]'
+    )
+    .forEach(
+      function(input) {
+
+        input.value = "";
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "formMessage"
+    )
+    .style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   PESAN
+===================================================== */
+
+function tampilkanPesan(
+  pesan,
+  tipe
+) {
+
+  const message =
+    document.getElementById(
+      "formMessage"
+    );
+
+
+  message.innerText =
+    pesan;
+
+
+  message.className =
+    "message";
+
+
+  if (
+    tipe === "error"
+  ) {
+
+    message.classList.add(
+      "message-error"
+    );
+
+  } else if (
+    tipe === "success"
+  ) {
+
+    message.classList.add(
+      "message-success"
+    );
+
+  } else {
+
+    message.classList.add(
+      "message-info"
+    );
+
+  }
+
+
+  message.style.display =
+    "block";
+
+
+  message.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+
+}
+
+
+/* =====================================================
+   STATUS API
+===================================================== */
+
+function ambilStatus() {
+
+  const loading =
+    document.getElementById(
+      "statusLoading"
+    );
+
+  const tableWrapper =
+    document.getElementById(
+      "tableWrapper"
+    );
+
+  const empty =
+    document.getElementById(
+      "statusEmpty"
+    );
+
+  const errorBox =
+    document.getElementById(
+      "statusError"
+    );
+
+
+  loading.style.display =
+    "block";
+
+  tableWrapper.style.display =
+    "none";
+
+  empty.style.display =
+    "none";
+
+  errorBox.style.display =
+    "none";
+
+
+  /*
+   * JSONP digunakan karena
+   * halaman berada di GitHub.
+   */
+  const callbackName =
+    "dokumenStatus_" +
+    Date.now();
+
+
+  window[callbackName] =
+    function(result) {
+
+      try {
+
+        if (
+          !result ||
+          result.success !== true
+        ) {
+
+          throw new Error(
+            result &&
+            result.message
+              ? result.message
+              : "Data gagal dimuat."
+          );
+
+        }
+
+
+        semuaData =
+          Array.isArray(
+            result.data
+          )
+            ? result.data
+            : [];
+
+
+        renderTable();
+
+
+      } catch(error) {
+
+        tampilkanStatusError(
+          error.message ||
+          "Data gagal dimuat."
+        );
+
+      }
+
+
+      loading.style.display =
+        "none";
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      } catch(e) {}
+
+    };
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.src =
+    API_URL +
+    "?action=status&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  script.onerror =
+    function() {
+
+      loading.style.display =
+        "none";
+
+
+      tampilkanStatusError(
+        "Tidak dapat terhubung ke server dokumen."
+      );
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      } catch(e) {}
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   RENDER STATUS
+===================================================== */
+
+function renderTable() {
+
+  const search =
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const kelas =
+    document
+      .getElementById(
+        "filterKelas"
+      )
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const estate =
+    document
+      .getElementById(
+        "filterEstate"
+      )
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const hasil =
+    semuaData.filter(
+      function(item) {
+
+        const nama =
+          String(
+            item.nama || ""
+          )
+          .toLowerCase();
+
+
+        const itemKelas =
+          String(
+            item.kelas || ""
+          )
+          .toLowerCase();
+
+
+        const itemEstate =
+          String(
+            item.estate || ""
+          )
+          .toLowerCase();
+
+
+        return (
+
+          (!search ||
+            nama.includes(search))
+
+          &&
+
+          (!kelas ||
+            itemKelas === kelas)
+
+          &&
+
+          (!estate ||
+            itemEstate === estate)
+
+        );
+
+      }
+    );
+
+
+  const tbody =
+    document.getElementById(
+      "tableBody"
+    );
+
+
+  const tableWrapper =
+    document.getElementById(
+      "tableWrapper"
+    );
+
+
+  const empty =
+    document.getElementById(
+      "statusEmpty"
+    );
+
+
+  tbody.innerHTML = "";
+
+
+  if (
+    hasil.length === 0
+  ) {
+
+    tableWrapper.style.display =
+      "none";
+
+    empty.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  empty.style.display =
+    "none";
+
+  tableWrapper.style.display =
+    "block";
+
+
+  hasil.forEach(
+    function(item, index) {
 
       const tr =
-        document.createElement("tr");
+        document.createElement(
+          "tr"
+        );
 
 
       tr.innerHTML =
@@ -1107,176 +3277,200 @@
           (index + 1) +
         "</td>" +
 
-
         "<td>" +
           '<span class="student-name">' +
-          escapeHTML(item.nama || "-") +
+          escapeHTML(
+            item.nama || "-"
+          ) +
           "</span>" +
         "</td>" +
 
-
         "<td>" +
-          escapeHTML(item.kelas || "-") +
+          escapeHTML(
+            item.kelas || "-"
+          ) +
         "</td>" +
 
-
         "<td>" +
-          escapeHTML(item.estate || "-") +
+          escapeHTML(
+            item.estate || "-"
+          ) +
         "</td>" +
 
-
         "<td>" +
-          statusDokumen(item.fotoSiswa) +
+          statusDokumen(
+            item.fotoSiswa
+          ) +
         "</td>" +
 
-
         "<td>" +
-          statusDokumen(item.kartuKeluarga) +
+          statusDokumen(
+            item.kartuKeluarga
+          ) +
         "</td>" +
 
-
         "<td>" +
-          statusDokumen(item.aktaLahir) +
+          statusDokumen(
+            item.aktaLahir
+          ) +
         "</td>" +
 
-
         "<td>" +
-          statusKeseluruhan(item.status) +
+          statusKeseluruhan(
+            item.status
+          ) +
         "</td>";
 
 
-      tbody.appendChild(tr);
-
-    });
-
-  }
-
-
-  /* =========================================================
-     STATUS DOKUMEN
-  ========================================================= */
-
-  function statusDokumen(ada) {
-
-    if (ada === true) {
-
-      return `
-        <span class="doc-status doc-yes">
-          ✓ Ada
-        </span>
-      `;
-
-    }
-
-
-    return `
-      <span class="doc-status doc-no">
-        ✕ Belum
-      </span>
-    `;
-
-  }
-
-
-  /* =========================================================
-     STATUS KESELURUHAN
-  ========================================================= */
-
-  function statusKeseluruhan(status) {
-
-    const value =
-      String(status || "")
-        .toUpperCase();
-
-
-    if (value === "LENGKAP") {
-
-      return `
-        <span class="status-badge status-complete">
-          ✓ LENGKAP
-        </span>
-      `;
-
-    }
-
-
-    return `
-      <span class="status-badge status-incomplete">
-        ⚠ BELUM LENGKAP
-      </span>
-    `;
-
-  }
-
-
-  /* =========================================================
-     ERROR
-  ========================================================= */
-
-  function tampilkanError(pesan) {
-
-    const errorBox =
-      document.getElementById("errorBox");
-
-
-    errorBox.innerText =
-      pesan;
-
-
-    errorBox.style.display =
-      "block";
-
-  }
-
-
-  /* =========================================================
-     ESCAPE HTML
-  ========================================================= */
-
-  function escapeHTML(text) {
-
-    return String(text)
-
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-
-      .replace(
-        /</g,
-        "&lt;"
-      )
-
-      .replace(
-        />/g,
-        "&gt;"
-      )
-
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-
-      .replace(
-        /'/g,
-        "&#039;"
+      tbody.appendChild(
+        tr
       );
-
-  }
-
-
-  /* =========================================================
-     LOAD
-  ========================================================= */
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-      ambilData();
 
     }
   );
+
+}
+
+
+/* =====================================================
+   STATUS DOKUMEN
+===================================================== */
+
+function statusDokumen(ada) {
+
+  if (
+    ada === true
+  ) {
+
+    return `
+      <span class="doc-status doc-yes">
+        ✓ Ada
+      </span>
+    `;
+
+  }
+
+
+  return `
+    <span class="doc-status doc-no">
+      ✕ Belum
+    </span>
+  `;
+
+}
+
+
+/* =====================================================
+   STATUS KESELURUHAN
+===================================================== */
+
+function statusKeseluruhan(
+  status
+) {
+
+  const value =
+    String(
+      status || ""
+    ).toUpperCase();
+
+
+  if (
+    value === "LENGKAP"
+  ) {
+
+    return `
+      <span class="status-badge complete">
+        ✓ LENGKAP
+      </span>
+    `;
+
+  }
+
+
+  return `
+    <span class="status-badge incomplete">
+      ⚠ BELUM LENGKAP
+    </span>
+  `;
+
+}
+
+
+/* =====================================================
+   ERROR STATUS
+===================================================== */
+
+function tampilkanStatusError(
+  pesan
+) {
+
+  const errorBox =
+    document.getElementById(
+      "statusError"
+    );
+
+
+  errorBox.innerText =
+    pesan;
+
+
+  errorBox.style.display =
+    "block";
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(text) {
+
+  return String(text)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   LOAD
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    /*
+     * Kita belum mengambil status
+     * sampai menu status dibuka.
+     */
+
+  }
+);
 
 </script>
 
