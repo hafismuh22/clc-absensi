@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dokumen Siswa | CLC Permodalan TKB Morisem 3</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 25px 18px 50px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(
+        135deg,
+        #0d47a1,
+        #1565c0,
+        #1976d2
+      );
+      color: white;
+      border-radius: 22px;
+      padding: 38px 35px;
+      margin-bottom: 22px;
+      box-shadow: 0 12px 35px rgba(13, 71, 161, 0.20);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      right: -70px;
+      top: -80px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      right: 100px;
+      bottom: -100px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      font-size: 14px;
+      opacity: 0.92;
+    }
+
+    /* =========================
+       MENU CARD
+    ========================= */
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      border: 1px solid #e5eaf1;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 17px;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border-color: #bbd7f7;
+    }
+
+    .menu-icon {
+      width: 58px;
+      height: 58px;
+      flex: 0 0 58px;
+      border-radius: 16px;
+      background: #e3f2fd;
+      color: #1565c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+    }
+
+    .menu-card h3 {
+      margin: 0 0 5px;
+      font-size: 17px;
+      color: #0d47a1;
+    }
+
+    .menu-card p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .menu-arrow {
+      margin-left: auto;
+      color: #94a3b8;
+      font-size: 22px;
+    }
+
+    /* =========================
+       CONTENT CARD
+    ========================= */
+
+    .content-card {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #e5eaf1;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .content-header {
+      padding: 22px 24px;
+      border-bottom: 1px solid #e8edf3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .content-title {
+      margin: 0;
+      color: #0d47a1;
+      font-size: 19px;
+    }
+
+    .content-subtitle {
+      margin: 5px 0 0;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    /* =========================
+       FILTER
+    ========================= */
+
+    .filter-area {
+      padding: 18px 24px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e8edf3;
+
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr auto;
+      gap: 10px;
+    }
+
+    .input-box,
+    .select-box {
+      width: 100%;
+      height: 44px;
+      border: 1px solid #d9e1ea;
+      border-radius: 10px;
+      background: white;
+      padding: 0 13px;
+      outline: none;
+      font-size: 13px;
+      color: #334155;
+    }
+
+    .input-box:focus,
+    .select-box:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 3px rgba(25,118,210,0.10);
+    }
+
+    .refresh-button {
+      height: 44px;
+      border: none;
+      border-radius: 10px;
+      background: #1565c0;
+      color: white;
+      padding: 0 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .refresh-button:hover {
+      background: #0d47a1;
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 900px;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: left;
+      padding: 14px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #edf1f5;
+      font-size: 13px;
+      color: #334155;
+      vertical-align: middle;
+    }
+
+    tbody tr:hover {
+      background: #f8fbff;
+    }
+
+    .student-name {
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    /* =========================
+       DOCUMENT STATUS
+    ========================= */
+
+    .doc-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .doc-yes {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .doc-no {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 11px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-complete {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-incomplete {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    .loading {
+      padding: 45px 20px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .spinner {
+      width: 35px;
+      height: 35px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      border: 4px solid #dbeafe;
+      border-top-color: #1565c0;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =========================
+       EMPTY
+    ========================= */
+
+    .empty {
+      padding: 50px 20px;
+      text-align: center;
+      color: #64748b;
+      display: none;
+    }
+
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .empty h3 {
+      margin: 0 0 6px;
+      color: #334155;
+    }
+
+    .empty p {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    /* =========================
+       ERROR
+    ========================= */
+
+    .error-box {
+      display: none;
+      margin: 18px 24px;
+      padding: 13px 15px;
+      border-radius: 10px;
+      background: #fee2e2;
+      color: #991b1b;
+      font-size: 13px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+      text-align: center;
+      padding: 25px 10px 5px;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      .container {
+        padding: 12px 10px 35px;
+      }
+
+      .hero {
+        padding: 28px 22px;
+        border-radius: 17px;
+      }
+
+      .hero h1 {
+        font-size: 23px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-card {
+        padding: 18px;
+      }
+
+      .content-header {
+        padding: 18px;
+        align-items: flex-start;
+      }
+
+      .filter-area {
+        grid-template-columns: 1fr;
+        padding: 15px;
+      }
+
+      .refresh-button {
+        width: 100%;
+      }
+
+      .error-box {
+        margin: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        📁 SISTEM DOKUMEN SISWA
+      </div>
+
+      <h1>
+        Dokumen Siswa
+      </h1>
+
+      <p>
+        CLC PERMODALAN TKB MORISEM 3
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MENU
+  ========================= -->
+
+  <section class="menu-grid">
+
+    <div
+      class="menu-card"
+      onclick="bukaUpload()"
+    >
+
+      <div class="menu-icon">
+        📤
+      </div>
+
+      <div>
+
+        <h3>
+          Upload Dokumen Siswa
+        </h3>
+
+        <p>
+          Upload foto siswa, kartu keluarga,
+          dan akta lahir.
+        </p>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </div>
+
+
+    <div
+      class="menu-card"
+      onclick="scrollKeStatus()"
+    >
+
+      <div class="menu-icon">
+        📋
+      </div>
+
+      <div>
+
+        <h3>
+          Lihat Status Dokumen
+        </h3>
+
+        <p>
+          Periksa kelengkapan dokumen
+          siswa.
+        </p>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       STATUS
+  ========================= -->
+
+  <section
+    class="content-card"
+    id="statusSection"
+  >
+
+    <div class="content-header">
+
+      <div>
+
+        <h2 class="content-title">
+          Status Dokumen Siswa
+        </h2>
+
+        <p class="content-subtitle">
+          Daftar kelengkapan dokumen siswa
+          CLC Permodalan TKB Morisem 3
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- FILTER -->
+
+    <div class="filter-area">
+
+      <input
+        type="text"
+        id="searchInput"
+        class="input-box"
+        placeholder="🔎 Cari nama siswa..."
+        oninput="renderTable()"
+      >
+
+
+      <select
+        id="kelasFilter"
+        class="select-box"
+        onchange="renderTable()"
+      >
+
+        <option value="">
+          Semua Kelas
+        </option>
+
+        <option value="TKB">
+          TKB
+        </option>
+
+        <option value="5">
+          Kelas 5
+        </option>
+
+        <option value="6">
+          Kelas 6
+        </option>
+
+        <option value="7">
+          Kelas 7
+        </option>
+
+        <option value="8">
+          Kelas 8
+        </option>
+
+        <option value="9">
+          Kelas 9
+        </option>
+
+      </select>
+
+
+      <select
+        id="estateFilter"
+        class="select-box"
+        onchange="renderTable()"
+      >
+
+        <option value="">
+          Semua Estate
+        </option>
+
+        <option value="Morisem">
+          Morisem
+        </option>
+
+        <option value="Permodalan">
+          Permodalan
+        </option>
+
+        <option value="Ladang Tas">
+          Ladang Tas
+        </option>
+
+        <option value="Lainnya">
+          Lainnya
+        </option>
+
+      </select>
+
+
+      <button
+        class="refresh-button"
+        onclick="ambilData()"
+      >
+        ↻ Refresh
+      </button>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+      id="errorBox"
+      class="error-box"
+    ></div>
+
+
+    <!-- LOADING -->
+
+    <div
+      id="loading"
+      class="loading"
+    >
+
+      <div class="spinner"></div>
+
+      Memuat data dokumen siswa...
+
+    </div>
+
+
+    <!-- EMPTY -->
+
+    <div
+      id="empty"
+      class="empty"
+    >
+
+      <div class="empty-icon">
+        📂
+      </div>
+
+      <h3>
+        Data tidak ditemukan
+      </h3>
+
+      <p>
+        Belum ada data siswa yang sesuai
+        dengan pencarian.
+      </p>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div
+      id="tableWrapper"
+      class="table-wrapper"
+      style="display:none;"
+    >
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              NO
+            </th>
+
+            <th>
+              NAMA SISWA
+            </th>
+
+            <th>
+              KELAS
+            </th>
+
+            <th>
+              ESTATE
+            </th>
+
+            <th>
+              FOTO SISWA
+            </th>
+
+            <th>
+              KARTU KELUARGA
+            </th>
+
+            <th>
+              AKTA LAHIR
+            </th>
+
+            <th>
+              STATUS
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="tableBody">
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <div class="footer">
+
+    CLC PERMODALAN TKB MORISEM 3<br>
+
+    Sistem Informasi Dokumen Siswa
+
+  </div>
+
+</div>
+
+
+<script>
+
+  /* =========================================================
+     KONFIGURASI
+  ========================================================= */
+
+  const DOCUMENT_API_URL =
+    "https://script.google.com/macros/s/AKfycbyQNN6KU92qBhk130NFRlyL2Roj3gSoVbChWrWZ8Cc7ai2S--DQgCLs9L_fIKvYQ70t/exec";
+
+
+  /*
+   * URL halaman upload Apps Script.
+   */
+
+  const UPLOAD_URL =
+    DOCUMENT_API_URL;
+
+
+  /* =========================================================
+     DATA
+  ========================================================= */
+
+  let semuaData = [];
+
+
+  /* =========================================================
+     BUKA UPLOAD
+  ========================================================= */
+
+  function bukaUpload() {
+
+    window.location.href = UPLOAD_URL;
+
+  }
+
+
+  /* =========================================================
+     SCROLL STATUS
+  ========================================================= */
+
+  function scrollKeStatus() {
+
+    document
+      .getElementById("statusSection")
+      .scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+  }
+
+
+  /* =========================================================
+     AMBIL DATA API
+  ========================================================= */
+
+  function ambilData() {
+
+    const loading =
+      document.getElementById("loading");
+
+    const tableWrapper =
+      document.getElementById("tableWrapper");
+
+    const empty =
+      document.getElementById("empty");
+
+    const errorBox =
+      document.getElementById("errorBox");
+
+
+    loading.style.display = "block";
+
+    tableWrapper.style.display = "none";
+
+    empty.style.display = "none";
+
+    errorBox.style.display = "none";
+
+
+    /*
+     * JSONP
+     *
+     * Kita menggunakan callback karena
+     * halaman ini berada di GitHub/site lain.
+     */
+
+    const callbackName =
+      "dokumenCallback_" +
+      Date.now();
+
+
+    window[callbackName] =
+      function(response) {
+
+        try {
+
+          if (
+            !response ||
+            response.success !== true
+          ) {
+
+            tampilkanError(
+              response &&
+              response.message
+                ? response.message
+                : "Data dokumen gagal dimuat."
+            );
+
+            return;
+
+          }
+
+
+          semuaData =
+            Array.isArray(response.data)
+              ? response.data
+              : [];
+
+
+          renderTable();
+
+        }
+
+        catch(error) {
+
+          tampilkanError(
+            "Data berhasil diterima tetapi tidak dapat ditampilkan."
+          );
+
+        }
+
+        finally {
+
+          loading.style.display =
+            "none";
+
+        }
+
+
+        /*
+         * Hapus callback setelah selesai.
+         */
+
+        try {
+
+          delete window[callbackName];
+
+        }
+
+        catch(e) {}
+
+      };
+
+
+    const script =
+      document.createElement("script");
+
+
+    script.src =
+      DOCUMENT_API_URL +
+      "?action=status&callback=" +
+      encodeURIComponent(callbackName);
+
+
+    script.onerror =
+      function() {
+
+        loading.style.display =
+          "none";
+
+        tampilkanError(
+          "Tidak dapat terhubung ke server dokumen."
+        );
+
+
+        try {
+
+          delete window[callbackName];
+
+        }
+
+        catch(e) {}
+
+      };
+
+
+    document
+      .body
+      .appendChild(script);
+
+  }
+
+
+  /* =========================================================
+     RENDER TABLE
+  ========================================================= */
+
+  function renderTable() {
+
+    const search =
+      document
+        .getElementById("searchInput")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const kelas =
+      document
+        .getElementById("kelasFilter")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const estate =
+      document
+        .getElementById("estateFilter")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const hasil =
+      semuaData.filter(function(item) {
+
+        const nama =
+          String(item.nama || "")
+            .toLowerCase();
+
+        const itemKelas =
+          String(item.kelas || "")
+            .toLowerCase();
+
+        const itemEstate =
+          String(item.estate || "")
+            .toLowerCase();
+
+
+        const cocokNama =
+          !search ||
+          nama.includes(search);
+
+
+        const cocokKelas =
+          !kelas ||
+          itemKelas === kelas;
+
+
+        const cocokEstate =
+          !estate ||
+          itemEstate === estate;
+
+
+        return (
+          cocokNama &&
+          cocokKelas &&
+          cocokEstate
+        );
+
+      });
+
+
+    const tbody =
+      document.getElementById("tableBody");
+
+
+    const tableWrapper =
+      document.getElementById("tableWrapper");
+
+
+    const empty =
+      document.getElementById("empty");
+
+
+    tbody.innerHTML = "";
+
+
+    if (!hasil.length) {
+
+      tableWrapper.style.display =
+        "none";
+
+      empty.style.display =
+        "block";
+
+      return;
+
+    }
+
+
+    empty.style.display =
+      "none";
+
+    tableWrapper.style.display =
+      "block";
+
+
+    hasil.forEach(function(item, index) {
+
+      const tr =
+        document.createElement("tr");
+
+
+      tr.innerHTML =
+
+        "<td>" +
+          (index + 1) +
+        "</td>" +
+
+
+        "<td>" +
+          '<span class="student-name">' +
+          escapeHTML(item.nama || "-") +
+          "</span>" +
+        "</td>" +
+
+
+        "<td>" +
+          escapeHTML(item.kelas || "-") +
+        "</td>" +
+
+
+        "<td>" +
+          escapeHTML(item.estate || "-") +
+        "</td>" +
+
+
+        "<td>" +
+          statusDokumen(item.fotoSiswa) +
+        "</td>" +
+
+
+        "<td>" +
+          statusDokumen(item.kartuKeluarga) +
+        "</td>" +
+
+
+        "<td>" +
+          statusDokumen(item.aktaLahir) +
+        "</td>" +
+
+
+        "<td>" +
+          statusKeseluruhan(item.status) +
+        "</td>";
+
+
+      tbody.appendChild(tr);
+
+    });
+
+  }
+
+
+  /* =========================================================
+     STATUS DOKUMEN
+  ========================================================= */
+
+  function statusDokumen(ada) {
+
+    if (ada === true) {
+
+      return `
+        <span class="doc-status doc-yes">
+          ✓ Ada
+        </span>
+      `;
+
+    }
+
+
+    return `
+      <span class="doc-status doc-no">
+        ✕ Belum
+      </span>
+    `;
+
+  }
+
+
+  /* =========================================================
+     STATUS KESELURUHAN
+  ========================================================= */
+
+  function statusKeseluruhan(status) {
+
+    const value =
+      String(status || "")
+        .toUpperCase();
+
+
+    if (value === "LENGKAP") {
+
+      return `
+        <span class="status-badge status-complete">
+          ✓ LENGKAP
+        </span>
+      `;
+
+    }
+
+
+    return `
+      <span class="status-badge status-incomplete">
+        ⚠ BELUM LENGKAP
+      </span>
+    `;
+
+  }
+
+
+  /* =========================================================
+     ERROR
+  ========================================================= */
+
+  function tampilkanError(pesan) {
+
+    const errorBox =
+      document.getElementById("errorBox");
+
+
+    errorBox.innerText =
+      pesan;
+
+
+    errorBox.style.display =
+      "block";
+
+  }
+
+
+  /* =========================================================
+     ESCAPE HTML
+  ========================================================= */
+
+  function escapeHTML(text) {
+
+    return String(text)
+
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+
+      .replace(
+        /</g,
+        "&lt;"
+      )
+
+      .replace(
+        />/g,
+        "&gt;"
+      )
+
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+  }
+
+
+  /* =========================================================
+     LOAD
+  ========================================================= */
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+      ambilData();
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
