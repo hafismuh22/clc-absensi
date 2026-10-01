@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <meta name="theme-color" content="#0757b8">
 <title>Data Guru - CLC PERMODALAN</title>
 <style>
 :root{--blue:#0757b8;--blue2:#0878df;--navy:#073d83;--text:#123b73;--muted:#6b86a5;--line:#d9eafb;--shadow:0 8px 25px rgba(12,88,165,.11)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#f8fdff,#fff 55%,#f4fbff)}
 a{text-decoration:none;color:inherit}button,input,select{font:inherit}
-.site-header{position:sticky;top:0;z-index:1000;background:linear-gradient(100deg,#06468f,#0873d8);color:#fff;box-shadow:0 4px 18px rgba(0,60,130,.22)}
+.site-header{position:sticky;top:0;z-index:99999;background:linear-gradient(100deg,#06468f,#0873d8);color:#fff;box-shadow:0 4px 18px rgba(0,60,130,.22)}
 .nav-wrap{max-width:1440px;height:68px;margin:auto;padding:0 28px;display:flex;align-items:center;gap:22px}
 .brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}.brand-logo{width:49px;height:49px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:25px;border:2px solid rgba(255,255,255,.75)}
 .brand-text{line-height:1.05;white-space:nowrap}.brand-text strong{display:block;font-size:17px}.brand-text small{display:block;font-size:14px;font-weight:700;margin-top:3px}
@@ -52,19 +53,28 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 </head>
 <body>
 <header class="site-header">
-<div class="nav-wrap">
-<a class="brand" href="home.html"><div class="brand-logo">🎓</div><div class="brand-text"><strong>CLC PERMODALAN</strong><small>TKB MORISEM 3</small></div></a>
-<nav class="main-nav">
-<a href="home.html"><span class="nav-icon">⌂</span>Beranda</a>
-<a href="guru.html" class="active"><span class="nav-icon">♟</span>Data Guru</a>
-<a href="siswa.html"><span class="nav-icon">♟</span>Data Siswa</a>
-<a href="alumni.html"><span class="nav-icon">🎓</span>Data Alumni</a>
-<a href="kegiatan.html"><span class="nav-icon">▣</span>Kegiatan</a>
-<a href="pembayaran.html"><span class="nav-icon">▤</span>Pembayaran</a>
-<a href="portal-absensi.html"><span class="nav-icon">☑</span>Absensi</a>
-<button class="search-btn" onclick="openSearch()">⌕</button>
-<a class="ppdb-btn" href="#" onclick="coming(event)">▣ &nbsp; PPDB</a>
-</nav></div>
+  <div class="nav-wrap">
+    <a class="brand" href="home.html" aria-label="CLC Permodalan">
+      <div class="brand-logo"><span>🎓</span></div>
+      <div class="brand-text">
+        <strong>CLC PERMODALAN</strong>
+        <small>TKB MORISEM 3</small>
+      </div>
+    </a>
+
+    <nav class="main-nav" aria-label="Navigasi utama">
+      <a href="home.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span>Beranda</a>
+      <a href="guru.html" class="active"><span class="nav-icon"><i class="fa-solid fa-user-group"></i></span>Data Guru</a>
+      <a href="siswa.html"><span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>Data Siswa</a>
+      <a href="alumni.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>Data Alumni</a>
+      <a href="kegiatan.html"><span class="nav-icon"><i class="fa-solid fa-arrows-spin"></i></span>Kegiatan</a>
+      <a href="dokumen.html"><span class="nav-icon"><i class="fa-solid fa-folder-open"></i></span>Dokumen</a>
+      <a href="pembayaran.html"><span class="nav-icon">▤</span>Pembayaran</a>
+      <a href="portal-absensi.html"><span class="nav-icon">☑</span>Absensi</a>
+      <button class="search-btn" type="button" onclick="openSearch()" aria-label="Cari">⌕</button>
+      <a class="ppdb-btn" href="#" onclick="showComingSoon(event)">▣ &nbsp; PPDB</a>
+    </nav>
+  </div>
 </header>
 
 <section class="hero"><div class="container hero-inner"><div class="hero-copy">
