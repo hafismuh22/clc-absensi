@@ -50,6 +50,24 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 @media(max-width:850px){.site-header{position:relative}.nav-wrap{height:auto;min-height:68px;flex-wrap:wrap;padding:8px 12px}.main-nav{order:3;flex-basis:100%;overflow-x:auto;justify-content:flex-start}.main-nav a{padding:10px 8px 12px}.main-nav a.active:after{bottom:2px}.hero,.hero-inner{min-height:410px}.hero-copy{width:70%}.hero h1{font-size:43px}.hero h1 span{font-size:28px}.filters{grid-template-columns:1fr 1fr 1fr}.filter-btn,.reset-btn{height:42px}.section-head{align-items:flex-start}.total{min-width:165px}.info-strip{grid-template-columns:repeat(2,1fr)}.info-box:nth-child(3){border-left:0;border-top:1px solid #e0edf8}.info-box:nth-child(4){border-top:1px solid #e0edf8}}
 @media(max-width:600px){.container{width:calc(100% - 20px)}.hero{min-height:490px;background:linear-gradient(90deg,rgba(241,251,255,.96),rgba(241,251,255,.78)),url("assets/hero-guru.jpg") center/cover no-repeat}.hero-inner{min-height:490px;align-items:flex-start}.hero-copy{width:100%;padding-top:35px}.hero h1{font-size:39px}.hero h1 span{font-size:25px}.hero p{font-size:13px}.category-grid{grid-template-columns:1fr}.category{min-height:92px}.section-head{flex-direction:column}.total{width:100%}.filters{grid-template-columns:1fr 1fr}.input{grid-column:1/-1}.filter-btn,.reset-btn{width:100%}.teacher-main{display:block;min-height:0}.teacher-photo{width:100%;height:280px}.teacher-info{padding:12px 3px}.teacher-name{font-size:18px}.pagination{flex-wrap:wrap}.pages{order:3;width:100%;justify-content:center}.info-strip{grid-template-columns:1fr}.info-box:nth-child(3),.info-box:nth-child(4){border-left:0}}
 </style>
+
+<style id="clc-header-final-sticky">
+.site-header{
+  position:sticky !important;
+  top:0 !important;
+  z-index:99999 !important;
+  width:100% !important;
+}
+@media (max-width:900px){
+  .site-header{
+    position:sticky !important;
+    top:0 !important;
+    z-index:99999 !important;
+    width:100% !important;
+  }
+}
+html,body{overflow-x:hidden;}
+</style>
 </head>
 <body>
 <header class="site-header">
