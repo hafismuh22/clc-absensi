@@ -48,6 +48,44 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 .success-popup-box h3{margin:0;color:#073d83;font-size:21px}
 .success-popup-box p{margin:8px 0 18px;color:#6b86a5;font-size:12px;line-height:1.5}
 .success-popup-box button{border:0;border-radius:10px;padding:11px 24px;background:linear-gradient(100deg,#0878df,#0757b8);color:#fff;font-weight:900;cursor:pointer}
+@media (max-width: 600px) {
+  .modal {
+    padding: 10px;
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modal-box {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100vh - 20px);
+    margin: 0;
+    padding: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .modal-gallery {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .modal-gallery img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .modal-photo {
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+  }
+}
 </style>
 
 <style id="clc-header-sticky-final">
