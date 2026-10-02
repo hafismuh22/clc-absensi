@@ -67,7 +67,7 @@ select{
 .site-header{
   position:sticky;
   top:0;
-  z-index:1000;
+  z-index:99999;
   background:
     linear-gradient(
       100deg,
@@ -1008,7 +1008,7 @@ select{
 @media(max-width:850px){
 
   .site-header{
-    position:fixed;
+    position:relative;
   }
 
   .nav-wrap{
@@ -1274,19 +1274,7 @@ select{
 
 
 <style id="clc-header-fixed-final">
-/* =========================================================
-   CLC PERMODALAN — HEADER FINAL
-   Sama dengan sistem yang sudah berhasil di guru.html.
-   Header tidak ikut scroll pada PC maupun HP.
-   ========================================================= */
-
-html,
-body{
-  margin:0;
-  padding:0;
-  overflow-x:hidden;
-}
-
+/* Header disamakan dengan Home/Guru + fixed agar tidak ikut scroll */
 .site-header{
   position:fixed !important;
   top:0 !important;
@@ -1301,25 +1289,14 @@ body{
 
 body{
   padding-top:68px !important;
+  overflow-x:hidden;
 }
 
 .site-header .nav-wrap{
   height:68px !important;
 }
 
-/* Desktop / laptop */
-@media (min-width:851px){
-  .site-header{
-    position:fixed !important;
-  }
-
-  body{
-    padding-top:68px !important;
-  }
-}
-
-/* HP */
-@media (max-width:850px){
+@media(max-width:850px){
   .site-header{
     position:fixed !important;
     top:0 !important;
@@ -1351,99 +1328,28 @@ body{
      ===================================================== -->
 
 <header class="site-header">
-
   <div class="nav-wrap">
-
-    <a class="brand" href="home.html">
-
-      <div class="brand-logo">
-        🎓
-      </div>
-
+    <a class="brand" href="home.html" aria-label="CLC Permodalan">
+      <div class="brand-logo"><span>🎓</span></div>
       <div class="brand-text">
-
-        <strong>
-          CLC PERMODALAN
-        </strong>
-
-        <small>
-          TKB MORISEM 3
-        </small>
-
+        <strong>CLC PERMODALAN</strong>
+        <small>TKB MORISEM 3</small>
       </div>
-
     </a>
 
-
-    <nav class="main-nav">
-
-      <a href="home.html">
-        <span class="nav-icon">⌂</span>
-        Beranda
-      </a>
-
-      <a href="guru.html">
-        <span class="nav-icon">♟</span>
-        Data Guru
-      </a>
-
-      <a href="siswa.html" class="active"
-         class="active">
-
-        <span class="nav-icon">♟</span>
-        Data Siswa
-
-      </a>
-
-      <a href="alumni.html">
-
-        <span class="nav-icon">🎓</span>
-        Data Alumni
-
-      </a>
-
-      <a href="kegiatan.html">
-
-        <span class="nav-icon">▣</span>
-        Kegiatan
-
-      </a>
-
-      <a href="pembayaran.html">
-
-        <span class="nav-icon">▤</span>
-        Pembayaran
-
-      </a>
-
-      <a href="portal-absensi.html">
-
-        <span class="nav-icon">☑</span>
-        Absensi
-
-      </a>
-
-      <button
-        class="search-btn"
-        onclick="openSearch()">
-
-        ⌕
-
-      </button>
-
-      <a
-        class="ppdb-btn"
-        href="#"
-        onclick="coming(event)">
-
-        ▣ &nbsp; PPDB
-
-      </a>
-
+    <nav class="main-nav" aria-label="Navigasi utama">
+      <a href="home.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span>Beranda</a>
+      <a href="guru.html"><span class="nav-icon"><i class="fa-solid fa-user-group"></i></span>Data Guru</a>
+      <a href="siswa.html" class="active"><span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>Data Siswa</a>
+      <a href="alumni.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>Data Alumni</a>
+      <a href="kegiatan.html"><span class="nav-icon"><i class="fa-solid fa-arrows-spin"></i></span>Kegiatan</a>
+      <a href="dokumen.html"><span class="nav-icon"><i class="fa-solid fa-folder-open"></i></span>Dokumen</a>
+      <a href="pembayaran.html"><span class="nav-icon">▤</span>Pembayaran</a>
+      <a href="portal-absensi.html"><span class="nav-icon">☑</span>Absensi</a>
+      <button class="search-btn" type="button" onclick="openSearch()" aria-label="Cari">⌕</button>
+      <a class="ppdb-btn" href="#" onclick="showComingSoon(event)">▣ &nbsp; PPDB</a>
     </nav>
-
   </div>
-
 </header>
 
 
