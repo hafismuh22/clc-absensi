@@ -573,12 +573,10 @@ function renderStats() {
       );
     }).length;
 
-  const study =
-    data.filter(a =>
-      /melanjutkan|kuliah|universitas|sma|smk|sekolah/i
-        .test(a.status || '')
-    ).length;
-
+ const study =
+  data.filter(a =>
+    String(a.sekolahLanjutan || '').trim() !== ''
+  ).length;
 
   document.getElementById('statTotal')
     .textContent = total;
