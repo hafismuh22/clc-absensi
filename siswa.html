@@ -7,7 +7,7 @@
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <meta name="theme-color"
 content="#0757b8">
 
@@ -67,7 +67,7 @@ select{
 .site-header{
   position:sticky;
   top:0;
-  z-index:99999;
+  z-index:1000;
   background:
     linear-gradient(
       100deg,
@@ -1008,7 +1008,7 @@ select{
 @media(max-width:850px){
 
   .site-header{
-    position:relative;
+    position:fixed;
   }
 
   .nav-wrap{
@@ -1273,23 +1273,73 @@ select{
 </style>
 
 
-<style id="clc-header-final-sticky">
-.site-header{
-  position:sticky !important;
-  top:0 !important;
-  z-index:99999 !important;
-  width:100% !important;
+<style id="clc-header-fixed-final">
+/* =========================================================
+   CLC PERMODALAN — HEADER FINAL
+   Sama dengan sistem yang sudah berhasil di guru.html.
+   Header tidak ikut scroll pada PC maupun HP.
+   ========================================================= */
+
+html,
+body{
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
 }
-@media (max-width:900px){
+
+.site-header{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  width:100% !important;
+  height:68px !important;
+  z-index:2147483647 !important;
+  transform:none !important;
+  visibility:visible !important;
+}
+
+body{
+  padding-top:68px !important;
+}
+
+.site-header .nav-wrap{
+  height:68px !important;
+}
+
+/* Desktop / laptop */
+@media (min-width:851px){
   .site-header{
-    position:sticky !important;
-    top:0 !important;
-    z-index:99999 !important;
-    width:100% !important;
+    position:fixed !important;
+  }
+
+  body{
+    padding-top:68px !important;
   }
 }
-html,body{overflow-x:hidden;}
+
+/* HP */
+@media (max-width:850px){
+  .site-header{
+    position:fixed !important;
+    top:0 !important;
+    left:0 !important;
+    right:0 !important;
+    width:100% !important;
+    height:auto !important;
+  }
+
+  body{
+    padding-top:68px !important;
+  }
+
+  .site-header .nav-wrap{
+    height:auto !important;
+    min-height:68px !important;
+  }
+}
 </style>
+
 </head>
 
 
@@ -1301,28 +1351,99 @@ html,body{overflow-x:hidden;}
      ===================================================== -->
 
 <header class="site-header">
+
   <div class="nav-wrap">
-    <a class="brand" href="home.html" aria-label="CLC Permodalan">
-      <div class="brand-logo"><span>🎓</span></div>
-      <div class="brand-text">
-        <strong>CLC PERMODALAN</strong>
-        <small>TKB MORISEM 3</small>
+
+    <a class="brand" href="home.html">
+
+      <div class="brand-logo">
+        🎓
       </div>
+
+      <div class="brand-text">
+
+        <strong>
+          CLC PERMODALAN
+        </strong>
+
+        <small>
+          TKB MORISEM 3
+        </small>
+
+      </div>
+
     </a>
 
-    <nav class="main-nav" aria-label="Navigasi utama">
-      <a href="home.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span>Beranda</a>
-      <a href="guru.html"><span class="nav-icon"><i class="fa-solid fa-user-group"></i></span>Data Guru</a>
-      <a href="siswa.html" class="active"><span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>Data Siswa</a>
-      <a href="alumni.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>Data Alumni</a>
-      <a href="kegiatan.html"><span class="nav-icon"><i class="fa-solid fa-arrows-spin"></i></span>Kegiatan</a>
-      <a href="dokumen.html"><span class="nav-icon"><i class="fa-solid fa-folder-open"></i></span>Dokumen</a>
-      <a href="pembayaran.html"><span class="nav-icon">▤</span>Pembayaran</a>
-      <a href="portal-absensi.html"><span class="nav-icon">☑</span>Absensi</a>
-      <button class="search-btn" type="button" onclick="openSearch()" aria-label="Cari">⌕</button>
-      <a class="ppdb-btn" href="#" onclick="showComingSoon(event)">▣ &nbsp; PPDB</a>
+
+    <nav class="main-nav">
+
+      <a href="home.html">
+        <span class="nav-icon">⌂</span>
+        Beranda
+      </a>
+
+      <a href="guru.html">
+        <span class="nav-icon">♟</span>
+        Data Guru
+      </a>
+
+      <a href="siswa.html" class="active"
+         class="active">
+
+        <span class="nav-icon">♟</span>
+        Data Siswa
+
+      </a>
+
+      <a href="alumni.html">
+
+        <span class="nav-icon">🎓</span>
+        Data Alumni
+
+      </a>
+
+      <a href="kegiatan.html">
+
+        <span class="nav-icon">▣</span>
+        Kegiatan
+
+      </a>
+
+      <a href="pembayaran.html">
+
+        <span class="nav-icon">▤</span>
+        Pembayaran
+
+      </a>
+
+      <a href="portal-absensi.html">
+
+        <span class="nav-icon">☑</span>
+        Absensi
+
+      </a>
+
+      <button
+        class="search-btn"
+        onclick="openSearch()">
+
+        ⌕
+
+      </button>
+
+      <a
+        class="ppdb-btn"
+        href="#"
+        onclick="coming(event)">
+
+        ▣ &nbsp; PPDB
+
+      </a>
+
     </nav>
+
   </div>
+
 </header>
 
 
