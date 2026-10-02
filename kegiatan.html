@@ -302,6 +302,20 @@ function checkSaveSuccess(){
 checkSaveSuccess();
 loadActivities();
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const currentPage = window.location.pathname.split("/").pop().toLowerCase() || "home.html";
 
+  document.querySelectorAll(".main-nav a").forEach(function (link) {
+    link.classList.remove("active");
+
+    const href = (link.getAttribute("href") || "").split("/").pop().toLowerCase();
+
+    if (href === currentPage) {
+      link.classList.add("active");
+    }
+  });
+});
+</script>
 </body>
 </html>
