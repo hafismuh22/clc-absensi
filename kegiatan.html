@@ -48,104 +48,128 @@ a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 .success-popup-box h3{margin:0;color:#073d83;font-size:21px}
 .success-popup-box p{margin:8px 0 18px;color:#6b86a5;font-size:12px;line-height:1.5}
 .success-popup-box button{border:0;border-radius:10px;padding:11px 24px;background:linear-gradient(100deg,#0878df,#0757b8);color:#fff;font-weight:900;cursor:pointer}
-@media (max-width: 600px) {
-  .modal {
-    padding: 10px;
-    align-items: flex-start;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .modal-box {
-    width: 100%;
-    max-width: 100%;
-    max-height: calc(100vh - 20px);
-    margin: 0;
-    padding: 16px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-  }
-
-  .modal-gallery {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .modal-gallery img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    display: block;
-  }
-
-  .modal-photo {
-    min-height: auto;
-    height: auto;
-    overflow: visible;
-  }
-}
 </style>
 
-<style id="clc-header-fixed-final">
-/* =========================================================
-   CLC PERMODALAN — HEADER FINAL
-   Sama dengan Guru, Siswa, dan Alumni yang sudah berhasil.
-   ========================================================= */
+<style id="clc-header-sticky-final">
 .site-header{
-  position:fixed !important;
+  position:sticky !important;
   top:0 !important;
-  left:0 !important;
-  right:0 !important;
+  z-index:99999 !important;
   width:100% !important;
-  height:68px !important;
-  z-index:2147483647 !important;
-  transform:none !important;
-  visibility:visible !important;
 }
-
-body{
-  padding-top:68px !important;
-  overflow-x:hidden;
-}
-
-.site-header .nav-wrap{
-  height:68px !important;
-}
-
-@media(max-width:850px){
+@media (max-width:900px){
   .site-header{
-    position:fixed !important;
+    position:sticky !important;
     top:0 !important;
-    left:0 !important;
-    right:0 !important;
+    z-index:99999 !important;
     width:100% !important;
-    height:auto !important;
-  }
-
-  body{
-    padding-top:68px !important;
-  }
-
-  .site-header .nav-wrap{
-    height:auto !important;
-    min-height:68px !important;
   }
 }
+html,body{overflow-x:hidden;}
 </style>
 
-<style id="mobile-content-spacing-fix">
-@media (max-width: 850px) {
 
-  body {
-    padding-top: 0 !important;
+<style id="kegiatan-detail-mobile-final">
+/* =========================================================
+   DETAIL KEGIATAN — MOBILE
+   HEADER TERBARU TIDAK DIUBAH
+   Foto tetap berukuran nyaman; jika banyak foto,
+   MODAL yang discroll sampai bawah.
+   ========================================================= */
+
+@media (max-width: 600px){
+
+  /* Modal berada di bawah sticky header */
+  #activityModal{
+    align-items:flex-start !important;
+    justify-content:center !important;
+    padding:210px 10px 10px !important;
+    overflow:hidden !important;
   }
 
-  .hero {
-    padding-top: 120px !important;
+  /* Jangan mengecilkan foto karena jumlah foto banyak.
+     Biarkan isi modal yang scroll vertikal. */
+  #activityModal .modal-box{
+    width:100% !important;
+    max-width:520px !important;
+    max-height:calc(100dvh - 220px) !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding:14px !important;
+    border-radius:18px !important;
+    margin:0 !important;
   }
 
+  #activityModal .modal-box h2{
+    font-size:19px !important;
+    line-height:1.2 !important;
+    margin:0 42px 6px 0 !important;
+  }
+
+  #activityModal .modal-meta{
+    font-size:10px !important;
+    line-height:1.45 !important;
+    margin-bottom:10px !important;
+  }
+
+  #activityModal .modal-photo{
+    min-height:0 !important;
+    height:auto !important;
+    border-radius:12px !important;
+    display:block !important;
+    overflow:visible !important;
+    background:#f4fbff !important;
+  }
+
+  #activityModal .modal-gallery{
+    width:100% !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+    padding:0 !important;
+  }
+
+  #activityModal .modal-gallery img{
+    width:100% !important;
+    height:145px !important;
+    min-height:145px !important;
+    object-fit:cover !important;
+    border-radius:9px !important;
+    display:block !important;
+  }
+
+  #activityModal .modal-desc{
+    font-size:11px !important;
+    line-height:1.55 !important;
+    margin-top:11px !important;
+    padding-bottom:4px !important;
+  }
+
+  #activityModal .close{
+    width:31px !important;
+    height:31px !important;
+    right:8px !important;
+    top:8px !important;
+    font-size:18px !important;
+  }
+}
+
+/* HP kecil */
+@media (max-width:380px){
+  #activityModal{
+    padding-top:210px !important;
+  }
+
+  #activityModal .modal-box{
+    max-height:calc(100dvh - 220px) !important;
+    padding:12px !important;
+  }
+
+  #activityModal .modal-gallery img{
+    height:135px !important;
+    min-height:135px !important;
+  }
 }
 </style>
 
@@ -162,11 +186,11 @@ body{
     </a>
 
     <nav class="main-nav" aria-label="Navigasi utama">
-      <a href="home.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span>Beranda</a>
+      <a href="home.html" class="active"><span class="nav-icon"><i class="fa-solid fa-house"></i></span>Beranda</a>
       <a href="guru.html"><span class="nav-icon"><i class="fa-solid fa-user-group"></i></span>Data Guru</a>
       <a href="siswa.html"><span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>Data Siswa</a>
       <a href="alumni.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>Data Alumni</a>
-      <a href="kegiatan.html" class="active"><span class="nav-icon"><i class="fa-solid fa-arrows-spin"></i></span>Kegiatan</a>
+      <a href="kegiatan.html"><span class="nav-icon"><i class="fa-solid fa-arrows-spin"></i></span>Kegiatan</a>
       <a href="dokumen.html"><span class="nav-icon"><i class="fa-solid fa-folder-open"></i></span>Dokumen</a>
       <a href="pembayaran.html"><span class="nav-icon">▤</span>Pembayaran</a>
       <a href="portal-absensi.html"><span class="nav-icon">☑</span>Absensi</a>
