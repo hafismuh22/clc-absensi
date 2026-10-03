@@ -1338,6 +1338,159 @@ body{
   }
 
 }
+
+<style id="mobile-detail-modal-compact">
+
+/* =====================================================
+   MODAL DETAIL SISWA - COMPACT HP
+   Desktop tidak berubah
+   ===================================================== */
+
+@media (max-width: 600px){
+
+  /* Kotak modal */
+  #detailModal .modal-box{
+    width:calc(100% - 24px);
+    max-width:500px;
+    max-height:none !important;
+    overflow:visible !important;
+    padding:14px;
+    border-radius:18px;
+  }
+
+  /* Judul */
+  #detailModal .modal-box h2{
+    font-size:19px;
+    margin:0 0 10px;
+    padding-right:35px;
+  }
+
+  /* Foto + informasi dibuat sejajar */
+  #detailModal .detail-layout{
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  /* Foto diperkecil */
+  #detailModal .detail-photo{
+    width:78px !important;
+    height:100px !important;
+    flex:0 0 78px !important;
+    border-radius:9px;
+    font-size:32px;
+    margin:0 !important;
+  }
+
+  /* Data siswa */
+  #detailModal .detail-lines{
+    font-size:10px !important;
+    line-height:1.42 !important;
+    min-width:0;
+  }
+
+  #detailModal .detail-lines > div{
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  #detailModal .detail-lines strong{
+    font-size:10px;
+  }
+
+  /* Dokumen */
+  #detailModal .document-detail{
+    margin-top:10px !important;
+    padding-top:9px !important;
+  }
+
+  #detailModal .document-detail-title{
+    font-size:12px !important;
+    margin-bottom:7px !important;
+  }
+
+  /* Dokumen kembali 3 kolom */
+  #detailModal .document-detail-grid{
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:5px !important;
+  }
+
+  #detailModal .document-detail-item{
+    padding:7px 4px !important;
+    border-radius:7px;
+  }
+
+  #detailModal .document-detail-item .doc-name{
+    font-size:8px !important;
+    margin-bottom:3px !important;
+  }
+
+  #detailModal .document-detail-item .doc-result{
+    font-size:9px !important;
+  }
+
+  /* NIK yang sudah dimasking */
+  #detailModal .document-detail > div:last-child{
+    margin-top:6px !important;
+    font-size:8px !important;
+  }
+
+  /* Tombol X */
+  #detailModal .close{
+    width:30px;
+    height:30px;
+    right:9px;
+    top:9px;
+    font-size:18px;
+  }
+
+}
+
+
+/* HP sangat kecil */
+@media (max-width:380px){
+
+  #detailModal .modal-box{
+    width:calc(100% - 16px);
+    padding:11px;
+  }
+
+  #detailModal .detail-photo{
+    width:68px !important;
+    height:88px !important;
+    flex-basis:68px !important;
+  }
+
+  #detailModal .detail-lines{
+    font-size:9px !important;
+    line-height:1.35 !important;
+  }
+
+  #detailModal .detail-lines strong{
+    font-size:9px;
+  }
+
+  #detailModal .document-detail-title{
+    font-size:11px !important;
+  }
+
+  #detailModal .document-detail-item{
+    padding:6px 3px !important;
+  }
+
+  #detailModal .document-detail-item .doc-name{
+    font-size:7px !important;
+  }
+
+  #detailModal .document-detail-item .doc-result{
+    font-size:8px !important;
+  }
+
+}
+
+</style>
 </style>
 
 </head>
