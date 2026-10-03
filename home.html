@@ -432,11 +432,10 @@ img{max-width:100%;display:block}
 </style>
 
 
-<style id="clc-home-header-mobile-fixed-final">
+<style id="clc-home-header-fixed-final">
 /* =========================================================
-   CLC PERMODALAN — HOME HEADER FINAL
-   Desktop + HP sama-sama tetap di atas saat scroll.
-   Desain/header Home lainnya tidak diubah.
+   HOME HEADER — SAMAKAN DENGAN HEADER HALAMAN ALUMNI
+   Desktop + HP tetap menempel saat scroll.
    ========================================================= */
 
 .site-header{
@@ -450,13 +449,13 @@ img{max-width:100%;display:block}
   visibility:visible !important;
 }
 
-/* Header desktop tetap setinggi 68px */
-@media (min-width:651px){
+/* Desktop */
+@media (min-width:901px){
   .site-header{
     height:68px !important;
   }
 
-  .nav-wrap{
+  .site-header .nav-wrap{
     height:68px !important;
   }
 
@@ -465,8 +464,9 @@ img{max-width:100%;display:block}
   }
 }
 
-/* HP: tetap fixed, bukan sticky/relative */
-@media (max-width:650px){
+/* Tablet + HP
+   Jangan biarkan rule lama Home mengubah header menjadi relative. */
+@media (max-width:900px){
   .site-header{
     position:fixed !important;
     top:0 !important;
@@ -476,13 +476,12 @@ img{max-width:100%;display:block}
     height:auto !important;
   }
 
-  .nav-wrap{
-    height:auto !important;
-    min-height:68px !important;
+  .site-header .nav-wrap{
+    min-height:70px !important;
   }
 
   body{
-    padding-top:68px !important;
+    padding-top:70px !important;
     overflow-x:hidden !important;
   }
 }
