@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pendataan Alumni - CLC PERMODALAN</title>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --blue:#0d47a1;
+  --blue2:#1976d2;
+  --gold:#d4a017;
+  --bg:#f3f7fc;
+  --text:#17324d;
+  --muted:#6b7b8c;
+  --line:#dbe4ef;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#eef5ff,#f9fbff);
+  color:var(--text);
+  min-height:100vh;
+}
+
+.page{
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+  padding:28px 16px 42px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #e1e8f0;
+  border-radius:22px;
+  box-shadow:0 12px 35px rgba(13,71,161,.10);
+  overflow:hidden;
+}
+
+.top{
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff;
+  padding:28px 24px 24px;
+  text-align:center;
+}
+
+.logo{
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  object-fit:contain;
+  background:#fff;
+  padding:5px;
+  margin-bottom:10px;
+}
+
+/* Jika logo belum dipasang, lingkaran ikon tetap terlihat */
+.logo-fallback{
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  background:#fff;
+  color:var(--blue);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 10px;
+  font-size:30px;
+}
+
+.top h1{
+  margin:0;
+  font-size:24px;
+  line-height:1.25;
+}
+
+.top h2{
+  margin:7px 0 0;
+  font-size:16px;
+  font-weight:600;
+  opacity:.95;
+}
+
+.top p{
+  margin:8px 0 0;
+  font-size:13px;
+  opacity:.85;
+}
+
+.form{
+  padding:24px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:var(--blue);
+  font-size:17px;
+  font-weight:700;
+  margin:2px 0 16px;
+}
+
+.section-title i{
+  width:32px;
+  height:32px;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eaf2ff;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+label{
+  font-size:13px;
+  font-weight:700;
+  color:#334e68;
+}
+
+.required{
+  color:#d32f2f;
+}
+
+input,
+select{
+  width:100%;
+  height:45px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  padding:0 13px;
+  font-size:14px;
+  color:var(--text);
+  background:#fff;
+  outline:none;
+  transition:.2s;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--blue2);
+  box-shadow:0 0 0 3px rgba(25,118,210,.10);
+}
+
+.hint{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.4;
+}
+
+.photo-box{
+  border:1.5px dashed #b8cbe1;
+  border-radius:14px;
+  padding:14px;
+  background:#f8fbff;
+}
+
+.photo-preview{
+  display:none;
+  width:110px;
+  height:130px;
+  border-radius:12px;
+  object-fit:cover;
+  margin:10px auto 0;
+  border:1px solid #dbe4ef;
+}
+
+.submit-wrap{
+  margin-top:24px;
+}
+
+button{
+  width:100%;
+  height:48px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 7px 18px rgba(13,71,161,.20);
+}
+
+button:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+.status{
+  display:none;
+  margin-top:15px;
+  padding:13px 14px;
+  border-radius:11px;
+  font-size:13px;
+  line-height:1.45;
+}
+
+.status.success{
+  display:block;
+  background:#eaf8ef;
+  color:#176b35;
+  border:1px solid #bde5c8;
+}
+
+.status.error{
+  display:block;
+  background:#fff0f0;
+  color:#a51d1d;
+  border:1px solid #f0c0c0;
+}
+
+.footer{
+  text-align:center;
+  padding:0 24px 23px;
+  font-size:11px;
+  color:#8a99a8;
+}
+
+@media(max-width:600px){
+  .page{
+    padding:12px 9px 25px;
+  }
+
+  .card{
+    border-radius:17px;
+  }
+
+  .top{
+    padding:22px 15px 20px;
+  }
+
+  .top h1{
+    font-size:20px;
+  }
+
+  .top h2{
+    font-size:14px;
+  }
+
+  .form{
+    padding:17px 14px 20px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+    gap:13px;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .section-title{
+    font-size:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <div class="card">
+
+    <div class="top">
+      <div class="logo-fallback">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+
+      <h1>PENDATAAN ALUMNI</h1>
+      <h2>CLC PERMODALAN TKB MORISEM 3</h2>
+      <p>Silakan isi data alumni dengan lengkap dan benar.</p>
+    </div>
+
+    <form class="form" id="alumniForm">
+
+      <div class="section-title">
+        <i class="fa-solid fa-user-graduate"></i>
+        <span>Data Alumni</span>
+      </div>
+
+      <div class="grid">
+
+        <div class="field full">
+          <label for="nama">
+            Nama Lengkap <span class="required">*</span>
+          </label>
+          <input id="nama" name="nama" type="text"
+                 placeholder="Masukkan nama lengkap" required>
+        </div>
+
+        <div class="field">
+          <label for="nisn">
+            NISN
+          </label>
+          <input id="nisn" name="nisn" type="text"
+                 inputmode="numeric"
+                 placeholder="Masukkan NISN (opsional)">
+          <div class="hint">
+            Boleh dikosongkan jika lupa NISN.
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="jenis_kelamin">
+            Jenis Kelamin <span class="required">*</span>
+          </label>
+          <select id="jenis_kelamin" name="jenis_kelamin" required>
+            <option value="">Pilih jenis kelamin</option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="tahun_lulus">
+            Tahun Lulus <span class="required">*</span>
+          </label>
+          <input id="tahun_lulus" name="tahun_lulus"
+                 type="number" min="2000" max="2100"
+                 placeholder="Contoh: 2026" required>
+        </div>
+
+        <div class="field">
+          <label for="kelas_terakhir">
+            Kelas Terakhir <span class="required">*</span>
+          </label>
+          <select id="kelas_terakhir" name="kelas_terakhir" required>
+            <option value="">Pilih kelas</option>
+            <option value="6">Kelas 6</option>
+            <option value="9">Kelas 9</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="tkb">
+            TKB <span class="required">*</span>
+          </label>
+          <select id="tkb" name="tkb" required>
+            <option value="">Pilih TKB</option>
+            <option value="TKB MORISEM 3">TKB MORISEM 3</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="estate">
+            Estate <span class="required">*</span>
+          </label>
+          <input id="estate" name="estate" type="text"
+                 placeholder="Masukkan estate tempat kamu tingal dulu, contoh (MORISEM 1)" required>
+        </div>
+
+        <div class="field full">
+          <label for="sekolah_lanjutan">
+            Sekolah Lanjutan
+          </label>
+          <input id="sekolah_lanjutan" name="sekolah_lanjutan"
+                 type="text"
+                 placeholder="kosongkan jika kamu tidak lanjut sekolah">
+          <div class="hint">
+            isi sekolah terakhir kamu jika kamu lanjut, cocntoh (kamu lanjut di SMA 1 MAKASSAR) setelah lulus kamu tidak lanjut, yang kamu isi adalah sekolah lanjutan teakhir "SMA 1 MAKASSAR" kecuali kalau kamu tidak lanjut sama sekali setelah lulus di clc morisem 3 kosongkan saja.
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="jurusan">
+          Jurusan
+        </label>
+            <input id="jurusan" name="jurusan"
+            type="text"
+            placeholder="Masukkan UMUM jika tidak ada jurusna spesifik dan kosongkan jika tidak lanjut">
+        </div>
+
+        <div class="field">
+          <label for="status">
+            Status
+          </label>
+          <input id="status" name="status"
+                 type="text"
+                 value="LULUS"
+                 readonly>
+          <div class="hint">
+            Status alumni otomatis ditetapkan sebagai LULUS.
+          </div>
+        </div>
+
+        <div class="field full">
+          <label for="foto">Foto Alumni</label>
+
+          <div class="photo-box">
+            <input id="foto" name="foto" type="file"
+                   accept="image/*">
+            <div class="hint">
+              Foto opsional. Gunakan foto yang jelas. Foto akan diproses
+              otomatis sebelum dikirim.
+            </div>
+
+            <img id="photoPreview"
+                 class="photo-preview"
+                 alt="Preview foto alumni">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" id="submitBtn">
+          <i class="fa-solid fa-paper-plane"></i>
+          &nbsp; Kirim Data Alumni
+        </button>
+      </div>
+
+      <div id="statusBox" class="status"></div>
+
+    </form>
+
+    <div class="footer">
+      CLC PERMODALAN TKB MORISEM 3
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   URL WEB APP APPS SCRIPT
+   GANTI HANYA BARIS INI DENGAN URL DEPLOYMENT KAMU
+   ===================================================== */
+
+const API_URL = 'PASTE_URL_WEB_APP_APPS_SCRIPT_DI_SINI';
+
+
+const form = document.getElementById('alumniForm');
+const submitBtn = document.getElementById('submitBtn');
+const statusBox = document.getElementById('statusBox');
+const fotoInput = document.getElementById('foto');
+const photoPreview = document.getElementById('photoPreview');
+
+
+/* =====================================================
+   PREVIEW FOTO
+   ===================================================== */
+
+fotoInput.addEventListener('change', function(){
+
+  const file = this.files && this.files[0];
+
+  if(!file){
+    photoPreview.style.display = 'none';
+    photoPreview.removeAttribute('src');
+    return;
+  }
+
+  if(!file.type.startsWith('image/')){
+    this.value = '';
+    showStatus('error','File yang dipilih harus berupa gambar.');
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    photoPreview.src = e.target.result;
+    photoPreview.style.display = 'block';
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+/* =====================================================
+   RESIZE FOTO SEBELUM DIKIRIM
+   ===================================================== */
+
+function resizeImage(file){
+
+  return new Promise(function(resolve,reject){
+
+    const reader = new FileReader();
+
+    reader.onload = function(event){
+
+      const img = new Image();
+
+      img.onload = function(){
+
+        const maxWidth = 1000;
+        const maxHeight = 1200;
+
+        let width = img.width;
+        let height = img.height;
+
+        const ratio = Math.min(
+          maxWidth / width,
+          maxHeight / height,
+          1
+        );
+
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+
+        const canvas = document.createElement('canvas');
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          width,
+          height
+        );
+
+        canvas.toBlob(
+          function(blob){
+
+            if(!blob){
+              reject(new Error('Foto gagal diproses.'));
+              return;
+            }
+
+            const blobReader = new FileReader();
+
+            blobReader.onloadend = function(){
+              resolve(blobReader.result);
+            };
+
+            blobReader.readAsDataURL(blob);
+
+          },
+          'image/jpeg',
+          0.82
+        );
+
+      };
+
+      img.onerror = function(){
+        reject(new Error('Foto tidak dapat dibaca.'));
+      };
+
+      img.src = event.target.result;
+
+    };
+
+    reader.onerror = function(){
+      reject(new Error('Foto gagal dibaca.'));
+    };
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+function showStatus(type,message){
+
+  statusBox.className = 'status ' + type;
+  statusBox.textContent = message;
+
+}
+
+
+/* =====================================================
+   SUBMIT
+   ===================================================== */
+
+form.addEventListener('submit', async function(event){
+
+  event.preventDefault();
+
+  if(
+    !API_URL ||
+    API_URL === 'PASTE_URL_WEB_APP_APPS_SCRIPT_DI_SINI'
+  ){
+
+    showStatus(
+      'error',
+      'URL Web App Apps Script belum diisi.'
+    );
+
+    return;
+  }
+
+
+  submitBtn.disabled = true;
+
+  submitBtn.innerHTML =
+    '<i class="fa-solid fa-spinner fa-spin"></i> ' +
+    'Mengirim data...';
+
+  statusBox.className = 'status';
+  statusBox.textContent = '';
+
+
+  try{
+
+    const payload = {
+
+      nama:
+        document.getElementById('nama').value.trim(),
+
+      nisn:
+        document.getElementById('nisn').value.trim(),
+
+      jenis_kelamin:
+        document.getElementById('jenis_kelamin').value,
+
+      tahun_lulus:
+        document.getElementById('tahun_lulus').value.trim(),
+
+      kelas_terakhir:
+        document.getElementById('kelas_terakhir').value,
+
+      tkb:
+        document.getElementById('tkb').value,
+
+      estate:
+        document.getElementById('estate').value.trim(),
+
+      sekolah_lanjutan:
+        document.getElementById('sekolah_lanjutan').value.trim(),
+
+      jurusan:
+        document.getElementById('jurusan').value.trim(),
+
+      status:
+        'LULUS',
+
+      foto_base64: ''
+
+    };
+
+
+    /* ================================================
+       FOTO
+       ================================================ */
+
+    const file =
+      fotoInput.files &&
+      fotoInput.files[0];
+
+    if(file){
+
+      payload.foto_base64 =
+        await resizeImage(file);
+
+    }
+
+
+    /* ================================================
+       KIRIM KE APPS SCRIPT
+       ================================================ */
+
+    const response =
+      await fetch(API_URL,{
+        method:'POST',
+        headers:{
+          'Content-Type':'text/plain;charset=utf-8'
+        },
+        body:JSON.stringify(payload)
+      });
+
+
+    const text =
+      await response.text();
+
+
+    let result;
+
+    try{
+
+      result = JSON.parse(text);
+
+    }catch(error){
+
+      throw new Error(
+        'Respons dari server tidak dapat dibaca.'
+      );
+
+    }
+
+
+    if(!result.success){
+
+      throw new Error(
+        result.message ||
+        'Data gagal disimpan.'
+      );
+
+    }
+
+
+    showStatus(
+      'success',
+      'Data alumni berhasil dikirim. ' +
+      'Nomor data: ' + result.id
+    );
+
+
+    form.reset();
+
+    photoPreview.style.display = 'none';
+    photoPreview.removeAttribute('src');
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      'error',
+      error.message ||
+      'Terjadi kesalahan saat mengirim data.'
+    );
+
+  }finally{
+
+    submitBtn.disabled = false;
+
+    submitBtn.innerHTML =
+      '<i class="fa-solid fa-paper-plane"></i>' +
+      '&nbsp; Kirim Data Alumni';
+
+  }
+
+});
+</script>
+
+</body>
+</html>
