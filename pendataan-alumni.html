@@ -597,6 +597,90 @@ function showStatus(type,message){
 
 
 /* =====================================================
+   KIRIM KE APPS SCRIPT TANPA FETCH/CORS
+   ===================================================== */
+
+function submitToAppsScript(payload){
+
+  const iframeName =
+    'alumniSubmitFrame_' + Date.now();
+
+  const iframe =
+    document.createElement('iframe');
+
+  iframe.name = iframeName;
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  const postForm =
+    document.createElement('form');
+
+  postForm.method = 'POST';
+  postForm.action = API_URL;
+  postForm.target = iframeName;
+  postForm.style.display = 'none';
+
+  Object.keys(payload).forEach(function(key){
+
+    const input =
+      document.createElement('input');
+
+    input.type = 'hidden';
+    input.name = key;
+    input.value = payload[key] || '';
+
+    postForm.appendChild(input);
+
+  });
+
+  document.body.appendChild(postForm);
+
+  let handled = false;
+
+  iframe.addEventListener('load', function(){
+
+    if(handled){
+      return;
+    }
+
+    handled = true;
+
+    showStatus(
+      'success',
+      'Data alumni berhasil dikirim dan sedang diproses.'
+    );
+
+    form.reset();
+
+    photoPreview.style.display = 'none';
+    photoPreview.removeAttribute('src');
+
+    submitBtn.disabled = false;
+
+    submitBtn.innerHTML =
+      '<i class="fa-solid fa-paper-plane"></i>' +
+      '&nbsp; Kirim Data Alumni';
+
+    setTimeout(function(){
+
+      if(postForm.parentNode){
+        postForm.parentNode.removeChild(postForm);
+      }
+
+      if(iframe.parentNode){
+        iframe.parentNode.removeChild(iframe);
+      }
+
+    }, 3000);
+
+  });
+
+  postForm.submit();
+
+}
+
+
+/* =====================================================
    SUBMIT
    ===================================================== */
 
@@ -685,58 +769,14 @@ form.addEventListener('submit', async function(event){
 
     /* ================================================
        KIRIM KE APPS SCRIPT
+       -----------------------------------------------
+       Menggunakan form POST + iframe tersembunyi.
+       Cara ini menghindari masalah CORS/redirect
+       yang menyebabkan "Failed to fetch" pada GitHub.
+       doPost() di Code.gs sudah menerima e.parameter.
        ================================================ */
 
-    const response =
-      await fetch(API_URL,{
-        method:'POST',
-        headers:{
-          'Content-Type':'text/plain;charset=utf-8'
-        },
-        body:JSON.stringify(payload)
-      });
-
-
-    const text =
-      await response.text();
-
-
-    let result;
-
-    try{
-
-      result = JSON.parse(text);
-
-    }catch(error){
-
-      throw new Error(
-        'Respons dari server tidak dapat dibaca.'
-      );
-
-    }
-
-
-    if(!result.success){
-
-      throw new Error(
-        result.message ||
-        'Data gagal disimpan.'
-      );
-
-    }
-
-
-    showStatus(
-      'success',
-      'Data alumni berhasil dikirim. ' +
-      'Nomor data: ' + result.id
-    );
-
-
-    form.reset();
-
-    photoPreview.style.display = 'none';
-    photoPreview.removeAttribute('src');
+    submitToAppsScript(payload);
 
 
   }catch(error){
@@ -751,11 +791,7 @@ form.addEventListener('submit', async function(event){
 
   }finally{
 
-    submitBtn.disabled = false;
-
-    submitBtn.innerHTML =
-      '<i class="fa-solid fa-paper-plane"></i>' +
-      '&nbsp; Kirim Data Alumni';
+    /* Tombol dikembalikan setelah iframe menerima hasil POST. */
 
   }
 
